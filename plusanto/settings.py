@@ -31,17 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # DjangoApps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
+    'debug_toolbar', # Narzędzie debugowania
+    # MyApps
+    'accounts', # Aplikacja obsługująca konta
+    'main', # Główna aplikacja
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarModdleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # Narzędzie do debugowania, działa jedynie na localhostcie
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,11 +53,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Odczytuje język przeglądarki i dostosywuje stronę do tego języka
+
 ]
 
 INTERNAL_IPS = [
     # ...
-    '127.0.0.1',
+    '127.0.0.1', # Definiujemy IP localhosta
     # ...
 ]
 
@@ -83,12 +89,13 @@ WSGI_APPLICATION = 'plusanto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'plusantodb',           # The name of the database you created
-        'USER': 'root',             # Default XAMPP MySQL username
-        'PASSWORD': '',              # Default password is blank
-        'HOST': 'localhost',        # Host is localhost
-        'PORT': '3306',             # Default MySQL port
+        'ENGINE': 'django.db.backends.mysql',   # Silnik bazy danych django
+        'NAME': 'plusantodb',                   # Nazwa bazy danych
+        'USER': 'plusantodb_admin',             # Nazwa użytkownika
+        'PASSWORD': 'Plusantodbadmin123!',      #  Hasło
+        'HOST': 'localhost',                    #  Adres serwera
+        'PORT': '3306',                         #  Port bazy danych
+
     }
 }
 
@@ -96,7 +103,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = [ # Formy walidacji hasła
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -115,9 +122,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl-pl' # Język strony
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET' # Strefa czasowa strony
 
 USE_I18N = True
 

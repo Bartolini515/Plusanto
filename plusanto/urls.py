@@ -20,5 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('__debug__/', include(debug_toolbar.urls))
+    path('__debug__/', include(debug_toolbar.urls)),
+    path('accounts/', include('accounts.urls'), name='accounts'), # Przekierowanie na aplikację kont
+    path('', include('main.urls'), name='index'), # Przekierowanie na stronę główną
 ]

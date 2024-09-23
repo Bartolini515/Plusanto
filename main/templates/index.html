@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona główna</title>
+</head>
+<body>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+    <h1>Witaj na stronie głównej</h1>
+    <a href="{% url 'register' %}">Zarejestruj się</a>
+    <a href="{% url 'login' %}">Zaloguj się</a>
+</body>
+</html>
