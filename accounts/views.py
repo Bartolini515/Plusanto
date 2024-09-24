@@ -16,7 +16,7 @@ def register(request): # Funkcja rejestracji użytkownika
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, email=email)
-            if user is not None: # Jeżeli użytkownik istnieje powracamy do formularza
+            if user is not None: # Jeżeli użytkownik istnieje powracamy do formularza # TODO nie sprawdza chłopka czy istnieje i chce go dodać
                 messages.info(request, 'Użytkownik o podanej nazwie i email już istnieje')
                 form = UserCreationForm()
                 return render(request, 'register.html', {'form': form})
