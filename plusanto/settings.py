@@ -14,12 +14,14 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOGIN_URL = "/accounts/login/" # Ustawienie przekierowania do strony logowania
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# TODO Zastosować plik .env dla klucza prywatnego
 SECRET_KEY = 'django-insecure-5((pc722q!n_$on9t$f%mpe-m4_ny$&vo6rkd_2y^6)z3lk3ro'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -32,7 +34,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # DjangoApps
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'plusanto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
+DATABASES = { # TODO Zastosować plik .env dla ustawień bazy danych
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # Silnik bazy danych django
         'NAME': 'plusantodb',                   # Nazwa bazy danych

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Pulpit</title>
+</head>
+<body>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+    <a href="{% url 'index' %}">Wróć na stronę główną</a>
+    <h1>Witaj w pulpicie</h1>
+    <a href="{% url 'informations' %}">Twoje informacje</a>
+</body>
+</html>

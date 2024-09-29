@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'), # Przekierowanie na stronę główną w przypadku wejścia na stronę
-    path('home/', views.index, name='home'),  # Przekierowanie na stronę główną w przypadku wyjścia z innej funkcji
+    path('dashboard/', views.dashboard, name='dashboard'), # Przekierowanie na pulpit
+    path('dashboard/informations/', views.informations, name='informations') # Przekierowanie na informacje użytkownika
 ]

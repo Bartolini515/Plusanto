@@ -15,5 +15,7 @@
     <h1>Witaj na stronie głównej</h1>
     <a href="{% url 'register' %}">Zarejestruj się</a>
     <a href="{% url 'login' %}">Zaloguj się</a>
+    <a href="{% url 'logout' %}">Wyloguj się</a> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
+    <a href="{% url 'dashboard' %}">Wejdź do pulpitu</a>
 </body>
 </html>
