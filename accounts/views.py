@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegistrationForm
@@ -20,7 +19,7 @@ def register(request): # Funkcja rejestracji użytkownika
                 if existing_user:
                     messages.info(request, 'Użytkownik o podanej nazwie już istnieje')
                     return render(request, 'register.html', {'form': RegistrationForm(request.POST)})
-            except User.DoesNotExist: # Jeżeli użytkownik nie istnieje w bazie danych możemy go utworzyć
+            except User.DoesNotExist: # Jeżeli użytkownik nie istnieje w bazie danych możemy przejść dalej
                 pass
             
             try: # Sprawdzamy czy adres email istnieje w bazie danych
@@ -28,7 +27,7 @@ def register(request): # Funkcja rejestracji użytkownika
                 if existing_email: # Jeżeli email istnieje w bazie danych powracamy do formularza
                     messages.info(request, 'Podany adres email został już powiązany z innym użytkownikiem')
                     return render(request, 'register.html', {'form': RegistrationForm(request.POST)})
-            except  User.DoesNotExist: # Jeżeli email nie istnieje w bazie danych możemy go ut
+            except  User.DoesNotExist: # Jeżeli email nie istnieje w bazie danych możemy przejść dalej
                 pass
             
             User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password) # Tworzymy użytkownika w bazie danych
@@ -49,7 +48,11 @@ def signin(request): # Funkcja logowania  użytkownika
         if user is not None: #  Jeżeli użytkownik istnieje logujemy go
             login(request, user)
             messages.success(request, "Zalogowano pomyślnie!")
-            return redirect('index')
+            next_url = request.GET.get('next')
+            if next_url: # Jeżeli dostajemy specjalne przekierowanie, to przekierowujemy
+                return redirect(next_url)
+            else:
+                return redirect('index')
         else:  # Jeżeli użytkownik nie istnieje wyświetlamy komunikat
             messages.error(request, "Błędne dane logowania!")
     return render(request, 'signin.html')

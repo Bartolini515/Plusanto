@@ -14,5 +14,10 @@
 {% endif %}
     <a href="{% url 'dashboard' %}">Wróć do pulpitu</a>
     <h1>Witaj w informacjach</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Zapisz</button>
+    </form>
 </body>
 </html>

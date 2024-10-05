@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+# Inicjalizacja pliku .env
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +27,7 @@ LOGIN_URL = "/accounts/login/" # Ustawienie przekierowania do strony logowania
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO Zastosować plik .env dla klucza prywatnego
-SECRET_KEY = 'django-insecure-5((pc722q!n_$on9t$f%mpe-m4_ny$&vo6rkd_2y^6)z3lk3ro'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,14 +93,15 @@ WSGI_APPLICATION = 'plusanto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = { # TODO Zastosować plik .env dla ustawień bazy danych
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # Silnik bazy danych django
-        'NAME': 'plusantodb',                   # Nazwa bazy danych
-        'USER': 'plusantodb_admin',             # Nazwa użytkownika
-        'PASSWORD': 'Plusantodbadmin123!',      #  Hasło
-        'HOST': 'localhost',                    #  Adres serwera
-        'PORT': '3306',                         #  Port bazy danych
+        'NAME': env('DATABASE_NAME'),           # Nazwa bazy danych brana z pliku .env
+        'USER': env('DATABASE_USER'),           # Nazwa użytkownika brana z pliku .env
+        'PASSWORD': env('DATABASE_PASSWORD'),   # Hasło brane z pliku .env
+        'HOST': 'localhost',                    # Adres serwera
+        'PORT': '3306',                         # Port bazy danych
+        'CHARSET': 'utf8mb4',                   # Kodowanie tekstu
 
     }
 }
