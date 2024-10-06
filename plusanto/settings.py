@@ -101,7 +101,7 @@ DATABASES = {
         'PASSWORD': env('DATABASE_PASSWORD'),   # Hasło brane z pliku .env
         'HOST': 'localhost',                    # Adres serwera
         'PORT': '3306',                         # Port bazy danych
-        'CHARSET': 'utf8mb4',                   # Kodowanie tekstu
+        'CHARSET': 'utf8_general_ci',           # Kodowanie tekstu
 
     }
 }

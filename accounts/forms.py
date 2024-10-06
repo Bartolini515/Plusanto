@@ -28,10 +28,9 @@ class RegistrationForm(forms.Form):
             raise ValidationError(e.messages[0])
         return password
 
-    def clean_confirm(self): # Walidacja identyczności haseł # TODO : nie działa sprawdzanie hasła oraz wywala baze danych jeżeli są znaki polskie
-        cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        password_confirm = cleaned_data.get('password_confirm')
+    def clean_password_confirm(self):
+        password = self.cleaned_data.get('password')
+        password_confirm = self.cleaned_data.get('password_confirm')
         if password != password_confirm:
             raise ValidationError('Hasła nie są identyczne')
-        return cleaned_data
+        return password, password_confirm
