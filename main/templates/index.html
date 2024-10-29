@@ -3,7 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Strona główna</title>
+    <style>
+        body {
+          background-color: white;
+        }
+        
+        
+        h1 {
+          color: white;
+          text-align: center;
+        }
+        h2 {
+            color: black;
+            text-align: center;
+          }
+        p {
+          font-family: Arial;
+          font-size: 20px;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+          }
+          
+          li {
+            float: left;
+            color: white;
+            
+            
+          }
+          
+          li a {
+            display: strip;
+            padding: 45px;
+            margin: 0;
+            text-align: center;
+            color: white;
+
+            background-color: gray;
+          }
+          
+    .czarny-naglowek {
+        background-color: black; /* Czarny kolor tła */
+        color: white; /* Biały kolor tekstu */
+        padding: 15px; /* Odstępy wewnętrzne */
+        text-align: center; /* Wyśrodkowanie tekstu */
+        font-size: 1em; /* Wielkość tekstu */
+    }
+
+        </style>
 </head>
+
 <body>
     {% if messages %}
     <ul>
@@ -12,10 +64,38 @@
         {% endfor %}
     </ul>
 {% endif %}
-    <h1>Witaj na stronie głównej</h1>
-    <a href="{% url 'register' %}">Zarejestruj się</a>
-    <a href="{% url 'login' %}">Zaloguj się</a>
-    <a href="{% url 'logout' %}">Wyloguj się</a> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
-    <a href="{% url 'dashboard' %}">Wejdź do pulpitu</a>
+    
+    
+    <header class="czarny-naglowek">
+        <h1>Witaj na stronie głównej</h1>
+    </header>
+    <div class="text-image-container">
+       
+      </div>
+      
+    <ul>
+    <li><h2><a href="{% url 'register' %}">Zarejestruj się</a></h2></li>
+    <li><h2><a href="{% url 'login' %}">Zaloguj się</a></h2></li>
+    <li><h2><a href="{% url 'logout' %}">Wyloguj się</a></h2></li> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
+    <li><h2><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></h2></li>
+    <li><h2><a href="{% url 'dashboard' %}">O nas</a></h2></li>
+    <li><h2><a href="{% url 'dashboard' %}">Kontakt</a></h2></li>
+    </ul>
+    <h2>Aby przejść dalej zarejestruj się, lub gdy jesteś już zarejestrowany to zaloguj się.</h2>
+    <img src="C:\Users\maksy\Documents\Projekt-szkola\Plusanto\main\templates\images\LOGO.jpg" alt="Obrazek kasy pod tekstem">
+    <br></br>
+    <h2>Opis strony</h2>
+    <h2>Poznaj aplikację finansową PLUSTANTO – Twojego zaufanego partnera w zarządzaniu finansami!
+
+      Dzięki PLUSTANTO masz pełną kontrolę nad swoimi wydatkami i oszczędnościami, niezależnie od miejsca i czasu.
+       Oferujemy łatwe w użyciu narzędzia, które pomogą Ci w efektywnym planowaniu budżetu, monitorowaniu inwestycji i odkładaniu na przyszłość. 
+       Z naszym wsparciem zobaczysz pełen obraz swoich finansów i podejmiesz najlepsze decyzje, które zapewnią Ci finansową stabilność i spokój ducha.
+      
+      Dlaczego warto wybrać PLUSTANTO?
+      
+      Przejrzysty interfejs: intuicyjny i przyjazny nawet dla początkujących użytkowników,
+      Szybki dostęp do analiz i raportów: śledź swoje postępy finansowe i planuj kolejne kroki,
+      Bezpieczeństwo danych: dbamy o pełną ochronę Twoich informacji.
+      Nie zwlekaj – dołącz do społeczności świadomych finansowo użytkowników i zacznij zarządzać swoimi środkami z łatwością dzięki PLUSTANTO!</h2>
 </body>
 </html>
