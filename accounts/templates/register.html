@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
+    
     <title>Rejestracja</title>
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
+
 <body>
-    <a href="{% url 'index' %}">Wróć na stronę główną</a>
-    <h1>Rejestracja</h1>
+    <h3><a href="{% url 'index' %}"class="button">Wróć na stronę główną</a></h3>
+    <h1 id="powrot">Rejestracja</h1>
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -16,7 +20,7 @@
     {% endif %}
     <form method="post">
         {% csrf_token %} <!-- Zawsze przywołuj csrf_token gdy formularz korzysta z POST aby chronić przed CSRF (https://owasp.org/www-community/attacks/csrf#overview) <p> -->
-        {% for field in form %} <!-- Tworzy formularz pole po polu zgodnie z templatem forms.py (https://docs.djangoproject.com/en/5.1/topics/forms/#looping-over-the-form-s-fields) -->
+            <h2> {% for field in form %}</h2> <!-- Tworzy formularz pole po polu zgodnie z templatem forms.py (https://docs.djangoproject.com/en/5.1/topics/forms/#looping-over-the-form-s-fields) -->
             <div>
                 {{ field.errors }}
                 {{ field.label_tag }} {{ field }}
@@ -27,6 +31,8 @@
                 {% endif %}
             </div>
         {% endfor %}
+        <br>
+        <br>
         <button type="submit">Zarejestruj się</button>
     </form>
 </body>

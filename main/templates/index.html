@@ -1,63 +1,13 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Strona główna</title>
-    <style>
-        body {
-          background-color: white;
-        }
-        
-        
-        h1 {
-          color: white;
-          text-align: center;
-        }
-        h2 {
-            color: black;
-            text-align: center;
-          }
-        p {
-          font-family: Arial;
-          font-size: 20px;
-        }
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-          }
-          
-          li {
-            float: left;
-            color: white;
-            
-            
-          }
-          
-          li a {
-            display: strip;
-            padding: 45px;
-            margin: 0;
-            text-align: center;
-            color: white;
-
-            background-color: gray;
-          }
-          
-    .czarny-naglowek {
-        background-color: black; /* Czarny kolor tła */
-        color: white; /* Biały kolor tekstu */
-        padding: 15px; /* Odstępy wewnętrzne */
-        text-align: center; /* Wyśrodkowanie tekstu */
-        font-size: 1em; /* Wielkość tekstu */
-    }
-
-        </style>
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 
 <body>
-  {% load static %}
     {% if messages %}
     <ul>
         {% for message in messages %}
@@ -83,7 +33,7 @@
     <li><h2><a href="{% url 'dashboard' %}">Kontakt</a></h2></li>
     </ul>
     <h2>Aby przejść dalej zarejestruj się, lub gdy jesteś już zarejestrowany to zaloguj się.</h2>
-    <img src="{% static "images/LOGO.jpg" %}" alt="Obrazek kasy pod tekstem">
+    
     <br></br>
     <h2>Opis strony</h2>
     <h2>Poznaj aplikację finansową PLUSTANTO – Twojego zaufanego partnera w zarządzaniu finansami!
@@ -98,5 +48,7 @@
       Szybki dostęp do analiz i raportów: śledź swoje postępy finansowe i planuj kolejne kroki,
       Bezpieczeństwo danych: dbamy o pełną ochronę Twoich informacji.
       Nie zwlekaj – dołącz do społeczności świadomych finansowo użytkowników i zacznij zarządzać swoimi środkami z łatwością dzięki PLUSTANTO!</h2>
+      <img src="{% static "images/kasa.jpg" %}" alt="Obrazek kasy pod tekstem" style="width:1256px;">
 </body>
+
 </html>

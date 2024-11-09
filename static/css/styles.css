@@ -1,0 +1,71 @@
+body {
+    background-color: white;
+    text-align: center;
+  }
+  
+  
+  h1 {
+    color: white;
+    text-align: center;
+  }
+  h2 {
+      color: black;
+      text-align: center;
+    }
+  h3 {
+      text-align:left;
+  }
+  p {
+    font-family: Arial;
+    font-size: 20px;
+  }
+  ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    li {
+      float: left;
+      color: white;
+      
+      
+    }
+    
+    li a {
+      display: strip;
+      padding: 45px;
+      margin: 0;
+      text-align: center;
+      color: white;
+
+      background-color: gray;
+    }
+    
+.czarny-naglowek {
+  background-color: black; /* Czarny kolor tła */
+  color: white; /* Biały kolor tekstu */
+  padding: 15px; /* Odstępy wewnętrzne */
+  text-align: center; /* Wyśrodkowanie tekstu */
+  font-size: 1em; /* Wielkość tekstu */
+}
+
+#powrot {
+  text-align: center;
+  color:black
+
+}
+
+.button {
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  
+}
+
