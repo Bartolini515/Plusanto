@@ -57,6 +57,7 @@
 </head>
 
 <body>
+  {% load static %}
     {% if messages %}
     <ul>
         {% for message in messages %}
@@ -82,7 +83,7 @@
     <li><h2><a href="{% url 'dashboard' %}">Kontakt</a></h2></li>
     </ul>
     <h2>Aby przejść dalej zarejestruj się, lub gdy jesteś już zarejestrowany to zaloguj się.</h2>
-    <img src="C:\Users\maksy\Documents\Projekt-szkola\Plusanto\main\templates\images\LOGO.jpg" alt="Obrazek kasy pod tekstem">
+    <img src="{% static "images/LOGO.jpg" %}" alt="Obrazek kasy pod tekstem">
     <br></br>
     <h2>Opis strony</h2>
     <h2>Poznaj aplikację finansową PLUSTANTO – Twojego zaufanego partnera w zarządzaniu finansami!
