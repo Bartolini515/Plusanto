@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Logowanie</title>
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
-    <a href="{% url 'index' %}">Wróć na stronę główną</a>
-    <h1>Logowanie</h1>
+    <h3><a href="{% url 'index' %}"class="button">Wróć na stronę główną</a></h3>
+    <h1 id="powrot">Logowanie</h1>
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -20,5 +22,6 @@
         <p><label>Password:<br><input type="password" name="password"></label></p>
         <button type="submit">Logowanie</button>
     </form>
+    <img src="{% static "images/kasa.jpg" %}" alt="Obrazek kasy pod tekstem" style="width:1256px;">
 </body>
 </html>

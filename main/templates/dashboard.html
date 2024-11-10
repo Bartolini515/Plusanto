@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Pulpit</title>
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
     {% if messages %}
@@ -12,7 +14,7 @@
         {% endfor %}
     </ul>
 {% endif %}
-    <a href="{% url 'index' %}">Wróć na stronę główną</a>
+<h3><a href="{% url 'index' %}"class="button">Wróć na stronę główną</a></h3>
     <h1>Witaj w pulpicie</h1>
     <a href="{% url 'informations' %}">Twoje informacje</a>
 </body>
