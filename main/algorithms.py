@@ -5,6 +5,7 @@
 # Bazujemy budżet na zasadzie 50(wydatki)/30(zachcianki)/15(dodatek czyli inwestycja i spłacanie kredytu)/5(awaryjne) || 50(wydatki)/30(dodatek czyli inwestycja i spłacanie kredytów)/20(awaryjne)
 # W przypadku opcji pierwszej stosujemy zasadę 5 przychodów (w koncie awaryjnym trzyma się 5 wartości przychodu)
 # Użytkownik może wybrac który budżet chce użyć
+# Użytkownika może określić wielkość buforu budżetu wydatkowego (w przypadku planu 2)
 # Pytamy czy użytkownik chce rozprowadzić swój balans jeżeli wykryjemy go większego niż 2 wartości przychodu 
 # 
 #
@@ -19,7 +20,7 @@
 # 
 # 50/30/20
 # Jeśli wydatki przekraczają budżet wydatkowy, wtedy dajemy komunikat o tym i innymi funduszami pokrywamy niedomiar 
-# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku, lecz pozostawia się 800 więcej (jeśli możliwe) w formie buferu
+# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku, lecz pozostawia się (jeśli możliwe) bufor określony przez użytkownika
 # Jeśli istnieje dług to spłacamy go z dodatku
 
 
@@ -30,6 +31,11 @@
 # Opcja wybrania różnych planów budżetowych
 # Kombinowanie z kontem awaryjnym i tym co jeżeli wydatki więcej - wystarczy komunikat i to tyle
 # Budżet na wydatki musi mieć więcej i nie oddawać całego nadmiaru aby zaopatrzać niespodziewane małe wydatki
+# Użytkownika ma możliwość ustalenia buforu
+
+# TODO może
+# Dodanie możliwości wyboru dokładnych wartości budżetu
+# Dodanie możliwości wprowadzania różnych typów długów i ich spłacania
 
 
 def budgetEstablish(value, budgetType):
