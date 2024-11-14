@@ -43,3 +43,9 @@ def informations(request): # Informacje finansowe o użytkowniku
 
 
     return render(request, 'informations.html', {'form': form}) # Jeżeli użytkownik nie wysyła żadnych danych to wyświetli stronę informacji
+
+def about(request): # O nas
+    return render(request, 'about.html')
+
+def contact(request): # Kontakt
+    return render(request, 'contact.html')
