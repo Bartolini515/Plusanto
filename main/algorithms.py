@@ -3,10 +3,8 @@
 
 #### ZAŁOŻENIA BUDŻETU ####
 # Bazujemy budżet na zasadzie 50(wydatki)/30(zachcianki)/15(dodatek czyli inwestycja i spłacanie kredytu)/5(awaryjne) || 50(wydatki)/30(dodatek czyli inwestycja i spłacanie kredytów)/20(awaryjne)
-# W przypadku opcji pierwszej stosujemy zasadę 5 wypłat
+# W przypadku opcji pierwszej stosujemy zasadę 5 przychodów (w koncie awaryjnym trzyma się 5 wartości przychodu)
 # Użytkownik może wybrac który budżet chce użyć
-# Budżet awaryjny znajduje się w koncie wysoko oprocentowanym
-# Inwestycje są trywialne
 # Pytamy czy użytkownik chce rozprowadzić swój balans jeżeli wykryjemy go większego niż 2 wartości przychodu 
 # 
 #
@@ -21,8 +19,9 @@
 # 
 # 50/30/20
 # Jeśli wydatki przekraczają budżet wydatkowy, wtedy dajemy komunikat o tym i innymi funduszami pokrywamy niedomiar 
-# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku 
+# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku, lecz pozostawia się 800 więcej (jeśli możliwe) w formie buferu
 # Jeśli istnieje dług to spłacamy go z dodatku
+
 
 
 
@@ -138,27 +137,30 @@ def budgetRule(balance, income, expenses, debt, emergencyFund, budgetType):
     
     if expenses > budgetExpenses: # Sprawdza czy wydatki przekraczają budżet na wydatki, jeżeli tak to stara się załatać lukę
         budgetExpenses, budgetWants, budgetEmergency, allowance, balance = calculateExpensesDeficit(expenses, budgetExpenses, budgetWants, allowance, budgetEmergency, balance, budgetType)
-    else: # W przeciwnym razie dodaje nadmiar do dodatku
-        difference = budgetExpenses - expenses
+    elif (difference := budgetExpenses - expenses) > 800: # W przeciwnym razie dodaje nadmiar do dodatku ale zostawia 800 jeśli to możliwe, jeśli nie to zostawia jak jest
+        difference -= 800
+        budgetExpenses -= difference
         allowance += difference
         print(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}, nadmiar przekazany został do dodatku.') # TODO dodaje komunikat o nadmiarze w budżecie wydatkowym i przekazaniu go do dodatku
 
 
-    if budgetType == 1:
-        if emergencyFund > income * 5: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości powyżej 5 miesięcznych przychodów dodajemy jego składki na inwestycje
-            allowance += budgetEmergency
-            print(f'Fundusz awaryjny jest powyżej 5 wartości przychodu, budżet awaryjny został przekazany do dodatku.') # TODO dodaje komunikat o przekazaniu budżetu awaryjnego do dodatku
-        elif emergencyFund < income * 2: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości mniejszej niż 2 miesięczne przychody przekazujemy połowę dodatku na budżet awaryjny
-            if debt: # Jeżeli istnieje dług to przekazujemy pół dodateku na budżet awaryjny, a drugie na spłate długu
-                halfAllowance = 0.5 * allowance
-                allowance = 0
-                budgetEmergency += halfAllowance
-                repayDebt += halfAllowance
-                print(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, połowa dodatku o wartości {halfAllowance} została przekazana na budżet awaryjny. Pozostała część posłuży spłaceniu długu.') # TODO dodaje komunikat o przekazaniu połowy dodatku na budżet awaryjny, drugiej na spłacenie długu
-            else:
-                budgetEmergency += allowance
-                allowance = 0
-                print(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, dodatek został przekazany na budżet awaryjny.') # TODO dodaje komunikat o przekazaniu dodatku na budżet awaryjny.
+    match budgetType:
+        case 1:
+            if emergencyFund > income * 5: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości powyżej 5 miesięcznych przychodów dodajemy jego składki na inwestycje
+                allowance += budgetEmergency
+                print(f'Fundusz awaryjny jest powyżej 5 wartości przychodu, budżet awaryjny został przekazany do dodatku.') # TODO dodaje komunikat o przekazaniu budżetu awaryjnego do dodatku
+            elif emergencyFund < income * 2: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości mniejszej niż 2 miesięczne przychody przekazujemy połowę dodatku na budżet awaryjny
+                if debt: # Jeżeli istnieje dług to przekazujemy pół dodateku na budżet awaryjny, a drugie na spłate długu
+                    halfAllowance = 0.5 * allowance
+                    allowance = 0
+                    budgetEmergency += halfAllowance
+                    repayDebt += halfAllowance
+                    print(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, połowa dodatku o wartości {halfAllowance} została przekazana na budżet awaryjny. Pozostała część posłuży spłaceniu długu.') # TODO dodaje komunikat o przekazaniu połowy dodatku na budżet awaryjny, drugiej na spłacenie długu
+                else:
+                    budgetEmergency += allowance
+                    allowance = 0
+                    print(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, dodatek został przekazany na budżet awaryjny.') # TODO dodaje komunikat o przekazaniu dodatku na budżet awaryjny.
+
 
     if debt and allowance: # Jeżeli istnieje dług oraz dodatek to przekazujemy dodatek na spłacenie długu
         repayDebt += allowance
