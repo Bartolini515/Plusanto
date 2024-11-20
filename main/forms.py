@@ -30,15 +30,29 @@ class Budget_form(forms.Form):
         label="Dług",
         min_value=0,
         max_value=999999999,
-        required=False,
+        required=True,
         widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź dług'})
     )
     emergencyFund = forms.IntegerField(
         label="Fundusz awaryjny",
         min_value=0,
         max_value=999999999,
-        required=False,
+        required=True,
         widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź fundusz awaryjny'})
+    )
+    plannedEmergencyFund = forms.IntegerField(
+        label="Planowany fundusz awaryjny",
+        min_value=0,
+        max_value=999999999,
+        required=False,
+        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź planowany fundusz awaryjny'})
+    )
+    bufor = forms.IntegerField(
+        label="Bufor",
+        min_value=0,
+        max_value=999999999,
+        required=False,
+        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź bufor'})
     )
     budgetType = forms.ChoiceField(
         label="Typ budżetu",
@@ -47,13 +61,7 @@ class Budget_form(forms.Form):
         required=True,
         widget=forms.Select(attrs={'placeholder': 'Wybierz typ budżetu'})
     )
-    bufor = forms.IntegerField(
-        label="Bufor",
-        min_value=0,
-        max_value=999999999,
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Wprowadź bufor'})
-    )
+    
     percentWants = forms.IntegerField(
         label="Procent przekazywany na zachcianki",
         min_value=0,
@@ -74,11 +82,4 @@ class Budget_form(forms.Form):
         max_value=50,
         required=False,
         widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent awaryjny'})
-    )
-    plannedEmergencyFund = forms.IntegerField(
-        label="Planowany fundusz awaryjny",
-        min_value=0,
-        max_value=999999999,
-        required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź planowany fundusz awaryjny'})
     )
