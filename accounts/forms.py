@@ -20,7 +20,7 @@ class RegistrationForm(forms.Form):
             raise ValidationError('Nazwa użytkownika musi mieć co najmniej 3 znaki')
         return username
     
-    def clean_password(self):
+    def clean_password(self): # Walidacja hasła poprzez wbudowane moduły django
         password = self.cleaned_data.get('password')
         try:
             validate_password(password)
@@ -28,7 +28,7 @@ class RegistrationForm(forms.Form):
             raise ValidationError(e.messages[0])
         return password
 
-    def clean_password_confirm(self):
+    def clean_password_confirm(self): # Walidacja identyczności haseł
         password = self.cleaned_data.get('password')
         password_confirm = self.cleaned_data.get('password_confirm')
         if password != password_confirm:

@@ -11,4 +11,5 @@ class Informations(models.Model): # Model bazy danych informacji finansowych uż
     balance = models.IntegerField( min("0"))
     income = models.IntegerField( min("0"))
     expenses = models.IntegerField( min("0"))
+    debt = models.IntegerField( min("0"))
     emergencyFund = models.IntegerField( min("0"))

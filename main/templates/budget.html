@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Budżet</title>
+    <script src="{% static 'js/scripts.js' %}" defer></script>
+</head>
+<body>
+    <a href="{% url 'dashboard' %}">Wróć do pulpitu</a>
+    <h1>Witaj w budżecie</h1>
+    <form id="budgetForm" method="post">
+        {% csrf_token %}
+        {{ form.as_p }} 
+        {% comment %} jeżeli jest typ budżetu 2 to wtedy nie pokazuje procentu na zachcianki {% endcomment %}
+        <button type="button" id="submitButton">Zapisz</button>
+    </form>
+    <span id="errorValidateJS" style="color: red; display: none;"></span>
+    <div id="responseMessage"></div>
+
+    <div id="calculatedResults">
+        <h3>Wyliczony budżet</h3>
+        <p>Saldo: <span id="balanceDisplay"></span></p>
+        <p>Budżet wydatkowy: <span id="budgetExpensesDisplay"></span></p>
+        <p>Budżet zachcianek: <span id="budgetWantsDisplay"></span></p>
+        <p>Dodatek: <span id="allowanceDisplay"></span></p>
+        <p>Budżet awaryjny: <span id="budgetEmergencyDisplay"></span></p>
+        <p>Dług: <span id="debtDisplay"></span></p>
+        <ul id="messages"></ul>
+    </div>
+</body>
+</html>
