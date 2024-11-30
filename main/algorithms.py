@@ -44,6 +44,7 @@
 # procenty sie nie zmieniaja gdy zmiana typu | done
 # wyeliminować floaty | done
 # > Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości 2.0, pokrycie nie jest możliwe. Brakująca ilość: 0.0. | done
+# > Budżet awaryjny: -50000 | done
 
 
 # TODO może
@@ -164,6 +165,7 @@ def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, 
 def distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergency, debt, repayDebt): # Funkcja rozprowadzająca fundusz
     if emergencyFund >= plannedEmergencyFund: # W przypadku jeżeli posiadamy fundusz awaryjny powyżej planowanego, dodajemy jego składki do dodatku
         allowance += budgetEmergency
+        budgetEmergency = 0
         createMessage(f'Fundusz awaryjny jest powyżej planowanego funduszu, budżet awaryjny został przekazany do dodatku.')
     
     else: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości mniejszej niż 40% planowanego przekazujemy połowę dodatku na budżet awaryjny
@@ -198,7 +200,7 @@ def debtRepayment(repayDebt, allowance, debt): # Funkcja spłacania długu
 def checkEmergencyBudget(emergencyFund, plannedEmergencyFund, budgetEmergency, allowance): # Funkcja sprawdzająca czy budżet awaryjny jest nadto planowany
     difference = plannedEmergencyFund - emergencyFund
     
-    if (difference2 := difference - budgetEmergency) < 0:
+    if ((difference2 := difference - budgetEmergency) < 0):
         allowance += abs(difference2)
         budgetEmergency = difference
         createMessage(f'Twój budżet awaryjny przekraczał planowany, został odpowiednio skorygowany przekazując {abs(difference2)} do dodatku.')
@@ -216,7 +218,7 @@ def budgetRule(balance, income, expenses, debt, emergencyFund, budgetType, bufor
     
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetEstablish(income, budgetType, percentWants, percentAllowance, percentEmergency)
     
-    if distributeConf: # Sprawdza saldo, jeżeli powyżej 2 wartości dochodu to pyta użytkownika czy chce rozprowadzić
+    if distributeConf: # Sprawdza czy użytkownik chciał rozprowadzić saldo
         budgetExpenses, budgetWants, budgetEmergency, allowance, balance = distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency)
 
     if expenses > budgetExpenses: # Sprawdza czy wydatki przekraczają budżet na wydatki, jeżeli tak to stara się załatać lukę
@@ -227,7 +229,7 @@ def budgetRule(balance, income, expenses, debt, emergencyFund, budgetType, bufor
         allowance += difference
         createMessage(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}, nadmiar przekazany został do dodatku.')
 
-    if budgetType == '1' and (emergencyFund > plannedEmergencyFund or emergencyFund < plannedEmergencyFund * 0.4): # Jeżeli mamy typ budżetu 1 i fundusz awaryjny spełnia któreś z warunków to rozprowadza fundusz
+    if emergencyFund > plannedEmergencyFund or (budgetType == '1' and emergencyFund < plannedEmergencyFund * 0.4): # Jeżeli mamy typ budżetu 1 i fundusz awaryjny jest poniżej 40% planowanego albo jeżeli fundusz awaryjny jest powyżej planowanego to rozprowadza fundusz
         allowance, budgetEmergency, repayDebt = distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergency, debt, repayDebt)
     else:
         budgetEmergency, allowance = checkEmergencyBudget(emergencyFund, plannedEmergencyFund, budgetEmergency, allowance)

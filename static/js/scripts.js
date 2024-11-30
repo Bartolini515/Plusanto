@@ -37,9 +37,9 @@ document.getElementById('submitButton').addEventListener('click', function () {
                 document.getElementById('budgetEmergencyDisplay').textContent = data.budgetEmergency;
                 document.getElementById('debtDisplay').textContent = data.debt;
 
-                // Display messages
+                // Pokazujemy wiadomości zwrotne od algorytmu budżetowego
                 const messagesContainer = document.getElementById('messages');
-                messagesContainer.innerHTML = ''; // Clear previous messages
+                messagesContainer.innerHTML = '';
                 data.messages.forEach(message => {
                 const li = document.createElement('li');
                 li.textContent = message;
