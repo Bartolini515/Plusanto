@@ -22,6 +22,8 @@ def budget(request): # Sekcja budżetu
     if request.method == 'POST': # Sprawdzamy czy użytkownik przesyła dane
         form = Budget_form(request.POST)
         if form.is_valid():  # Sprawdzamy czy formularz jest poprawny
+            # Wyciągamy dodatkowe dane w AJAXie
+            distributeConf = request.POST.get('distributeConf', 'false') == 'true'
             # Wyciągamy dane z formularza
             balance = form.cleaned_data['balance']
             income = form.cleaned_data['income']
@@ -41,9 +43,23 @@ def budget(request): # Sekcja budżetu
             except Informations.DoesNotExist: # Jeżeli użytkownik pierwszy raz wprowadza informacje, wpisujemy go do bazy danych jak nowego
                 budget = Informations.objects.create(user=request.user, balance=balance, income=income, expenses=expenses, debt=debt, emergencyFund=emergencyFund) # Tworzymy rekordy
                 budget.save()
-                
             
-            response = JsonResponse({'status': 'success', 'message': 'Dane zostały zapisane.'}) # Zwróć odpowiedź dla strony o udanym zapisie danych
+            balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray = budgetRule(
+                balance, income, expenses, debt, emergencyFund, budgetType, bufor, percentWants, percentAllowance, percentEmergency, plannedEmergencyFund, distributeConf)
+            
+            # Zwróć odpowiedź dla strony o udanym zapisie danych oraz wartości dla pól budżetu
+            response = JsonResponse({
+                'status': 'success', 
+                'message': 'Dane zostały zapisane.',
+                'balance': int(balance),
+                'budgetExpenses': int(budgetExpenses),
+                'budgetWants': int(budgetWants),
+                'allowance': int(allowance),
+                'budgetEmergency': int(budgetEmergency),
+                'debt': int(debt),
+                'messages': messagesArray,
+                }) 
+            
             # Deklarujemy ciasteczka z pozostałych wartości które warto zapisać
             response.set_cookie(key='budgetType', value=str(budgetType), max_age=60*60*24*365)
             response.set_cookie(key='bufor', value=str(bufor), max_age=60*60*24*365)
@@ -51,24 +67,6 @@ def budget(request): # Sekcja budżetu
             response.set_cookie(key='percentAllowance', value=str(percentAllowance), max_age=60*60*24*365)
             response.set_cookie(key='percentEmergency', value=str(percentEmergency), max_age=60*60*24*365)
             response.set_cookie(key='plannedEmergencyFund', value=str(plannedEmergencyFund), max_age=60*60*24*365)
-            
-            
-            # ### TEMP #TODO: Coś poszło nie tak dało 150k z 10k
-            # try:
-            #     balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray = budgetRule(balance, income, expenses, debt, emergencyFund, budgetType, bufor, percentWants, percentAllowance, percentEmergency, plannedEmergencyFund)
-            # except ValueError:
-            #     # Handle the case where the function does not return the expected number of values
-            #     messages.error(request, "Wystąpił błąd podczas kalkulowania budżetu.")
-            #     return JsonResponse({'status': 'error', 'message': 'Wystąpił błąd podczas kalkulowania budżetu.'})
-            # messages.info(request, f"Twoje saldo po ustaleniach budżetowych: {balance}")
-            # messages.info(request, f"Twój budżet wydatkowy: {budgetExpenses}")
-            # messages.info(request, f"Twój budżet zachciankowy: {budgetWants}")
-            # messages.info(request, f"Twój dodatek: {allowance}")
-            # messages.info(request, f"Twój budżet awaryjny: {budgetEmergency}")
-            # for message in messagesArray:
-            #     messages.info(request, message)
-            # ###
-            
             return response
         else:
             # Zwróć odpowiedź dla strony o niepoprawnym formularzu
