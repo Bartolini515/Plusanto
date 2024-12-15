@@ -9,8 +9,12 @@
 </head>
 
 <body>
-    <h3><a href="{% url 'index' %}"class="button">Wróć na stronę główną</a></h3>
-    <h1 id="powrot">Rejestracja</h1>
+    <header class="czarny-naglowek">
+        <h1>Rejestracja</h1>
+    </header>
+    <h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
+    
+     
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -31,10 +35,9 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <br>
+        <br><br><br>
         
         <button type="submit">Zarejestruj się</button>
     </form>
-    <img src="{% static "images/kasa.jpg" %}" alt="Obrazek kasy pod tekstem" style="width:1256px;">
 </body>
 </html>

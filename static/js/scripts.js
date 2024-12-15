@@ -119,7 +119,7 @@ function validatePercentages() {
 
 // Walidacja dla długości pól na stronie budżetowej
 function validateFormInputs() {
-    const inputs = [balanceInput, incomeInput, expensesInput, debtInput, emergencyFundInput];
+    const inputs = [balanceInput, incomeInput, expensesInput, debtInput, emergencyFundInput, plannedEmergencyFundInput, buforInput];
     const errorMessageElement = document.getElementById('errorValidateJS');
     let isValid = true; // Zakładamy z początku, że wszystko jest zgodne
 
@@ -146,16 +146,26 @@ function validateFormInputs() {
 function checkBudgetType(value) { 
     switch (value) {
         case '1': // Typ budżetu stabilny
+            // Dla procentów
             percentWantsInput.style.display = ''; // Pokaż element
             percentWantsInput.value = 30;
             percentAllowanceInput.value = 15;
             percentEmergencyInput.value = 5; 
+
+            // Dla buforu
+            buforInput.style.display = 'none' // Ukryj element
+            buforInput.value = 0;
             break;
         case '2': // Typ budżetu rozwojowy
+            // Dla procentów
             percentWantsInput.style.display = 'none'; // Ukryj element
             percentWantsInput.value = 0; 
             percentAllowanceInput.value = 30; 
             percentEmergencyInput.value = 20;
+
+            // Dla buforu
+            buforInput.style.display = '' // Pokaż element
+            buforInput.value = '';
             break;
     }
 }
@@ -166,10 +176,13 @@ const incomeInput = document.getElementById('id_income');
 const expensesInput = document.getElementById('id_expenses');
 const debtInput = document.getElementById('id_debt');
 const emergencyFundInput = document.getElementById('id_emergencyFund');
+const plannedEmergencyFundInput = document.getElementById('id_plannedEmergencyFund');
+const buforInput = document.getElementById('id_bufor');
+const budgetTypeField = document.getElementById('id_budgetType');
 const percentWantsInput = document.getElementById('id_percentWants');
 const percentAllowanceInput = document.getElementById('id_percentAllowance');
 const percentEmergencyInput = document.getElementById('id_percentEmergency');
-const budgetTypeField = document.getElementById('id_budgetType');
+
 
 // Debouncowanie funkcji
 const validateFormInputsDebounced = debounce(validateFormInputs, 300);
@@ -181,10 +194,13 @@ incomeInput.addEventListener('input', validateFormInputsDebounced);
 expensesInput.addEventListener('input', validateFormInputsDebounced);
 debtInput.addEventListener('input', validateFormInputsDebounced);
 emergencyFundInput.addEventListener('input', validateFormInputsDebounced);
+buforInput.addEventListener('input', validateFormInputsDebounced);
+budgetTypeField.addEventListener('input', validateFormInputsDebounced);
+budgetTypeField.addEventListener('change', () => checkBudgetType(budgetTypeField.value));
 percentWantsInput.addEventListener('input', validatePercentagesDebounced);
 percentAllowanceInput.addEventListener('input', validatePercentagesDebounced);
 percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
-budgetTypeField.addEventListener('change', () => checkBudgetType(budgetTypeField.value));
+
 
 if (getCookie('budgetType') == '2') {
     percentWantsInput.style.display = 'none'; // Ukryj element
@@ -194,3 +210,18 @@ if (getCookie('budgetType') == '2') {
 
 // TODO
 // Zmienić sposób wyświetlania errorów, więcej pól czy coś
+//skrypt do collapsible - otwierania wysuwanego tekstu
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}

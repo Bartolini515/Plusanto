@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
+     <header class="czarny-naglowek">
+        <h1>Witaj w pulpicie</h1>
+    </header>
     {% if messages %}
     <ul>
         {% for message in messages %}
@@ -14,8 +17,8 @@
         {% endfor %}
     </ul>
 {% endif %}
-<h3><a href="{% url 'index' %}"class="button">Wróć na stronę główną</a></h3>
-    <h1>Witaj w pulpicie</h1>
+<h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
+    
     <a href="{% url 'budget' %}">Budżet</a>
 </body>
 </html>

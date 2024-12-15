@@ -9,6 +9,7 @@
 <body>
     <a href="{% url 'dashboard' %}">Wróć do pulpitu</a>
     <h1>Witaj w budżecie</h1>
+
     <form id="budgetForm" method="post">
         {% csrf_token %}
         {{ form.as_p }} 
@@ -17,6 +18,9 @@
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
     <div id="responseMessage"></div>
+    <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'path/to/your/styles.css' %}">
+</head>
 
     <div id="calculatedResults">
         <h3>Wyliczony budżet</h3>

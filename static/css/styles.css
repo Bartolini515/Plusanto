@@ -8,38 +8,49 @@ body {
   h1 {
     color: white;
     text-align: center;
+    text-decoration: none;
   }
   h2 {
       color: rgb(255, 255, 255);
       text-align: center;
+      text-decoration: none;
     }
   h3 {
       text-align:left;
+      color: black;
+  }
+  h4 {
+      text-align:center;
+      color: #f1f1f1;
+      font-size: 20px;
   }
   p {
     font-family: Arial;
     font-size: 20px;
+    text-decoration: none;
   }
   ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
       overflow: hidden;
+      text-decoration: none;
     }
     
     li {
       float: left;
       color: white;
-      
+      text-decoration: none;
       
     }
     
-    li a {
+    a {
       display: strip;
-      padding: 45px;
+      padding: 8px;
       margin: 0;
       text-align: center;
       color: white;
+      text-decoration: none;
 
       background-color: gray;
     }
@@ -50,6 +61,7 @@ body {
   padding: 15px; /* Odstępy wewnętrzne */
   text-align: center; /* Wyśrodkowanie tekstu */
   font-size: 1em; /* Wielkość tekstu */
+  margin: 0px;
 }
 
 #powrot {
@@ -59,14 +71,68 @@ body {
 }
 
 .button {
-  background-color: #04AA6D; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
+  background-color: whitesmoke; /* biały */
+  border: groove, width 10px;
+  color: black;
+  padding: 10px, 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 15px;
+  margin: 10px;
   
 }
 
+/* expander - wysuwane teksty */
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+.button1 {
+  background-color: green; /* zielony */
+  border: groove, width 10px;
+  color: white;
+  padding: 10px, 0px;
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  margin: 10px;
+}
+
+.budget-select {
+    width: 100%; /* Szerokość rozwijanej listy */
+    padding: 10px; /* Padding wewnętrzny */
+    border: 1px solid #ccc; /* Obramowanie */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    font-size: 16px; /* Rozmiar czcionki */
+    background-color: #f9f9f9; /* Kolor tła */
+    appearance: none; /* Usunięcie domyślnego stylu */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5" fill="#000"/></svg>'); /* Strzałka w dół */
+    background-repeat: no-repeat; /* Nie powtarzaj tła */
+    background-position: right 10px center; /* Pozycjonowanie strzałki */
+}
+
+.budget-select:focus {
+    border-color: #007bff; /* Kolor obramowania po najechaniu */
+    outline: none; /* Usunięcie domyślnego konturu */
+}
