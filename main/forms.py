@@ -67,19 +67,22 @@ class Budget_form(forms.Form):
         min_value=0,
         max_value=50,
         required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent zachcianek'})
+        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent zachcianek'}),
+        initial='30'
     )
     percentAllowance = forms.IntegerField(
         label="Procent przekazywany na dodatek",
         min_value=0,
         max_value=50,
         required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent dodatku'})
+        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent dodatku'}),
+        initial='15'
     )
     percentEmergency = forms.IntegerField(
         label="Procent przekazywany na awaryjność",
         min_value=0,
         max_value=50,
         required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent awaryjny'})
+        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent awaryjny'}),
+        initial='5'
     )

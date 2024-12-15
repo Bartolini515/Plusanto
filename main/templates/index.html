@@ -16,7 +16,6 @@
     </ul>
 {% endif %}
     
-    
     <header class="czarny-naglowek">
         <h1>Witaj na stronie głównej</h1>
     </header>
@@ -24,30 +23,24 @@
        
       </div>
       
+    <ul>
+    <li><h2><a href="{% url 'register' %}">Zarejestruj się</a></h2></li>
+    <li><h2><a href="{% url 'login' %}">Zaloguj się</a></h2></li>
+    <li><h2><a href="{% url 'logout' %}">Wyloguj się</a></h2></li> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
+    <li><h2><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></h2></li>
+    <li><h2><a href="{% url 'about' %}">O Plusanto</a></h2></li>
+    <li><h2><a href="{% url 'contact' %}">Kontakt</a></h2></li>
+    </ul>
     
-    <button class="button1"><h2><a href="{% url 'register' %}">Zarejestruj się</a></h2></button>
-    <button class="button1"><h2><a href="{% url 'login' %}">Zaloguj się</a></h2></button>
-    <button class="button1"><h2><a href="{% url 'logout' %}">Wyloguj się</a></h2></button> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
-    <button class="button1"><h2><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></h2></button>
-    <button class="button1"><h2><a href="{% url 'about' %}">O nas</a></h2></button>
-    <button class="button1"><h2><a href="{% url 'contact' %}">Kontakt</a></h2></button>
-    
-    <h2>Aby przejść dalej zarejestruj się, lub gdy jesteś już zarejestrowany to zaloguj się.</h2>
-    
-    <br></br>
-    <h2>Opis strony</h2>
-    <h2>Poznaj aplikację finansową PLUSTANTO – Twojego zaufanego partnera w zarządzaniu finansami!
-
-      Dzięki PLUSTANTO masz pełną kontrolę nad swoimi wydatkami i oszczędnościami, niezależnie od miejsca i czasu.
-       Oferujemy łatwe w użyciu narzędzia, które pomogą Ci w efektywnym planowaniu budżetu, monitorowaniu inwestycji i odkładaniu na przyszłość. 
-       Z naszym wsparciem zobaczysz pełen obraz swoich finansów i podejmiesz najlepsze decyzje, które zapewnią Ci finansową stabilność i spokój ducha.
-      
-      Dlaczego warto wybrać PLUSTANTO?
-      
-      Przejrzysty interfejs: intuicyjny i przyjazny nawet dla początkujących użytkowników,
-      Szybki dostęp do analiz i raportów: śledź swoje postępy finansowe i planuj kolejne kroki,
-      Bezpieczeństwo danych: dbamy o pełną ochronę Twoich informacji.
-      Nie zwlekaj – dołącz do społeczności świadomych finansowo użytkowników i zacznij zarządzać swoimi środkami z łatwością dzięki PLUSTANTO!</h2>
+    <br /> <br />
+    <!-- Napis Plusanto w ładnej czcionce dośc duże, obok całego tekstu po lewo logo Plusanto -->
+    <h2>Plusanto</h2>
+    <strong><p>Oblicz swój budżet!</p></strong>
+    <strong><p>Określ swoje cele finansowe!</p></strong>
+    <strong><p>Planuj swoją przyszłość!</p></strong>
+    <p>Oferujemy narzędzia, które Ci w tym pomogą!</p>
+    <p>Zarejestruj się lub zaloguj, aby skorzystać z naszych zasobów!</p>
+    <!-- Niewidzialne odnośniki przy "Zarejestruj się" i "Zaloguj się" -->
       
 </body>
 
