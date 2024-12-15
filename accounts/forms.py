@@ -34,3 +34,8 @@ class RegistrationForm(forms.Form):
         if password != password_confirm:
             raise ValidationError('Hasła nie są identyczne')
         return password, password_confirm
+    
+
+class SignInForm(forms.Form):
+    username = forms.CharField(label='Nazwa użytkownika', max_length=60, widget=forms.TextInput(attrs={'placeholder': 'Wprowadź nazwę użytkownika'}))
+    password = forms.CharField(label='Hasło', widget=forms.PasswordInput(attrs={'placeholder': 'Wprowadź hasło'}))

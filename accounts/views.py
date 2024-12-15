@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegistrationForm
+from .forms import SignInForm
 
 def register(request): # Funkcja rejestracji użytkownika
     if request.method == 'POST': # Sprawdzamy czy użytkownik przesyła dane
@@ -42,20 +43,24 @@ def register(request): # Funkcja rejestracji użytkownika
 
 def signin(request): # Funkcja logowania  użytkownika
     if request.method == 'POST': # Sprawdzamy czy użytkownik przesyła dane
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)  # Sprawdzamy czy użytkownik istnieje w bazie danych
-        if user is not None: #  Jeżeli użytkownik istnieje logujemy go
-            login(request, user)
-            messages.success(request, "Zalogowano pomyślnie!")
-            next_url = request.GET.get('next')
-            if next_url: # Jeżeli dostajemy specjalne przekierowanie, to przekierowujemy
-                return redirect(next_url)
-            else:
-                return redirect('index')
-        else:  # Jeżeli użytkownik nie istnieje wyświetlamy komunikat
-            messages.error(request, "Błędne dane logowania!")
-    return render(request, 'signin.html')
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)  # Sprawdzamy czy użytkownik istnieje w bazie danych
+            if user is not None: #  Jeżeli użytkownik istnieje logujemy go
+                login(request, user)
+                messages.success(request, "Zalogowano pomyślnie!")
+                next_url = request.GET.get('next')
+                if next_url: # Jeżeli dostajemy specjalne przekierowanie, to przekierowujemy
+                    return redirect(next_url)
+                else:
+                    return redirect('index')
+            else:  # Jeżeli użytkownik nie istnieje wyświetlamy komunikat
+                messages.error(request, "Błędne dane logowania!")
+    else:
+        form = SignInForm()
+    return render(request, 'signin.html', {'form': form})
 
 def signout(request): # Funkcja wylogowania użytkownika
     if request.user.is_authenticated: # Tylko jeżeli użytkownik jest zalogowany
