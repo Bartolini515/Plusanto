@@ -10,6 +10,7 @@ django-debug-toolbar = "*"
 djangorestframework = "*"
 django-environ = "*"
 whitenoise = "*"
+environ = "*"
 
 [dev-packages]
 
