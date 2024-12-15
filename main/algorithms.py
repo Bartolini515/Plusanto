@@ -1,50 +1,35 @@
-# Plik tymczasowy który jest używany do przechowywania algorytmów w czasie wykonywania programu
-# Ew. zostanie jako faktyczny plik
-
 #### ZAŁOŻENIA BUDŻETU ####
 # Istnieją 2 plany budżetowe stabilny: 50(wydatki)/30(zachcianki)/15(dodatek)/5(awaryjne) || rozwojowy: 50(wydatki)/30(dodatek)/20(awaryjne)
 # Użytkownik może wybrać który budżet chce użyć jako fundamentu, a następnie może dostosować wielkości poszczególnych części budżetu, lecz wydatki pozostają niezmienione
-# Użytkownik może określić wielkość buforu budżetu wydatkowego (w przypadku planu 2)
-# Użytkownik może określić planowany budżet awaryjny w przypadku planu 1
+# Użytkownik może określić wielkość buforu budżetu wydatkowego (w przypadku budżetu rozwojowego, budżet stabilny posiada od tego zachcianki)
+# Użytkownik może określić planowany budżet awaryjny
 # Budżety mają swoje unikalne właściwości, to jak działają opisane jest w każdym parametrze na stronie
-# Pytamy czy użytkownik chce rozprowadzić swoje saldo jeżeli wykryjemy go większego niż 2 wartości dochodu
-# Dodatek wykorzystywany jest m.in. do spłacania długów oraz inwestycji
+# Użytkownik może rozprowadzić swoje saldo jeżeli jest ono większe niż 2 wartości dochodu
+# Dodatek wykorzystywany jest m.in. do spłacania długów
+# 
+# 
+## Obowiązujące dla obu budżetów ##
+# Jeśli wydatki przekraczają budżet wydatkowy, wtedy innymi budżetami pokrywamy niedomiar 
+# Jeśli planowany fundusz awaryjny został osiągnięty, wtedy przekazujemy każde kolejne budżety awaryjne do dodatku 
+# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku
+# Jeśli istnieje dług to spłacamy go z dodatku
 #
-# 50/30/15/5
-# Jeśli wydatki przekraczają budżet wydatkowy, wtedy dajemy komunikat o tym i innymi budżetami pokrywamy niedomiar 
+## Stabilny (50/30/15/5) ##
+# Posiada zachcianki
 # Jeśli budżet awaryjny jest mniejszy niż 40% planowanego funduszu awaryjnego:
 #   Jeżeli istnieje dług wtedy połowa dodatku jest przekazywana do awaryjnego 
 #   Jeżeli nie ma długu wtedy całość dodatku jest przekazywana do awaryjnego 
-# Jeśli planowany fundusz awaryjny został osiągnięty, wtedy przekazujemy każde kolejne budżety awaryjne do dodatku 
-# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku 
-# Jeśli istnieje dług to spłacamy go z dodatku
 # 
-# 50/30/20
-# Jeśli wydatki przekraczają budżet wydatkowy, wtedy dajemy komunikat o tym i innymi budżetami pokrywamy niedomiar 
-# Jeśli wydatki są mniejsze niż budżet wydatkowy to przekazujemy nadmiar do dodatku, lecz pozostawia się (jeśli możliwe) bufor określony przez użytkownika
-# Jeśli istnieje dług to spłacamy go z dodatku
+## Rozwojowy (50/30/20) ##
+# Posiada bufor który jest dodatkową wartością dodawaną do wydatków służy jako zabezpieczenie przed nagłymi małymi wydatkami
+# Pozostawia się (jeśli możliwe) bufor określony przez użytkownika, nawet jeżeli budżet wydatkowy przekazywany jest na dodatek
 
 
 
 
 # TODO
-# Optymalizacja
-# Opcja wybrania różnych planów budżetowych
-# Kombinowanie z kontem awaryjnym i tym co jeżeli wydatki więcej - wystarczy komunikat i to tyle
-# Budżet na wydatki musi mieć więcej i nie oddawać całego nadmiaru aby zaopatrzać niespodziewane małe wydatki
-# Użytkownik ma możliwość ustalenia buforu
-# Dodanie możliwości wyboru dokładnych wartości budżetu
 # Lepsze opisanie wszystkiego oraz przeniesienie do takiego poradnika typu help
-# Dodanie możliwości dla użytkownika definiowania wielkości maksymalnego funduszu awaryjnego w przypadku pierwszej opcji
 # 5 przychodów będzie tylko sugestią w helpie
-# Zamienić przychód na dochód bo kwestia definicji
-# Zamienić balansy na salda
-
-# Jezeli budżet emergency jest taki jak planowany wtedy reszta do dodatku bo mamy planowany | done
-# procenty sie nie zmieniaja gdy zmiana typu | done
-# wyeliminować floaty | done
-# > Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości 2.0, pokrycie nie jest możliwe. Brakująca ilość: 0.0. | done
-# > Budżet awaryjny: -50000 | done
 
 
 # TODO może
@@ -163,7 +148,7 @@ def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, 
      
         
 def distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergency, debt, repayDebt): # Funkcja rozprowadzająca fundusz
-    if emergencyFund >= plannedEmergencyFund: # W przypadku jeżeli posiadamy fundusz awaryjny powyżej planowanego, dodajemy jego składki do dodatku
+    if emergencyFund > plannedEmergencyFund: # W przypadku jeżeli posiadamy fundusz awaryjny powyżej planowanego, dodajemy jego składki do dodatku
         allowance += budgetEmergency
         budgetEmergency = 0
         createMessage(f'Fundusz awaryjny jest powyżej planowanego funduszu, budżet awaryjny został przekazany do dodatku.')
@@ -180,6 +165,24 @@ def distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergen
             allowance = 0
             createMessage(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, dodatek został przekazany na budżet awaryjny.')
     return allowance, budgetEmergency, repayDebt
+
+
+def distributeExpenses(budgetExpenses, expenses, allowance, bufor, budgetType):
+    difference = budgetExpenses - expenses
+    match budgetType: # w zależności od typu budżetu wlicza w obliczenia bufor bądź nie
+        case '1':
+            budgetExpenses -= difference
+            allowance += difference
+            createMessage(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}, nadmiar przekazany został do dodatku.')
+            return budgetExpenses, allowance
+        
+        case '2':
+            if difference > bufor:
+                difference -= bufor
+                budgetExpenses -= difference
+                allowance += difference
+                createMessage(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}, nadmiar przekazany został do dodatku.')
+            return budgetExpenses, allowance
     
 
 def debtRepayment(repayDebt, allowance, debt): # Funkcja spłacania długu
@@ -223,11 +226,8 @@ def budgetRule(balance, income, expenses, debt, emergencyFund, budgetType, bufor
 
     if expenses > budgetExpenses: # Sprawdza czy wydatki przekraczają budżet na wydatki, jeżeli tak to stara się załatać lukę
         budgetExpenses, budgetWants, budgetEmergency, allowance, balance = calculateExpensesDeficit(expenses, budgetExpenses, budgetWants, allowance, budgetEmergency, balance, budgetType)
-    elif (difference := budgetExpenses - expenses) > bufor: # W przeciwnym razie dodaje nadmiar do dodatku ale zostawia bufor jeśli to możliwe, jeśli nie to zostawia jak jest
-        difference -= bufor # TODO Bufor musi zostać określony na 0, nwm o co mi chodziło więc zostawie to tu
-        budgetExpenses -= difference
-        allowance += difference
-        createMessage(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}, nadmiar przekazany został do dodatku.')
+    else: # Jeżeli jest nadmiar to go rozprowadza
+        budgetExpenses, allowance = distributeExpenses(budgetExpenses, expenses, allowance, bufor, budgetType)
 
     if emergencyFund > plannedEmergencyFund or (budgetType == '1' and emergencyFund < plannedEmergencyFund * 0.4): # Jeżeli mamy typ budżetu 1 i fundusz awaryjny jest poniżej 40% planowanego albo jeżeli fundusz awaryjny jest powyżej planowanego to rozprowadza fundusz
         allowance, budgetEmergency, repayDebt = distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergency, debt, repayDebt)
