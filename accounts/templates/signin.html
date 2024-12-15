@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
-    <h3><a href="{% url 'index' %}"class="button">Wróć na stronę główną</a></h3>
-    <h1 id="powrot">Logowanie</h1>
+    <header class="czarny-naglowek">
+        <h1>Logowanie</h1>
+    </header>
+    <h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
+    
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -18,10 +21,9 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <p><label>Username:<br><input type="text" name="username"></label></p>
-        <p><label>Password:<br><input type="password" name="password"></label></p>
+        <p><label>Nazwa użytkownika<br><input type="text" name="username"></label></p>
+        <p><label>Hasło<br><input type="password" name="password"></label></p>
         <button type="submit">Logowanie</button>
     </form>
-    <img src="{% static "images/kasa.jpg" %}" alt="Obrazek kasy pod tekstem" style="width:1256px;">
 </body>
 </html>

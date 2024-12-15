@@ -5,12 +5,12 @@ name = "pypi"
 
 [packages]
 django = "*"
-mysqlclient = "*"
 django-debug-toolbar = "*"
 djangorestframework = "*"
 django-environ = "*"
 whitenoise = "*"
 environ = "*"
+mysqlclient = "==2.2.4"
 
 [dev-packages]
 
