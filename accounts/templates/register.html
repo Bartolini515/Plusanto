@@ -24,20 +24,27 @@
     {% endif %}
     <form method="post">
         {% csrf_token %} <!-- Zawsze przywołuj csrf_token gdy formularz korzysta z POST aby chronić przed CSRF (https://owasp.org/www-community/attacks/csrf#overview) <p> -->
-            <h2> {% for field in form %}</h2> <!-- Tworzy formularz pole po polu zgodnie z templatem forms.py (https://docs.djangoproject.com/en/5.1/topics/forms/#looping-over-the-form-s-fields) -->
-            <div>
-                {{ field.errors }}
-                {{ field.label_tag }} {{ field }}
-                {% if field.help_text %}
-                    <p class="help" id="{{ field.auto_id }}_helptext">
-                    {{ field.help_text|safe }}
-                    </p>
-                {% endif %}
-            </div>
-        {% endfor %}
-        <br><br><br>
+           <label for="id_username">Nazwa użytkownika</label><br><br>
+           {{form.username}}
+        <br><br>
+        <label for="id_first_name">Imię</label><br><br>
+           {{form.first_name}}
+           <br><br>
+        <label for="id_last_name">Nazwisko</label><br><br>
+           {{form.last_name}}
+           <br><br>
+        <label for="id_email">Email</label><br><br>
+           {{form.email}}
+           <br><br>
+           <label for="id_password">Hasło</label><br><br>
+           {{form.password}}
+           <br><br>
+           <label for="id_password_confirm">Potwierdź hasło</label><br><br>
+           {{form.password_confirm}}
+           <br><br>
+
         
-        <button type="submit">Zarejestruj się</button>
+        <button class="button2">Zarejestruj się</button>
     </form>
 </body>
 </html>
