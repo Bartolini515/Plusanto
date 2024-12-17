@@ -43,7 +43,7 @@ def register(request): # Funkcja rejestracji użytkownika
 
 def signin(request): # Funkcja logowania  użytkownika
     if request.method == 'POST': # Sprawdzamy czy użytkownik przesyła dane
-        form = RegistrationForm(request.POST)
+        form = SignInForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
