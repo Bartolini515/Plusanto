@@ -104,3 +104,9 @@ def about(request): # O nas
 
 def contact(request): # Kontakt
     return render(request, 'contact.html')
+
+def calculator(request): # Kalkulator
+    return render(request, 'calculator.html')
+
+def goals(request): # Cele
+    return render(request, 'goals.html')
