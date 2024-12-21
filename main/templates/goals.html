@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Cele</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/goals.js' %}" defer></script>
+</head>
+<body>
+    <header class="czarny-naglowek">
+        <h1>Cele</h1>
+    </header>
+    <h3><a href="{% url 'index' %}"class="button1">Wróć do pulpitu</a></h3>
+    <p>Ustal swoje cele na które zbierasz</p>
+</body>
+</html>
