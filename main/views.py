@@ -31,11 +31,11 @@ def budget(request): # Sekcja budżetu
             debt = form.cleaned_data['debt']
             emergencyFund = form.cleaned_data['emergencyFund']
             budgetType = form.cleaned_data['budgetType']
-            bufor = form.cleaned_data['bufor']
-            percentWants = form.cleaned_data['percentWants']
-            percentAllowance = form.cleaned_data['percentAllowance']
-            percentEmergency = form.cleaned_data['percentEmergency']
-            plannedEmergencyFund = form.cleaned_data['plannedEmergencyFund']
+            bufor = form.cleaned_data['bufor'] or 0
+            percentWants = form.cleaned_data['percentWants'] or 0
+            percentAllowance = form.cleaned_data['percentAllowance'] or 0
+            percentEmergency = form.cleaned_data['percentEmergency'] or 0
+            plannedEmergencyFund = form.cleaned_data['plannedEmergencyFund'] or 0
             
             try:
                 Budget_informations.objects.get(pk=request.user) # Sprawdzamy czy użytkownik ma już informacje

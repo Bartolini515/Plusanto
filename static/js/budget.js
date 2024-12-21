@@ -201,30 +201,14 @@ percentWantsInput.addEventListener('input', validatePercentagesDebounced);
 percentAllowanceInput.addEventListener('input', validatePercentagesDebounced);
 percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
 
+// Reszta
+checkBudgetType(budgetTypeField.value)
 
-if (getCookie('budgetType') == '2') {
-    percentWantsInput.style.display = 'none'; // Ukryj element
-    percentWantsInput.value = 0; 
-}
+
+
+
 
 
 // TODO
 // Zmienić sposób wyświetlania errorów, więcej pól czy coś
 //skrypt do collapsible - otwierania wysuwanego tekstu
-
-// To niżej do nowego
-
-// var coll = document.getElementsByClassName("collapsible");
-// var i;
-
-// for (i = 0; i < coll.length; i++) {
-//   coll[i].addEventListener("click", function() {
-//     this.classList.toggle("active");
-//     var content = this.nextElementSibling;
-//     if (content.style.display === "block") {
-//       content.style.display = "none";
-//     } else {
-//       content.style.display = "block";
-//     }
-//   });
-// }
