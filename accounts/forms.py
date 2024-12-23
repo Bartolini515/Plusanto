@@ -34,7 +34,7 @@ class RegistrationForm(forms.Form):
         if password != password_confirm:
             raise ValidationError('Hasła nie są identyczne')
         return password, password_confirm
-    
+
 
 # Formularz dla logowania
 class SignInForm(forms.Form):

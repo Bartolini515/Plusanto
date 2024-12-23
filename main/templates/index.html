@@ -8,13 +8,17 @@
 </head>
 
 <body>
-    {% if messages %}
+    <div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  {% if messages %}
     <ul>
         {% for message in messages %}
             <li>{{ message }}</li>
         {% endfor %}
     </ul>
 {% endif %}
+</div>
+    
     
     <header class="czarny-naglowek">
         <h1>Witaj na stronie głównej</h1>
@@ -24,12 +28,12 @@
       </div>
       
     <ul>
-    <li><h2><a href="{% url 'register' %}">Zarejestruj się</a></h2></li>
-    <li><h2><a href="{% url 'login' %}">Zaloguj się</a></h2></li>
-    <li><h2><a href="{% url 'logout' %}">Wyloguj się</a></h2></li> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
-    <li><h2><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></h2></li>
-    <li><h2><a href="{% url 'about' %}">O Plusanto</a></h2></li>
-    <li><h2><a href="{% url 'contact' %}">Kontakt</a></h2></li>
+    <li><button class="button2"><a href="{% url 'register' %}">Zarejestruj się</a></button></li>
+    <li><button class="button2"><a href="{% url 'login' %}">Zaloguj się</a></button></li>
+    <li><button class="button2"><a href="{% url 'logout' %}">Wyloguj się</a></button></li> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
+    <li><button class="button2"><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></button></li>
+    <li><button class="button2"><a href="{% url 'about' %}">O Plusanto</a></button></li>
+    <li><button class="button2"><a href="{% url 'contact' %}">Kontakt</a></button></li>
     </ul>
     
     <br /> <br />
