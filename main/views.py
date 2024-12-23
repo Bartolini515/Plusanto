@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
-from .forms import Budget_form
-from .models import Informations
+from .forms import Budget_form, CalculatorForm
+from .models import Budget_informations
 from django.http import JsonResponse
 from .algorithms import budgetRule
+from json import dumps
 
 def index(request): # Strona główna
     return render(request, 'index.html')
@@ -31,17 +32,17 @@ def budget(request): # Sekcja budżetu
             debt = form.cleaned_data['debt']
             emergencyFund = form.cleaned_data['emergencyFund']
             budgetType = form.cleaned_data['budgetType']
-            bufor = form.cleaned_data['bufor']
-            percentWants = form.cleaned_data['percentWants']
-            percentAllowance = form.cleaned_data['percentAllowance']
-            percentEmergency = form.cleaned_data['percentEmergency']
-            plannedEmergencyFund = form.cleaned_data['plannedEmergencyFund']
+            bufor = form.cleaned_data['bufor'] or 0
+            percentWants = form.cleaned_data['percentWants'] or 0
+            percentAllowance = form.cleaned_data['percentAllowance'] or 0
+            percentEmergency = form.cleaned_data['percentEmergency'] or 0
+            plannedEmergencyFund = form.cleaned_data['plannedEmergencyFund'] or 0
             
             try:
-                Informations.objects.get(pk=request.user) # Sprawdzamy czy użytkownik ma już informacje
-                Informations.objects.filter(pk=request.user).update(balance=balance, income=income, expenses=expenses, debt=debt, emergencyFund=emergencyFund) # Aktualizujemy rekordy
-            except Informations.DoesNotExist: # Jeżeli użytkownik pierwszy raz wprowadza informacje, wpisujemy go do bazy danych jak nowego
-                budget = Informations.objects.create(user=request.user, balance=balance, income=income, expenses=expenses, debt=debt, emergencyFund=emergencyFund) # Tworzymy rekordy
+                Budget_informations.objects.get(pk=request.user) # Sprawdzamy czy użytkownik ma już informacje
+                Budget_informations.objects.filter(pk=request.user).update(balance=balance, income=income, expenses=expenses, debt=debt, emergencyFund=emergencyFund) # Aktualizujemy rekordy
+            except Budget_informations.DoesNotExist: # Jeżeli użytkownik pierwszy raz wprowadza informacje, wpisujemy go do bazy danych jak nowego
+                budget = Budget_informations.objects.create(user=request.user, balance=balance, income=income, expenses=expenses, debt=debt, emergencyFund=emergencyFund) # Tworzymy rekordy
                 budget.save()
             
             balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray = budgetRule(
@@ -73,7 +74,7 @@ def budget(request): # Sekcja budżetu
             return JsonResponse({'status': 'error', 'message': 'Niepoprawny format danych.'})
     else:
         try: # Sprawdzamy czy użytkownik posiada informacje, jeżeli tak wyświetlamy je jako wartości formularza
-            budget = Informations.objects.get(user=request.user)
+            budget = Budget_informations.objects.get(user=request.user)
             budgetType = request.COOKIES.get('budgetType', '1')
             bufor = request.COOKIES.get('bufor', '')
             percentWants = request.COOKIES.get('percentWants', '30')
@@ -95,7 +96,7 @@ def budget(request): # Sekcja budżetu
                 'percentEmergency': percentEmergency,
                 'plannedEmergencyFund': plannedEmergencyFund,
             })
-        except Informations.DoesNotExist:
+        except Budget_informations.DoesNotExist:
             form = Budget_form()
     return render(request, 'budget.html', {'form': form}) # Jeżeli użytkownik nie wysyła żadnych danych to wyświetli stronę informacji
 
@@ -104,3 +105,7 @@ def about(request): # O nas
 
 def contact(request): # Kontakt
     return render(request, 'contact.html')
+
+def calculator(request): # Kalkulator
+    form = CalculatorForm
+    return render(request, 'calculator.html', {'form': form})
