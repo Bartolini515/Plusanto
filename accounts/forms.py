@@ -3,7 +3,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
 
-# Formularz z polami: nazwa użytkownika, imię, nazwisko, adres e-mail, hasło i potwierdzenie hasła
+# Formularz dla rejestracji
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Nazwa użytkownika', max_length=60, widget=forms.TextInput(attrs={'placeholder': 'Wprowadź nazwę użytkownika'}))
     first_name = forms.CharField(label='Imię', required=False, max_length=30, widget=forms.TextInput(attrs={'placeholder': 'Wprowadź swoje imię'}))
@@ -34,8 +34,9 @@ class RegistrationForm(forms.Form):
         if password != password_confirm:
             raise ValidationError('Hasła nie są identyczne')
         return password, password_confirm
-    
 
+
+# Formularz dla logowania
 class SignInForm(forms.Form):
     username = forms.CharField(label='Nazwa użytkownika', max_length=60, widget=forms.TextInput(attrs={'placeholder': 'Wprowadź nazwę użytkownika'}))
     password = forms.CharField(label='Hasło', widget=forms.PasswordInput(attrs={'placeholder': 'Wprowadź hasło'}))

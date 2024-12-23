@@ -86,3 +86,21 @@ class Budget_form(forms.Form):
         widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent awaryjny'}),
         initial='5'
     )
+    
+
+# Formularz kalkulatora podatku
+class CalculatorForm(forms.Form):
+    income = forms.IntegerField(
+    label="Przychód roczny",
+    min_value=0,
+    max_value=999999999,
+    required=True,
+    widget=forms.NumberInput(attrs={'placeholder': 'Wpisz swój przychód roczny'})
+    )
+    deductions = forms.IntegerField(
+    label="Odliczenia od podatku",
+    min_value=0,
+    max_value=999999999,
+    required=True,
+    widget=forms.NumberInput(attrs={'placeholder': 'Wpisz łączną wartość odliczeń od podatku'})
+    )

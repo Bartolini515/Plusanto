@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegistrationForm
-from .forms import SignInForm
+from .forms import RegistrationForm, SignInForm
 
 def register(request): # Funkcja rejestracji użytkownika
     if request.method == 'POST': # Sprawdzamy czy użytkownik przesyła dane

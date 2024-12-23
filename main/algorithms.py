@@ -38,11 +38,11 @@
 import math
 
 
-def createMessage(message): # Funkcja tworzenia komunikatów
+def createMessage(message:str): # Funkcja tworzenia komunikatów
     messagesArray.append(message)
 
 
-def budgetEstablish(value, budgetType, percentWants, percentAllowance, percentEmergency): # Funckja ustalania budżetu
+def budgetEstablish(value:int, budgetType, percentWants:int, percentAllowance:int, percentEmergency:int): # Funckja ustalania budżetu
     percentWants, percentEmergency, percentAllowance = percentWants / 100, percentEmergency / 100, percentAllowance / 100
     match budgetType:
         case '1':
@@ -58,13 +58,13 @@ def budgetEstablish(value, budgetType, percentWants, percentAllowance, percentEm
     return budgetExpenses, budgetWants, budgetEmergency, allowance
 
 
-def budgetAdd(value, budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency): # Funcja dodawania do budżetu kolejnych wartości odpowiednio rozdzielonych
+def budgetAdd(value:int, budgetType, budgetExpenses:int, budgetWants:int, budgetEmergency:int, allowance:int, percentWants:int, percentAllowance:int, percentEmergency:int): # Funcja dodawania do budżetu kolejnych wartości odpowiednio rozdzielonych
     budgetExpensesTemp, budgetWantsTemp, budgetEmergencyTemp, allowanceTemp = budgetEstablish(value, budgetType, percentWants, percentAllowance, percentEmergency)
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetExpenses + budgetExpensesTemp, budgetWants + budgetWantsTemp, budgetEmergency + budgetEmergencyTemp, allowance + allowanceTemp
     return budgetExpenses, budgetWants, budgetEmergency, allowance
 
 
-def calculateExpensesDeficit(expenses, budgetExpenses, budgetWants, allowance, budgetEmergency, balance, budgetType):
+def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, allowance:int, budgetEmergency:int, balance:int, budgetType):
     match budgetType:
         case '1': # W przypadku 50/30/15/5
             difference = expenses - budgetExpenses
@@ -147,7 +147,7 @@ def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, 
     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
      
         
-def distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergency, debt, repayDebt): # Funkcja rozprowadzająca fundusz
+def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, budgetEmergency:int, debt:int, repayDebt:int): # Funkcja rozprowadzająca fundusz
     if emergencyFund > plannedEmergencyFund: # W przypadku jeżeli posiadamy fundusz awaryjny powyżej planowanego, dodajemy jego składki do dodatku
         allowance += budgetEmergency
         budgetEmergency = 0
@@ -167,7 +167,7 @@ def distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergen
     return allowance, budgetEmergency, repayDebt
 
 
-def distributeExpenses(budgetExpenses, expenses, allowance, bufor, budgetType):
+def distributeExpenses(budgetExpenses:int, expenses:int, allowance:int, bufor:int, budgetType):
     difference = budgetExpenses - expenses
     match budgetType: # w zależności od typu budżetu wlicza w obliczenia bufor bądź nie
         case '1':
@@ -185,7 +185,7 @@ def distributeExpenses(budgetExpenses, expenses, allowance, bufor, budgetType):
             return budgetExpenses, allowance
     
 
-def debtRepayment(repayDebt, allowance, debt): # Funkcja spłacania długu
+def debtRepayment(repayDebt:int, allowance:int, debt:int): # Funkcja spłacania długu
     repayDebt += allowance
     debtActual = debt
     allowance = 0
@@ -200,7 +200,7 @@ def debtRepayment(repayDebt, allowance, debt): # Funkcja spłacania długu
     return allowance, debt
 
 
-def checkEmergencyBudget(emergencyFund, plannedEmergencyFund, budgetEmergency, allowance): # Funkcja sprawdzająca czy budżet awaryjny jest nadto planowany
+def checkEmergencyBudget(emergencyFund:int, plannedEmergencyFund:int, budgetEmergency:int, allowance:int): # Funkcja sprawdzająca czy budżet awaryjny jest nadto planowany
     difference = plannedEmergencyFund - emergencyFund
     
     if ((difference2 := difference - budgetEmergency) < 0):
@@ -212,8 +212,7 @@ def checkEmergencyBudget(emergencyFund, plannedEmergencyFund, budgetEmergency, a
     
     
     
-def budgetRule(balance, income, expenses, debt, emergencyFund, budgetType, bufor, percentWants, percentAllowance, percentEmergency, plannedEmergencyFund, distributeConf):
-    balance, income, expenses, debt, emergencyFund, bufor, percentWants, percentAllowance, percentEmergency, plannedEmergencyFund = int(balance), int(income), int(expenses), int(debt), int(emergencyFund), int(bufor), int(percentWants), int(percentAllowance), int(percentEmergency), int(plannedEmergencyFund)
+def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:int, budgetType, bufor:int, percentWants:int, percentAllowance:int, percentEmergency:int, plannedEmergencyFund:int, distributeConf:int):
     repayDebt = 0
     
     global messagesArray
@@ -238,3 +237,10 @@ def budgetRule(balance, income, expenses, debt, emergencyFund, budgetType, bufor
         allowance, debt = debtRepayment(repayDebt, allowance, debt)
         
     return balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray
+
+
+
+
+
+def goals():
+    return
