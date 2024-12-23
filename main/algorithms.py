@@ -237,10 +237,3 @@ def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:in
         allowance, debt = debtRepayment(repayDebt, allowance, debt)
         
     return balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray
-
-
-
-
-
-def goals():
-    return

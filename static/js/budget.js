@@ -1,5 +1,7 @@
 // AJAX dla podstrony budżetowej
-document.getElementById('submitButton').addEventListener('click', function () {
+document.getElementById('submitButton').addEventListener('click', function (event) {
+    event.preventDefault(); // Zapobiegamy defaultowemy zachowaniu na POSTa
+
     const responseMessage = document.getElementById('responseMessage');
 
     if (parseInt(balanceInput.value) > parseInt(incomeInput.value) * 2) {
@@ -30,12 +32,12 @@ document.getElementById('submitButton').addEventListener('click', function () {
         })
         .then(data => { // Sprawdzamy typ odpowiedzi i dostosowujemy odpowiedni tekst
             if (data.status === 'success') {
-                document.getElementById('balanceDisplay').textContent = data.balance;
-                document.getElementById('budgetExpensesDisplay').textContent = data.budgetExpenses;
-                document.getElementById('budgetWantsDisplay').textContent = data.budgetWants;
-                document.getElementById('allowanceDisplay').textContent = data.allowance;
-                document.getElementById('budgetEmergencyDisplay').textContent = data.budgetEmergency;
-                document.getElementById('debtDisplay').textContent = data.debt;
+                balanceDisplay.textContent = data.balance;
+                budgetExpensesDisplay.textContent = data.budgetExpenses;
+                budgetWantsDisplay.textContent = data.budgetWants;
+                allowanceDisplay.textContent = data.allowance;
+                budgetEmergencyDisplay.textContent = data.budgetEmergency;
+                debtDisplay.textContent = data.debt;
 
                 // Pokazujemy wiadomości zwrotne od algorytmu budżetowego
                 const messagesContainer = document.getElementById('messages');
@@ -170,6 +172,16 @@ function checkBudgetType(value) {
     }
 }
 
+// Funkcja projektowania danych z JSONa do pól
+function budgetOutDataDisplay(data) {
+    balanceDisplay.textContent = data.balance;
+    budgetExpensesDisplay.textContent = data.budgetExpenses;
+    budgetWantsDisplay.textContent = data.budgetWants;
+    allowanceDisplay.textContent = data.allowance;
+    budgetEmergencyDisplay.textContent = data.budgetEmergency;
+    debtDisplay.textContent = data.debt;
+}
+
 // Wyciąganie elementow z formularza
 const balanceInput = document.getElementById('id_balance');
 const incomeInput = document.getElementById('id_income');
@@ -182,7 +194,12 @@ const budgetTypeField = document.getElementById('id_budgetType');
 const percentWantsInput = document.getElementById('id_percentWants');
 const percentAllowanceInput = document.getElementById('id_percentAllowance');
 const percentEmergencyInput = document.getElementById('id_percentEmergency');
-
+const balanceDisplay = document.getElementById('balanceDisplay');
+const budgetExpensesDisplay = document.getElementById('budgetExpensesDisplay');
+const budgetWantsDisplay = document.getElementById('budgetWantsDisplay');
+const allowanceDisplay = document.getElementById('allowanceDisplay');
+const budgetEmergencyDisplay = document.getElementById('budgetEmergencyDisplay');
+const debtDisplay = document.getElementById('debtDisplay');
 
 // Debouncowanie funkcji
 const validateFormInputsDebounced = debounce(validateFormInputs, 300);

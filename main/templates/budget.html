@@ -15,10 +15,19 @@
         {% csrf_token %}
        <h2> {{ form.as_p }}</h2> 
         {% comment %} jeżeli jest typ budżetu 2 to wtedy nie pokazuje procentu na zachcianki {% endcomment %}
-        <button class="button2">Zapisz</button>
+        <button class="button2" id='submitButton'>Zapisz</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
     <div id="responseMessage"></div>
+
+{% if dataJSON %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = JSON.parse('{{ dataJSON|escapejs }}'); // Wyciąganie z JSONa danych o ostatnich danych wyjścia
+            budgetOutDataDisplay(data);
+        });
+    </script>
+{% endif %}
 
     <div id="calculatedResults">
         <h2>Wyliczony budżet</h2>

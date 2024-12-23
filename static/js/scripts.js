@@ -21,7 +21,7 @@ function checkAlerts(messages, levels) {
 
     if (error_messages.length > 0) { // Jeżeli istnieją errory to wyświetla tylko je ignorując inne komunikaty
         alertBox.style.backgroundColor = "red";
-
+        // Jak maks naprawi <li> to wtedy usunąć wszystko z br
         const ul = document.createElement("ul");
         error_messages.forEach(message => {
             const li = document.createElement("li");

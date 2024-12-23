@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Budget_informations(models.Model): # Model bazy danych budżetu użytkownika
+class Budget_input_informations(models.Model): # Model bazy danych wejściowych budżetu użytkownika
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -14,8 +14,14 @@ class Budget_informations(models.Model): # Model bazy danych budżetu użytkowni
     debt = models.IntegerField( min("0"))
     emergencyFund = models.IntegerField( min("0"))
     
-class Goals(models.Model): # Model bazy danych celów użytkownika
+class Budget_output_informations(models.Model): # Model bazy danych wyjściowych budżetu użytkownika
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         primary_key=True)
+    balance = models.IntegerField( min("0"))
+    budgetExpenses = models.IntegerField( min("0"))
+    budgetWants = models.IntegerField( min("0"))
+    allowance = models.IntegerField( min("0"))
+    budgetEmergency = models.IntegerField( min("0"))
+    debt = models.IntegerField( min("0"))
