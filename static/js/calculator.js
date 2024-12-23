@@ -36,9 +36,9 @@ function validateInputs() {
 
     // Iterujemy przez wszystkie elementy
     inputs.forEach(input => {
-        if (input.value.length > 21) { // Jeżeli ma więcej niż 21 liczb dajemy błąd
+        if (input.value.length > 9) { // Jeżeli ma więcej niż 9 liczb dajemy błąd
             isValid = false;
-            errorMessageElement.textContent = 'Pola nie mogą być dłuższe niż 21 liczb.';
+            errorMessageElement.textContent = 'Pola nie mogą być dłuższe niż 9 liczb.';
             errorMessageElement.style.display = 'block';
             input.style.borderColor = 'red';
         } else {
