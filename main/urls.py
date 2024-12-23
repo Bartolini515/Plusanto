@@ -8,5 +8,4 @@ urlpatterns = [
     path('about/', views.about, name='about'), # Przekierowanie na stronę o nas
     path('contact/', views.contact, name='contact'), # Przekierowanie na stronę kontaktową
     path('dashboard/calculator/', views.calculator, name='calculator'), # Przekierowanie na stronę kalkulatora
-    path('dashboard/goals/', views.goals, name='goals') # Przekierowanie na stronę celów
 ]

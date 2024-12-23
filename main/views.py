@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
-from .forms import Budget_form
+from .forms import Budget_form, CalculatorForm
 from .models import Budget_informations
 from django.http import JsonResponse
 from .algorithms import budgetRule
+from json import dumps
 
 def index(request): # Strona główna
     return render(request, 'index.html')
@@ -106,7 +107,5 @@ def contact(request): # Kontakt
     return render(request, 'contact.html')
 
 def calculator(request): # Kalkulator
-    return render(request, 'calculator.html')
-
-def goals(request): # Cele
-    return render(request, 'goals.html')
+    form = CalculatorForm
+    return render(request, 'calculator.html', {'form': form})
