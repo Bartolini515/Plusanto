@@ -4,18 +4,22 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Strona główna</title>
+    <script src="{% static 'js/scripts.js' %}" defer></script>
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 
 <body>
     <div class="alert">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-  {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
+{% if messages %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() { // Sprawdzanie alertów
+            // Dzielenie messages od django na format 2 list, jedna z zawartością, a druga z poziomem wiadomości
+            const messages = [{% for message in messages %}"{{ message|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]; 
+            const levels = [{% for message in messages %}"{{ message.level_tag|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]
+            checkAlerts(messages, levels); // Wezwanie funkcji sprawdzajacej alerty
+        });
+    </script>
 {% endif %}
 </div>
     
