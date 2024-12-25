@@ -60,7 +60,7 @@ document.getElementById('submitButton').addEventListener('click', function (even
             responseMessage.textContent = 'Wystąpił błąd, spróbuj ponownie później.';
             responseMessage.style.color = 'red';
         });
-    } else { // Jeżeli walidacje JS nie przeszły dajemy niepoprawny formay danych
+    } else { // Jeżeli walidacje JS nie przeszły dajemy niepoprawny format danych
         responseMessage.textContent = 'Niepoprawny format danych.';
         responseMessage.style.color = 'red';
     };
@@ -134,6 +134,11 @@ function validateFormInputs() {
         if (input.value.length > 9) { // Jeżeli ma więcej niż 9 liczb dajemy błąd
             isValid = false;
             errorMessageElement.textContent = 'Pola nie mogą być dłuższe niż 9 liczb.';
+            errorMessageElement.style.display = 'block';
+            input.style.borderColor = 'red';
+        } else if(!/^\d+$/.test(input.value)) { // Regex który sprawdza czy pole zawiera tylko cyfry
+            isValid = false;
+            errorMessageElement.textContent = 'Pola muszą zawierać wyłącznie cyfry, bez znaków specjalnych.';
             errorMessageElement.style.display = 'block';
             input.style.borderColor = 'red';
         } else {
