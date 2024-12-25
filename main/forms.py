@@ -104,3 +104,22 @@ class CalculatorForm(forms.Form):
     required=True,
     widget=forms.NumberInput(attrs={'placeholder': 'Wpisz łączną wartość odliczeń od podatku'})
     )
+    
+
+# Formularz dla przystępnościomierza
+class AffordabilityForm(forms.Form):
+    expense = forms.IntegerField(
+    label="Wartość wydatku",
+    min_value=0,
+    max_value=999999999,
+    required=True,
+    widget=forms.NumberInput(attrs={'placeholder': 'Wpisz wartość wydatku'})
+    )
+    frequency = forms.ChoiceField(
+        label="Powtarzalnosć",
+        choices=[('1', 'Jednorazowo'), 
+                 ('2', 'Miesięcznie'),
+                 ('3', 'Rocznie')],
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Wybierz Powtarzalność'})
+    )

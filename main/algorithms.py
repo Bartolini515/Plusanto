@@ -38,11 +38,13 @@
 import math
 
 
-def createMessage(message:str): # Funkcja tworzenia komunikatów
+# Funkcja tworzenia komunikatów
+def createMessage(message:str):
     messagesArray.append(message)
 
 
-def budgetEstablish(value:int, budgetType, percentWants:int, percentAllowance:int, percentEmergency:int): # Funckja ustalania budżetu
+# Funkcja ustalania budżetu
+def budgetEstablish(value:int, budgetType, percentWants:int, percentAllowance:int, percentEmergency:int): 
     percentWants, percentEmergency, percentAllowance = percentWants / 100, percentEmergency / 100, percentAllowance / 100
     match budgetType:
         case '1':
@@ -58,12 +60,14 @@ def budgetEstablish(value:int, budgetType, percentWants:int, percentAllowance:in
     return budgetExpenses, budgetWants, budgetEmergency, allowance
 
 
+# Funkcja rozprowadzania dodatkowej wartości do istniejącego już budżetu
 def budgetAdd(value:int, budgetType, budgetExpenses:int, budgetWants:int, budgetEmergency:int, allowance:int, percentWants:int, percentAllowance:int, percentEmergency:int): # Funcja dodawania do budżetu kolejnych wartości odpowiednio rozdzielonych
     budgetExpensesTemp, budgetWantsTemp, budgetEmergencyTemp, allowanceTemp = budgetEstablish(value, budgetType, percentWants, percentAllowance, percentEmergency)
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetExpenses + budgetExpensesTemp, budgetWants + budgetWantsTemp, budgetEmergency + budgetEmergencyTemp, allowance + allowanceTemp
     return budgetExpenses, budgetWants, budgetEmergency, allowance
 
 
+# Funkcja obliczania i łatania deficitu w budżecie wydatkowym
 def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, allowance:int, budgetEmergency:int, balance:int, budgetType):
     match budgetType:
         case '1': # W przypadku 50/30/15/5
@@ -106,6 +110,7 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     # TODO Czy coś tu dodać aby robiło gdy nie ma wystarczających środków?
                     createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference}, pokrycie nie jest możliwe. Brakująca ilość: {balance - abs(budgetWants + allowance + budgetEmergency - difference)}.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
+
                     
         case '2': # W przypadku 50/30/20
             difference = expenses - budgetExpenses
@@ -139,15 +144,17 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
          
                 
-def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency): # Funkcja rozprowadzająca saldo
+# Funkcja rozprowadzająca saldo
+def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency):
     difference = balance - (income * 2)
     balance -= abs(difference)
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetAdd(abs(difference), budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency)
     createMessage(f'Nadmiar w saldzie został rozprowadzony w wysokości {abs(difference)}')
     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
      
-        
-def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, budgetEmergency:int, debt:int, repayDebt:int): # Funkcja rozprowadzająca fundusz
+
+# Funkcja rozprowadzająca fundusz
+def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, budgetEmergency:int, debt:int, repayDebt:int):
     if emergencyFund > plannedEmergencyFund: # W przypadku jeżeli posiadamy fundusz awaryjny powyżej planowanego, dodajemy jego składki do dodatku
         allowance += budgetEmergency
         budgetEmergency = 0
@@ -167,6 +174,7 @@ def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, b
     return allowance, budgetEmergency, repayDebt
 
 
+# Funkcja rozprowadzająca nadmiar budżetu wydatkowego
 def distributeExpenses(budgetExpenses:int, expenses:int, allowance:int, bufor:int, budgetType):
     difference = budgetExpenses - expenses
     match budgetType: # w zależności od typu budżetu wlicza w obliczenia bufor bądź nie
@@ -185,7 +193,8 @@ def distributeExpenses(budgetExpenses:int, expenses:int, allowance:int, bufor:in
             return budgetExpenses, allowance
     
 
-def debtRepayment(repayDebt:int, allowance:int, debt:int): # Funkcja spłacania długu
+# Funkcja spłacania długu
+def debtRepayment(repayDebt:int, allowance:int, debt:int):
     repayDebt += allowance
     debtActual = debt
     allowance = 0
@@ -200,7 +209,8 @@ def debtRepayment(repayDebt:int, allowance:int, debt:int): # Funkcja spłacania 
     return allowance, debt
 
 
-def checkEmergencyBudget(emergencyFund:int, plannedEmergencyFund:int, budgetEmergency:int, allowance:int): # Funkcja sprawdzająca czy budżet awaryjny jest nadto planowany
+# Funkcja sprawdzająca czy budżet awaryjny jest nadto planowany
+def checkEmergencyBudget(emergencyFund:int, plannedEmergencyFund:int, budgetEmergency:int, allowance:int):
     difference = plannedEmergencyFund - emergencyFund
     
     if ((difference2 := difference - budgetEmergency) < 0):
@@ -212,6 +222,7 @@ def checkEmergencyBudget(emergencyFund:int, plannedEmergencyFund:int, budgetEmer
     
     
     
+# Funkcja główna budżetu
 def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:int, budgetType, bufor:int, percentWants:int, percentAllowance:int, percentEmergency:int, plannedEmergencyFund:int, distributeConf:int):
     repayDebt = 0
     
@@ -237,3 +248,62 @@ def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:in
         allowance, debt = debtRepayment(repayDebt, allowance, debt)
         
     return balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray
+
+
+
+
+### SEKCJA PRZYSTĘPNOŚCIOMIERZA ###
+
+# Funkcja zajmująca się obliczaniem wydatku gdy jest on jednorazowy
+def singleExpense(balance, budgetWants, allowance, expense, budgetType, canDo):
+    match budgetType:
+        case '1':
+            if (difference := budgetWants - expense) >= 0:
+                createMessage(f'Twój wydatek w wysokości {expense} może zostać pokryty z budżetu na zachcianki. Zostanie ci wtedy {difference} budżetu zachciankowego.')
+                return balance, difference, allowance, canDo # difference staje sie nowym budżetem na zachcianki
+            elif (difference := allowance - expense) >= 0:
+                createMessage(f'Twój wydatek w wysokości {expense} może zostać pokryty z dodatku. Zostanie ci wtedy {difference} dodatku.')
+                return balance, budgetWants, difference, canDo # difference staje sie nowym dodatkiem
+            elif (difference := balance - expense) >= 0:
+                createMessage(f'Twój wydatek w wysokości {expense} może zostać pokryty z salda. Zostanie ci wtedy {difference} salda.')
+                return difference, budgetWants, allowance, canDo # difference staje sie nowym saldem
+            else:
+                createMessage(f'Twój wydatek w wysokości {expense} nie może zostać pokryty z budżetu na zachcianki ani z dodatku, ani z salda. Brakująca wartość wynosi {expense - (allowance + balance + budgetWants)}.')
+                canDo = '0'
+                return balance, budgetWants, allowance, canDo
+        case '2':
+            if (difference := allowance - expense) >= 0:
+                createMessage(f'Twój wydatek w wysokości {expense} może zostać pokryty z dodatku. Zostanie ci wtedy {difference} dodatku.')
+                return balance, budgetWants, difference, canDo # difference staje sie nowym dodatkiem
+            elif (difference := balance - expense) >= 0:
+                createMessage(f'Twój wydatek w wysokości {expense} może zostać pokryty z salda. Zostanie ci wtedy {difference} salda.')
+                return difference, budgetWants, allowance, canDo # difference staje sie nowym saldem
+            else:
+                createMessage(f'Twój wydatek w wysokości {expense} nie może zostać pokryty z dodatku ani z salda. Brakująca wartość wynosi {expense - (allowance + balance)}.')
+                canDo = '0'
+                return balance, budgetWants, allowance, canDo
+
+
+
+
+# Funkcja główna przystępniościomierza
+def affordabilityRule(income, balance, budgetExpenses, budgetWants, allowance, expense, frequency, budgetType):
+    global messagesArray
+    messagesArray = []
+    
+    canDo = '1'
+    
+    match frequency:
+        case '1':
+            balance, budgetWants, allowance, canDo = singleExpense(balance, budgetWants, allowance, expense, budgetType, canDo)
+        case '2' | '3':
+            if frequency == '3':
+                expense = math.ceil(expense / 12) # W przypadku wydatku rocznego zostaje on rozłożony na 12 miesięcy
+            fullBudgetExpenses = math.ceil(income * 0.5)
+            if fullBudgetExpenses - budgetExpenses >= expense:
+                budgetExpenses += expense
+                createMessage(f'Twój wydatek w wysokości {expense} (wartość miesięczna) może zostać wpisany w budżet wydatkowy. Budżet wydatkowy wyniesie wtedy {budgetExpenses}.')
+            else:
+                createMessage(f'Twój wydatek w wysokości {expense} (wartość miesięczna) nie może zostać wpisany w budżet wydatkowy. Brakująca wartość wynosi {expense - (fullBudgetExpenses - budgetExpenses)}.')
+                canDo = '0'
+    return balance, budgetExpenses, budgetWants, allowance, canDo, messagesArray

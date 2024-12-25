@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
-from .forms import Budget_form, CalculatorForm
+from .forms import Budget_form, CalculatorForm, AffordabilityForm
 from .models import Budget_input_informations, Budget_output_informations
 from django.http import JsonResponse
-from .algorithms import budgetRule
+from .algorithms import budgetRule, affordabilityRule
 from json import dumps
 
 def index(request): # Strona główna
@@ -130,5 +130,63 @@ def contact(request): # Kontakt
     return render(request, 'contact.html')
 
 def calculator(request): # Kalkulator
-    form = CalculatorForm
+    form = CalculatorForm()
     return render(request, 'calculator.html', {'form': form})
+
+def affordability(request): # Przystępnościomierz
+    if request.method == 'POST': # Sprawdzamy czy użytkownik przesyła dane
+        form = AffordabilityForm(request.POST)
+        action = request.POST.get('action')
+        if form.is_valid() and action == 'calculate':  # Sprawdzamy czy formularz jest poprawny
+            # Wyciągamy dane z formularza
+            expense = form.cleaned_data['expense']
+            frequency = form.cleaned_data['frequency']
+            
+            budgetType = request.COOKIES.get('budgetType', '1')
+            
+            budget_in = Budget_input_informations.objects.get(user=request.user)
+            income = budget_in.income
+            budget_out = Budget_output_informations.objects.get(user=request.user)
+            balance = budget_out.balance
+            budgetExpenses = budget_out.budgetExpenses
+            budgetWants = budget_out.budgetWants
+            allowance = budget_out.allowance
+            
+            balanceAft, budgetExpensesAft, budgetWantsAft, allowanceAft, canDo, messagesArray = affordabilityRule(income, balance, budgetExpenses, budgetWants, allowance, expense, frequency, budgetType)
+            
+            
+            # Zwróć odpowiedź dla strony o udanym zapisie danych oraz wartości dla strony
+            response = JsonResponse({
+                'status': 'success', 
+                'message': 'Obliczenia wykonane poprawnie.',
+                'balance': int(balance),
+                'budgetExpenses': int(budgetExpenses),
+                'budgetWants': int(budgetWants),
+                'allowance': int(allowance),
+                'balanceAft': int(balanceAft),
+                'budgetExpensesAft': int(budgetExpensesAft),
+                'budgetWantsAft': int(budgetWantsAft),
+                'allowanceAft': int(allowanceAft),
+                'messages': messagesArray,
+                'canDo': canDo,
+                }) 
+            return response
+        elif action == 'save':
+            balanceAft = request.POST.get('balanceAft')
+            budgetExpensesAft = request.POST.get('budgetExpensesAft')
+            budgetWantsAft = request.POST.get('budgetWantsAft')
+            allowanceAft = request.POST.get('allowanceAft')
+            
+            Budget_output_informations.objects.filter(pk=request.user).update(balance=balanceAft, budgetExpenses=budgetExpensesAft, budgetWants=budgetWantsAft, allowance=allowanceAft) # Aktualizujemy rekordy
+            return JsonResponse({'status': 'success', 'message': 'Zapisano dane.'})
+        else:
+            # Zwróć odpowiedź dla strony o niepoprawnym formularzu
+            return JsonResponse({'status': 'error', 'message': 'Niepoprawny format danych.'})
+    else:
+        try: # Sprawdzamy czy użytkownik ma już informacje wyjściowe budżetu
+            Budget_output_informations.objects.get(pk=request.user) 
+            form = AffordabilityForm()
+            return render(request, 'affordability.html', {'form': form}) # Jeżeli użytkownik nie wysyła żadnych danych to wyświetli stronę informacji
+        except Budget_output_informations.DoesNotExist: # Jeżeli nie posiada to odmawiamy dostępu
+            messages.error(request, 'Musisz najpierw obliczyć budżet aby skorzystać z przystępnościomierza.')
+            return redirect('dashboard')
