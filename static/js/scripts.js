@@ -44,7 +44,7 @@ function checkAlerts(messages, levels) {
         });
 
         alertBox.innerHTML = "";
-        alertBox.style.display = ''
+        alertBox.style.display = '';
         alertBox.appendChild(ul); 
     };
 };
