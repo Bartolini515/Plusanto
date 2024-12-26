@@ -66,21 +66,21 @@ document.getElementById('submitButton').addEventListener('click', function (even
     };
 });
 
-// Funckja do odczytywania ciasteczek o podanej nazwie
+// Funkcja do odczytywania ciasteczek o podanej nazwie
 function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie); // Dekoduje ciasteczko aby zająć się znakami specjalnymi
-  let ca = decodedCookie.split(';'); // Dzielimy ciasteczko na części rozdzielone znakiem ';'
-  for(let i = 0; i <ca.length; i++) { // Przeszukujemy ciasteczko
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie); // Dekoduje ciasteczko aby zająć się znakami specjalnymi
+    let ca = decodedCookie.split(';'); // Dzielimy ciasteczko na części rozdzielone znakiem ';'
+    for(let i = 0; i <ca.length; i++) { // Przeszukujemy ciasteczko
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length); // Jeżeli znajdziemy ciasteczko zwracamy jego wartość
+        }
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length); // Jeżeli znajdziemy ciasteczko zwracamy jego wartość
-    }
-  }
-  return "";
+    return "";
 }
 
 // Funkcja opóźniająca akcje, "debouncing"
@@ -136,7 +136,7 @@ function validateFormInputs() {
             errorMessageElement.textContent = 'Pola nie mogą być dłuższe niż 9 liczb.';
             errorMessageElement.style.display = 'block';
             input.style.borderColor = 'red';
-        } else if(!/^\d+$/.test(input.value)) { // Regex który sprawdza czy pole zawiera tylko cyfry
+        } else if(!/^\d*$/.test(input.value)) { // Regex który sprawdza czy pole zawiera tylko cyfry
             isValid = false;
             errorMessageElement.textContent = 'Pola muszą zawierać wyłącznie cyfry, bez znaków specjalnych.';
             errorMessageElement.style.display = 'block';
@@ -225,12 +225,3 @@ percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
 
 // Reszta
 checkBudgetType(budgetTypeField.value)
-
-
-
-
-
-
-// TODO
-// Zmienić sposób wyświetlania errorów, więcej pól czy coś
-//skrypt do collapsible - otwierania wysuwanego tekstu
