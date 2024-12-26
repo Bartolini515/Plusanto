@@ -43,7 +43,8 @@ function checkAlerts(messages, levels) {
             ul.appendChild(br);
         });
 
-        alertBox.innerHTML = ""; 
+        alertBox.innerHTML = "";
+        alertBox.style.display = ''
         alertBox.appendChild(ul); 
     };
 };
