@@ -45,9 +45,11 @@ def budget(request): # Sekcja budżetu
                 budget = Budget_input_informations.objects.create(user=request.user, balance=balance, income=income, expenses=expenses, debt=debt, emergencyFund=emergencyFund) # Tworzymy rekordy
                 budget.save()
             
-            balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray = budgetRule(
+            balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray, lackingFunds = budgetRule(
                 balance, income, expenses, debt, emergencyFund, budgetType, bufor, percentWants, percentAllowance, percentEmergency, plannedEmergencyFund, distributeConf)
             
+            if lackingFunds:
+                return JsonResponse({'status': 'error', 'message': 'Brak wystarczających środków.'})
             # Zwróć odpowiedź dla strony o udanym zapisie danych oraz wartości dla pól budżetu
             response = JsonResponse({
                 'status': 'success', 
