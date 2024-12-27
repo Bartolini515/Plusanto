@@ -29,10 +29,12 @@ LOGIN_URL = "/accounts/login/" # Ustawienie przekierowania do strony logowania
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Zmienić na False na serwerze
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1'
+    '127.0.0.1',
+    '88.99.97.188'
 ]
 
 
