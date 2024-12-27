@@ -1,8 +1,11 @@
 Wydatki stałe
 Stałe, regularne wydatki, takie jak rachunki za prąd, wodę czy czynsz.
 
+Fundusz awaryjny
+Twój obecny fundusz w razie nagłej potrzeby, innymi słowy gdy stanie się coś niezaplanowanego i potrzebne są duże środki pieniężne których nie posiada się w saldzie.
+
 Planowany fundusz awaryjny
-Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.
+Twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.
 
 Bufor
 Dodatkowa kwota uwzględniana w budżecie, służy jako zabezpieczenie przed małymi, nagłymi wydatkami.
