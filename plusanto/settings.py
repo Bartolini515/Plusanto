@@ -29,7 +29,7 @@ LOGIN_URL = "/accounts/login/" # Ustawienie przekierowania do strony logowania
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '127.0.0.1'
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware', # Odczytuje język przeglądarki i dostosywuje stronę do tego języka
+    'django.middleware.locale.LocaleMiddleware', # Odczytuje język przeglądarki i dostosowuje stronę do tego języka
 
 ]
 
