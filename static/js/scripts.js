@@ -48,3 +48,39 @@ function checkAlerts(messages, levels) {
         alertBox.appendChild(ul); 
     };
 };
+
+// Funkcja do odczytywania ciasteczek o podanej nazwie
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie); // Dekoduje ciasteczko aby zająć się znakami specjalnymi
+    let ca = decodedCookie.split(';'); // Dzielimy ciasteczko na części rozdzielone znakiem ';'
+    for(let i = 0; i <ca.length; i++) { // Przeszukujemy ciasteczko
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length); // Jeżeli znajdziemy ciasteczko zwracamy jego wartość
+        }
+    }
+    return "";
+}
+
+// Funkcja sprawdzająca akceptację ciasteczek
+function checkCookiesAccept() {
+    blockade = document.getElementsByClassName("blokada")[0] // Wybiera pierwszy element, czyli jedyny, z klasy "blokada"
+    cookies = document.getElementsByClassName("ciasteczka")[0] // Wybiera pierwszy element, czyli jedyny, z klasy "ciasteczka"
+    if (getCookie('cookies-accepted') == "") { // Sprawdza czy istnieje cookie cookies-accepted, jeżeli funkcja zwraca pusty string to wyświetla proces akceptacji
+        blockade.style.display = '';
+        cookies.style.display = ''
+        document.getElementById('cookie-accept').addEventListener('click', function() {
+            blockade.style.display = 'none';
+            cookies.style.display = 'none';
+            document.cookie = "cookies-accepted=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;" // Utworzenie pliku cookie który sygnalizuje o akceptacji ciasteczek
+        });
+
+        document.getElementById('cookie-deny').addEventListener('click', function() {
+            window.history.back(); // Jeżeli użytkownik odrzuca ciasteczka to wraca do poprzedniej strony
+        });
+    }
+}

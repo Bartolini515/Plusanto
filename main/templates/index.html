@@ -9,13 +9,16 @@
 </head>
 
 <body>
-    <div class="blokada">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {checkCookiesAccept()}); // Wezwanie funkcji sprawdzajacej akceptacje plików cookie 
+    </script>
+    <div class="blokada" style='display:none'>
          </div>
-    <div class="ciasteczka">
+    <div class="ciasteczka" style='display:none'>
         <p>Używamy plików cookie, aby zapewnić najlepsze odczucia 
             z użytkowania naszej strony</p>
-        <button class="button2">Akceptuj</button>  
-        <button class="button2">Odrzuć</button>        
+        <button class="button2" id='cookie-accept'>Akceptuj</button>  
+        <button class="button2" id='cookie-deny'>Odrzuć</button>        
     </div>
 
            
