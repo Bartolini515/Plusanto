@@ -3,7 +3,7 @@ function checkAlerts(messages, levels) {
     const error_messages = [];
     const success_messages = [];
 
-    messages.forEach((message, i) => { // Dopisuje do odpowiadającej tablicy każdą wiadomość (dodatkowe levele na potencjalne rozszerzenie)
+    messages.forEach((message, i) => { // Dopisuje do odpowiadającej tablicy każdą wiadomość (dodatkowe poziomy na potencjalne rozszerzenie)
         switch (levels[i]) {
             case 'debug':
             case 'info':
