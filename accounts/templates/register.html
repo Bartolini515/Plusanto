@@ -24,27 +24,29 @@
     {% endif %}
     <form method="post">
         {% csrf_token %} <!-- Zawsze przywołuj csrf_token gdy formularz korzysta z POST aby chronić przed CSRF (https://owasp.org/www-community/attacks/csrf#overview) <p> -->
-           <label for="id_username">Nazwa użytkownika</label><br><br>
+           <label for="id_username">Nazwa użytkownika</label><br>
            {{form.username}}
         <br><br>
-        <label for="id_first_name">Imię</label><br><br>
+        <label for="id_first_name">Imię</label><br>
            {{form.first_name}}
            <br><br>
-        <label for="id_last_name">Nazwisko</label><br><br>
+        <label for="id_last_name">Nazwisko</label><br>
            {{form.last_name}}
            <br><br>
-        <label for="id_email">Email</label><br><br>
+        <label for="id_email">Email</label><br>
            {{form.email}}
            <br><br>
-           <label for="id_password">Hasło</label><br><br>
+           <label for="id_password">Hasło</label><br>
            {{form.password}}
            <br><br>
-           <label for="id_password_confirm">Potwierdź hasło</label><br><br>
+           <label for="id_password_confirm">Potwierdź hasło</label><br>
            {{form.password_confirm}}
            <br><br>
 
         
         <button class="button2">Zarejestruj się</button>
     </form>
+    <br>
+    <a href="signin" class="link"><u><b> Masz już konto? Zaloguj się.</u></b></a>
 </body>
 </html>
