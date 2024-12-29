@@ -26,19 +26,27 @@
     
     <header class="czarny-naglowek">
         <h1>Witaj na stronie głównej</h1>
+        {% if user.is_authenticated %}
+            <h4><b> {{ user.username }}</b></h4>
+        {% endif %}
     </header>
     <div class="text-image-container">
        
       </div>
       
     <ul>
-    <li><button class="button2"><a href="{% url 'register' %}">Zarejestruj się</a></button></li>
-    <li><button class="button2"><a href="{% url 'login' %}">Zaloguj się</a></button></li>
-    <li><button class="button2"><a href="{% url 'logout' %}">Wyloguj się</a></button></li> <!-- TODO Jedynie widoczne gdy użytkownik zalogowany -->
-    <li><button class="button2"><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></button></li>
+    {% if user.is_authenticated %}
+        <!-- Jeśli użytkownik jest zalogowany, nie pokazuj przycisków -->
+        <li><button class="button2"><a href="{% url 'logout' %}">Wyloguj się</a></button></li>
+        <li><button class="button2"><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></button></li>
+    {% else %}
+        <!-- Jeśli użytkownik nie jest zalogowany, pokazuj przyciski -->
+        <li><button class="button2"><a href="{% url 'register' %}">Zarejestruj się</a></button></li>
+        <li><button class="button2"><a href="{% url 'login' %}">Zaloguj się</a></button></li>
+    {% endif %}
     <li><button class="button2"><a href="{% url 'about' %}">O Plusanto</a></button></li>
     <li><button class="button2"><a href="{% url 'contact' %}">Kontakt</a></button></li>
-    </ul>
+</ul>
     
     <br /> <br />
     <!-- Napis Plusanto w ładnej czcionce dośc duże, obok całego tekstu po lewo logo Plusanto -->
