@@ -1,8 +1,18 @@
+// Importowanie z innych modułów
+import { renderChart } from './chart.js';
+
+
 // AJAX dla podstrony budżetowej
 document.getElementById('submitButton').addEventListener('click', function (event) {
     event.preventDefault(); // Zapobiegamy defaultowemy zachowaniu na POSTa
 
     const responseMessage = document.getElementById('responseMessage');
+    const ctx = chartDisplay.getContext('2d');
+    ctx.clearRect(0, 0, chartDisplay.width, chartDisplay.height);
+
+    if (myChart) {
+        myChart.destroy();
+    }
 
     if (parseInt(balanceInput.value) > parseInt(incomeInput.value) * 2) {
         if (confirm('Posiadasz saldo powyżej 2 wartości dochodu, czy chcesz rozprowadzić nadmiar do budżetu?')) {
@@ -39,6 +49,8 @@ document.getElementById('submitButton').addEventListener('click', function (even
                 budgetEmergencyDisplay.textContent = data.budgetEmergency;
                 debtDisplay.textContent = data.debt;
 
+                document.getElementById("calculatedResults").style.display = "";
+
                 // Pokazujemy wiadomości zwrotne od algorytmu budżetowego
                 const messagesContainer = document.getElementById('messages');
                 messagesContainer.innerHTML = '';
@@ -47,6 +59,12 @@ document.getElementById('submitButton').addEventListener('click', function (even
                 li.textContent = message;
                 messagesContainer.appendChild(li);
                 });
+
+                const type = 'pie';
+                const labels = data.labels;
+                const dataValues = data.values;
+                const title = 'Alokacja budżetu';
+                myChart = renderChart(ctx, type, labels, title, dataValues);
 
                 responseMessage.textContent = data.message; 
                 responseMessage.style.color = 'green';
@@ -178,13 +196,27 @@ function checkBudgetType(value) {
 }
 
 // Funkcja projektowania danych z JSONa do pól
-function budgetOutDataDisplay(data) {
+export function budgetOutDataDisplay(data) {
+    const ctx = chartDisplay.getContext('2d');
+    ctx.clearRect(0, 0, chartDisplay.width, chartDisplay.height);
+
+    if (myChart) {
+        myChart.destroy();
+    }
+
     balanceDisplay.textContent = data.balance;
     budgetExpensesDisplay.textContent = data.budgetExpenses;
     budgetWantsDisplay.textContent = data.budgetWants;
     allowanceDisplay.textContent = data.allowance;
     budgetEmergencyDisplay.textContent = data.budgetEmergency;
     debtDisplay.textContent = data.debt;
+    document.getElementById("calculatedResults").style.display = "";
+
+    const type = 'pie';
+    const labels = data.labels;
+    const dataValues = data.values;
+    const title = 'Alokacja budżetu';
+    myChart = renderChart(ctx, type, labels, title, dataValues);
 }
 
 // Wyciąganie elementow z formularza
@@ -205,6 +237,7 @@ const budgetWantsDisplay = document.getElementById('budgetWantsDisplay');
 const allowanceDisplay = document.getElementById('allowanceDisplay');
 const budgetEmergencyDisplay = document.getElementById('budgetEmergencyDisplay');
 const debtDisplay = document.getElementById('debtDisplay');
+const chartDisplay = document.getElementById('chartDisplay');
 
 // Debouncowanie funkcji
 const validateFormInputsDebounced = debounce(validateFormInputs, 300);
@@ -224,4 +257,5 @@ percentAllowanceInput.addEventListener('input', validatePercentagesDebounced);
 percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
 
 // Reszta
-checkBudgetType(budgetTypeField.value)
+checkBudgetType(budgetTypeField.value);
+let myChart = null;
