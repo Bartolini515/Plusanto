@@ -50,6 +50,13 @@ def budget(request): # Sekcja budżetu
             
             if lackingFunds:
                 return JsonResponse({'status': 'error', 'message': 'Brak wystarczających środków.'})
+            
+            labels = ['Budżet wydatkowy', 'Dodatek', 'Budżet awaryjny']
+            values = [budgetExpenses, allowance, budgetEmergency]
+            if budgetType == '1':
+                labels.insert(1, 'Budżet zachcianek')
+                values.insert(1, budgetWants)
+            
             # Zwróć odpowiedź dla strony o udanym zapisie danych oraz wartości dla pól budżetu
             response = JsonResponse({
                 'status': 'success', 
@@ -61,6 +68,8 @@ def budget(request): # Sekcja budżetu
                 'budgetEmergency': int(budgetEmergency),
                 'debt': int(debt),
                 'messages': messagesArray,
+                'labels': labels,
+                'values': values,
                 }) 
             
             try:
@@ -111,6 +120,13 @@ def budget(request): # Sekcja budżetu
         
         try: # Sprawdzamy czy użytkownika posiada informacje wyjściowe, jeżeli tak to dajemy do JSONa
             budget = Budget_output_informations.objects.get(pk=request.user)
+            
+            labels = ['Budżet wydatkowy', 'Dodatek', 'Budżet awaryjny']
+            values = [budget.budgetExpenses, budget.allowance, budget.budgetEmergency]
+            if budgetType == '1':
+                labels.insert(1, 'Budżet zachcianek')
+                values.insert(1, budget.budgetWants)
+            
             data = {
                 'balance': budget.balance,
                 'budgetExpenses': budget.budgetExpenses,
@@ -118,6 +134,8 @@ def budget(request): # Sekcja budżetu
                 'allowance': budget.allowance,
                 'budgetEmergency': budget.budgetEmergency,
                 'debt': budget.debt,
+                'labels': labels,
+                'values': values,
             }
             dataJSON = dumps(data)
         except Budget_output_informations.DoesNotExist:
@@ -154,8 +172,7 @@ def affordability(request): # Przystępnościomierz
             budgetWants = budget_out.budgetWants
             allowance = budget_out.allowance
             
-            balanceAft, budgetExpensesAft, budgetWantsAft, allowanceAft, canDo, messagesArray = affordabilityRule(income, balance, budgetExpenses, budgetWants, allowance, expense, frequency, budgetType)
-            
+            balanceAft, budgetExpensesAft, budgetWantsAft, allowanceAft, canDo, messagesArray, labels, values = affordabilityRule(income, balance, budgetExpenses, budgetWants, allowance, expense, frequency, budgetType)
             
             # Zwróć odpowiedź dla strony o udanym zapisie danych oraz wartości dla strony
             response = JsonResponse({
@@ -171,6 +188,8 @@ def affordability(request): # Przystępnościomierz
                 'allowanceAft': int(allowanceAft),
                 'messages': messagesArray,
                 'canDo': canDo,
+                'labels': labels,
+                'values': values,
                 }) 
             return response
         elif action == 'save':

@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Budżet</title>
-    <script src="{% static 'js/budget.js' %}" defer></script>
+    <script type="module" src="{% static 'js/budget.js' %}" defer></script>
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
@@ -13,7 +13,7 @@
 
     <form id="budgetForm" method="post">
         {% csrf_token %}
-       <h2> {{ form.as_p }}</h2> 
+        <h2> {{ form.as_p }}</h2> 
         {% comment %} jeżeli jest typ budżetu 2 to wtedy nie pokazuje procentu na zachcianki {% endcomment %}
         <button class="button2" id='submitButton'>Zapisz</button>
     </form>
@@ -21,7 +21,8 @@
     <div id="responseMessage"></div>
 
 {% if dataJSON %}
-    <script>
+    <script type="module">
+        import { budgetOutDataDisplay } from "{% static 'js/budget.js' %}";
         document.addEventListener('DOMContentLoaded', function() {
             const data = JSON.parse('{{ dataJSON|escapejs }}'); // Wyciąganie z JSONa danych o ostatnich danych wyjścia
             budgetOutDataDisplay(data);
@@ -29,15 +30,18 @@
     </script>
 {% endif %}
 
-    <div id="calculatedResults">
+    <div id="calculatedResults" style="display:none">
         <h2>Wyliczony budżet</h2>
         <h2><p>Saldo: <span id="balanceDisplay"></span></p></h2>
+        <div style='display:none'> {% comment %} Nie usuwać, ukryte ale potrzebne! {% endcomment %}
         <h2><p>Budżet wydatkowy: <span id="budgetExpensesDisplay"></span></p></h2>
         <h2><p>Budżet zachcianek: <span id="budgetWantsDisplay"></span></p></h2>
         <h2><p>Dodatek: <span id="allowanceDisplay"></span></p></h2>
         <h2><p>Budżet awaryjny: <span id="budgetEmergencyDisplay"></span></p></h2>
+        </div>
         <h2><p>Dług: <span id="debtDisplay"></span></p></h2>
         <ul id="messages"></ul>
+        <canvas id="chartDisplay" width="200" height="100"></canvas>
     </div>
 </body>
 </html>

@@ -1,9 +1,19 @@
+// Importowanie z innych modułów
+import { renderChart } from './chart.js';
+
+
 // AJAX dla podstrony przystępnościomierza
 document.querySelectorAll('.actionButton').forEach(button => {
     button.addEventListener('click', function (event) {
         event.preventDefault(); // Zapobiegamy defaultowemy zachowaniu na POSTa
 
         const responseMessage = document.getElementById('responseMessage');
+        const ctx = chartDisplay.getContext('2d');
+        ctx.clearRect(0, 0, chartDisplay.width, chartDisplay.height);
+
+        if (myChart) {
+            myChart.destroy();
+        }
 
         if (validateInputs()) {
             const action = this.getAttribute('data-action');
@@ -47,9 +57,17 @@ document.querySelectorAll('.actionButton').forEach(button => {
                             budgetExpensesAftDisplay.textContent = data.budgetExpensesAft;
                             budgetWantsAftDisplay.textContent = data.budgetWantsAft;
                             allowanceAftDisplay.textContent = data.allowanceAft;
+
+                            document.getElementById("calculatedResults").style.display = "";
+
+                            const type = 'bar';
+                            const labels = data.labels;
+                            const dataValues = data.values;
+                            const title = 'Porównanie przed i po wydatku';
+                            myChart = renderChart(ctx, type, labels, title, dataValues);
                         } else {
                             canDoDisplay.textContent = 'Wydatek nie jest możliwy do pokrycia!';
-                            canDoDisplay.style.color = 'red'
+                            canDoDisplay.style.color = 'red';
                         }
                         // Pokazujemy wiadomości zwrotne od algorytmu
                         const messagesContainer = document.getElementById('messages');
@@ -130,9 +148,13 @@ const budgetExpensesAftDisplay = document.getElementById('budgetExpensesAftDispl
 const budgetWantsAftDisplay = document.getElementById('budgetWantsAftDisplay');
 const allowanceAftDisplay = document.getElementById('allowanceAftDisplay');
 const canDoDisplay = document.getElementById('canDoDisplay');
+const chartDisplay = document.getElementById('chartDisplay');
 
 // Debouncowanie funkcji
 const validateFormInputsDebounced = debounce(validateInputs, 300);
 
 // Dodawanie event listenerów do każdego inputu i ich odpowiednich walidatorów
 expenseInput.addEventListener('input', validateFormInputsDebounced);
+
+// Reszta
+let myChart = null;
