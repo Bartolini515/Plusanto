@@ -195,6 +195,9 @@ button:active {
 .closebtn:hover {
   color: black;
 }
+.link {
+            color: white; /* Ustawia kolor czcionki na biały */
+        }
 /*Akceptacja plików cookie*/
 .ciasteczka{
   position:fixed;

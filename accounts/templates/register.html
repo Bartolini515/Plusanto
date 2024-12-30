@@ -24,7 +24,7 @@
     {% endif %}
     <form method="post">
         {% csrf_token %} <!-- Zawsze przywołuj csrf_token gdy formularz korzysta z POST aby chronić przed CSRF (https://owasp.org/www-community/attacks/csrf#overview) <p> -->
-           <label for="id_username">Nazwa użytkownika</label><br><br>
+           <label for="id_username">Nazwa użytkownika</label><br>
            {{form.username}}
         <br>
         <label for="id_first_name">Imię</label><br><br>
@@ -46,5 +46,7 @@
         
         <button class="button2">Zarejestruj się</button>
     </form>
+    <br>
+    <a href="signin" class="link"><u><b> Masz już konto? Zaloguj się.</u></b></a>
 </body>
 </html>
