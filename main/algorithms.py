@@ -61,7 +61,7 @@ def budgetEstablish(value:int, budgetType, percentWants:int, percentAllowance:in
 
 
 # Funkcja rozprowadzania dodatkowej wartości do istniejącego już budżetu
-def budgetAdd(value:int, budgetType, budgetExpenses:int, budgetWants:int, budgetEmergency:int, allowance:int, percentWants:int, percentAllowance:int, percentEmergency:int): # Funcja dodawania do budżetu kolejnych wartości odpowiednio rozdzielonych
+def budgetAdd(value:int, budgetType, budgetExpenses:int, budgetWants:int, budgetEmergency:int, allowance:int, percentWants:int, percentAllowance:int, percentEmergency:int): # Funkcja dodawania do budżetu kolejnych wartości odpowiednio rozdzielonych
     budgetExpensesTemp, budgetWantsTemp, budgetEmergencyTemp, allowanceTemp = budgetEstablish(value, budgetType, percentWants, percentAllowance, percentEmergency)
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetExpenses + budgetExpensesTemp, budgetWants + budgetWantsTemp, budgetEmergency + budgetEmergencyTemp, allowance + allowanceTemp
     return budgetExpenses, budgetWants, budgetEmergency, allowance
@@ -134,15 +134,17 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     allowance -= difference
                     budgetEmergency -= abs(allowance)
                     balance -= abs(budgetEmergency)
-                    allowance, budgetEmergency = 0, 0, 
+                    allowance, budgetEmergency = 0, 0
                     createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku, budżetu awaryjnego oraz obecnego salda.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case _:
                     # TODO Czy coś tu dodać aby robiło gdy nie ma wystarczających środków?
                     createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference}, pokrycie nie jest możliwe. Brakująca ilość: {balance - abs(budgetWants + allowance + budgetEmergency - difference)}.')
+                    global lackingFunds
+                    lackingFunds = True
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
-         
+                
                 
 # Funkcja rozprowadzająca saldo
 def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency):
@@ -151,7 +153,7 @@ def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, 
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetAdd(abs(difference), budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency)
     createMessage(f'Nadmiar w saldzie został rozprowadzony w wysokości {abs(difference)}')
     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
-     
+
 
 # Funkcja rozprowadzająca fundusz
 def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, budgetEmergency:int, debt:int, repayDebt:int):
@@ -161,7 +163,7 @@ def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, b
         createMessage(f'Fundusz awaryjny jest powyżej planowanego funduszu, budżet awaryjny został przekazany do dodatku.')
     
     else: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości mniejszej niż 40% planowanego przekazujemy połowę dodatku na budżet awaryjny
-        if debt: # Jeżeli istnieje dług to przekazujemy pół dodateku na budżet awaryjny, a drugie na spłate długu
+        if debt: # Jeżeli istnieje dług to przekazujemy pół dodatku na budżet awaryjny, a drugie na spłate długu
             halfAllowance = math.ceil(0.5 * allowance)
             allowance = 0
             budgetEmergency += halfAllowance
@@ -226,6 +228,9 @@ def checkEmergencyBudget(emergencyFund:int, plannedEmergencyFund:int, budgetEmer
 def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:int, budgetType, bufor:int, percentWants:int, percentAllowance:int, percentEmergency:int, plannedEmergencyFund:int, distributeConf:int):
     repayDebt = 0
     
+    global lackingFunds
+    lackingFunds = False
+    
     global messagesArray
     messagesArray = []
     
@@ -247,7 +252,7 @@ def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:in
     if (debt and allowance) or repayDebt: # Jeżeli istnieje dług oraz dodatek, lub spłata długu to przekazujemy dodatek na spłacenie długu
         allowance, debt = debtRepayment(repayDebt, allowance, debt)
         
-    return balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray
+    return balance, budgetExpenses, budgetWants, allowance, budgetEmergency, debt, messagesArray, lackingFunds
 
 
 
