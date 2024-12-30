@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Przystępnościomierz</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="{% static 'js/affordability.js' %}" defer></script>
+    <script type="module" src="{% static 'js/affordability.js' %}" defer></script>
 </head>
 <body>
     <header class="czarny-naglowek">
@@ -17,9 +17,9 @@
     <form id="affordability-checker" method='POST'>
         {% csrf_token %}
         <br><br><label for="id_expense">Wartość wydatku</label>
-           {{form.expense}}
-        <br><br><label for="id_frequency">Powtarzalnosć</label>
-           {{form.frequency}}
+            {{form.expense}}
+        <br><br><label for="id_frequency">Powtarzalność</label>
+            {{form.frequency}}
         <br><br><button class="actionButton" data-action='calculate'>Oblicz przystępność</button>
         {% comment %} Jak chcesz zmienić klasę to pamiętaj o js aby zmienić to w linijce 2 {% endcomment %}
     </form>
@@ -27,9 +27,10 @@
     <div id="responseMessage"></div>
 
     <div id="result" >
-    <div id="calculatedResults">
-        <h2>Wyliczenie przystepności</h2>
+    <div id="calculatedResults" style="display:none">
+        <h2>Wyliczenie przystępności</h2>
         <h2><p><span id="canDoDisplay"></span></p></h2>
+        <div style='display:none'> {% comment %} Nie usuwać, ukryte ale potrzebne! {% endcomment %}
         <h2><p>Saldo przed: <span id="balanceDisplay"></span></p></h2>
         <h2><p>Saldo po: <span id="balanceAftDisplay"></span></p></h2>
         <h2><p>Budżet wydatkowy przed: <span id="budgetExpensesDisplay"></span></p></h2>
@@ -38,8 +39,10 @@
         <h2><p>Budżet zachcianek po: <span id="budgetWantsAftDisplay"></span></p></h2>
         <h2><p>Dodatek przed: <span id="allowanceDisplay"></span></p></h2>
         <h2><p>Dodatek po: <span id="allowanceAftDisplay"></span></p></h2>
+        </div>
+        <button class="actionButton" data-action='save'>Zaktualizuj budżet wliczając ten wydatek</button>
         <ul id="messages"></ul>
-        <button class="actionButton" data-action='save'>Zaaktualizuj budżet wliczając ten wydatek</button>
+        <canvas id="chartDisplay" width="200" height="100"></canvas>
     </div>
 </body>
 </html>

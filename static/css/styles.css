@@ -198,3 +198,26 @@ button:active {
 .link {
             color: white; /* Ustawia kolor czcionki na biały */
         }
+/*Akceptacja plików cookie*/
+.ciasteczka{
+  position:fixed;
+  background-color:white;
+  color:black;
+  text-align: center;
+  display: block;
+  z-index: 9999999;
+  width: 50%;
+  height: 30%;
+  top: 20%;
+  left:25%;
+  opacity: 1.0;
+}
+.blokada{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background-color: black;
+  opacity:0.4;
+  z-index: 9999998;
+  display: block;
+}
