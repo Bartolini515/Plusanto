@@ -221,3 +221,38 @@ button:active {
   z-index: 9999998;
   display: block;
 }
+
+
+
+.button5 {
+    background-color: #4d4dd3; 
+    border: 2px solid black; 
+    color: #ffffff; /* Biały tekst */
+    width: 300px; /* Szerokość prostokątów */
+    height: 100px; /* Wysokość prostokątów */
+    font-family: 'Arial', sans-serif; /* Czcionka */
+    font-size: 24px; /* Duży rozmiar czcionki */
+    text-transform: uppercase; /* Wielkie litery */
+    cursor: pointer; /* Kursor wskazujący */
+    transition: background-color 0.3s, color 0.3s; /* Efekt przejścia */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 400px;
+    width: 400px;
+}
+
+.button5:hover {
+    background-color: #080477; 
+    color: #ffffff; 
+}
+
+ .dashboard-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px; /* Odstępy między przyciskami */
+    padding: 20px;
+    
+ }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+    
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -18,9 +19,10 @@
     </ul>
 {% endif %}
 <h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
-    
-    <button class="button2"><a href="{% url 'budget' %}">Budżet</a></button>
-    <button class="button2"><a href="{% url 'calculator' %}">Kalkulator</a></button>
-    <button class="button2"><a href="{% url 'affordability' %}">Przystępnościomierz</a></button>
+    <div class="dashboard-menu">
+    <button class="button5"><a href="{% url 'budget' %}">Budżet</a></button>
+    <button class="button5"><a href="{% url 'calculator' %}">Kalkulator</a></button>
+    <button class="button5"><a href="{% url 'affordability' %}">Przystępnościomierz</a></button>
+    </div>
 </body>
 </html>
