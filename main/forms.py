@@ -57,7 +57,7 @@ class Budget_form(forms.Form):
     budgetType = forms.ChoiceField(
         label="Typ budżetu",
         choices=[('1', 'Stabilny: 50% wydatki / 30% zachcianki / 15% dodatek / 5% awaryjne'), 
-                 ('2', 'Rozwojowy: 50% wydatki / 30% dodatek / 20% awaryjne')],
+                ('2', 'Rozwojowy: 50% wydatki / 30% dodatek / 20% awaryjne')],
         required=True,
         widget=forms.Select(attrs={'placeholder': 'Wybierz typ budżetu'})
     )
