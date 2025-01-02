@@ -9,16 +9,16 @@ export function renderChart(ctx, type, labels, title, dataValues) {
                 label: title,
                 data: dataValues,
                 backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
+                    'rgba(0, 123, 255, 0.6)',  
+                    'rgba(0, 200, 155, 0.6)',  
+                    'rgba(255, 193, 7, 0.6)',  
+                    'rgba(220, 53, 69, 0.6)'   
                 ],
                 borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(153, 102, 255, 1)'
+                    'rgba(0, 123, 255, 1)',    
+                    'rgba(0, 200, 155, 1)',    
+                    'rgba(255, 193, 7, 1)',    
+                    'rgba(220, 53, 69, 1)'     
                 ],
                 borderWidth: 1
             }]
@@ -28,6 +28,13 @@ export function renderChart(ctx, type, labels, title, dataValues) {
             scales: {
                 y: {
                     beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'rgba(255, 255, 255, 1)',
+                    }
                 }
             }
         }
