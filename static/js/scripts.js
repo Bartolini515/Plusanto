@@ -45,6 +45,9 @@ function checkAlerts(messages, levels) {
 
         alertBox.innerHTML = "";
         alertBox.style.display = '';
+        setTimeout(() => {
+            alertBox.style.display = "none";
+        }, 8000);
         alertBox.appendChild(ul); 
     };
 };

@@ -17,8 +17,8 @@ document.getElementById('submitButton').addEventListener('click', function (even
     if (parseInt(balanceInput.value) > parseInt(incomeInput.value) * 2) {
         if (confirm('Posiadasz saldo powyżej 2 wartości dochodu, czy chcesz rozprowadzić nadmiar do budżetu?')) {
             distributeConf = true;
-        } else {distributeConf = false};
-    } else {distributeConf = false};
+        }
+    }
 
     if (validatePercentages() && validateFormInputs()) {
         const form = document.getElementById('budgetForm');
@@ -259,3 +259,4 @@ percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
 // Reszta
 checkBudgetType(budgetTypeField.value);
 let myChart = null;
+let distributeConf = false;
