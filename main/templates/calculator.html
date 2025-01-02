@@ -15,13 +15,13 @@
     <p>Oblicz swój podatek w kilku prostych krokach.</p>
 
     <form id="tax-calculator" method='POST'>
-        <br><br><label for="id_income">Wartość wydatku</label>
+        <br><br><label for="id_income">Przychód roczny</label>
             {{form.income}}
             {{form.income.errors}}
-        <br><br><label for="id_deductions">Powtarzalność</label>
+        <br><br><label for="id_deductions">Odliczenia od podatku</label>
             {{form.deductions}}
             {{form.deductions.errors}}
-
+        <br><br>
         <button type="submit">Oblicz podatek</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
