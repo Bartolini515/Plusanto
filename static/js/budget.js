@@ -259,3 +259,8 @@ percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
 // Reszta
 checkBudgetType(budgetTypeField.value);
 let myChart = null;
+
+function toggleHelp() {
+    const helpText = document.getElementById('helpText');
+    helpText.classList.toggle('active'); // Dodaje/usuwa klasę "active"
+}
