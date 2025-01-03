@@ -225,8 +225,8 @@ button:active {
 
 
 .button5 {
-    background:  radial-gradient(circle, rgb(15, 64, 116) 10%, rgba(0, 191, 255, 1) 40%, rgba(135, 206, 250, 1) 100%);
-    border: 4px solid black; 
+   /* background:  radial-gradient(circle, rgb(15, 64, 116) 10%, rgba(0, 191, 255, 1) 40%, rgba(135, 206, 250, 1) 100%);
+    border: 4px solid black; */
     color: #ffffff; /* Biały tekst */
     width: 300px; /* Szerokość prostokątów */
     height: 100px; /* Wysokość prostokątów */
