@@ -20,9 +20,9 @@
 {% endif %}
 <h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
     <div class="dashboard-menu">
-    <button class="button5"><a href="{% url 'budget' %}"><h4>Budżet</h4></a></button>
-    <button class="button5"><a href="{% url 'calculator' %}"><h4>Kalkulator</h4></a></button>
-    <button class="button5"><a href="{% url 'affordability' %}"><h4>Przystępnościomierz</h4></a></button>
+    <a href="{% url 'budget' %}"><button class="button5"><h4>Budżet</h4></button></a>
+    <a href="{% url 'calculator' %}"><button class="button5"><h4>Kalkulator</h4></button></a>
+    <a href="{% url 'affordability' %}"><button class="button5"><h4>Przystępnościomierz</h4></button></a>
     </div>
 </body>
 </html>

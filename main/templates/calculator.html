@@ -12,16 +12,16 @@
         <h1>Kalkulator Podatków</h1>
     </header>
     <h3><a href="{% url 'dashboard' %}"class="button1">Wróć do pulpitu</a></h3>
-    <p>Oblicz swój podatek w kilku prostych krokach.</p>
-
+    <p><h4>Oblicz swój podatek w kilku prostych krokach.</h4></p>
+<h4>
     <form id="tax-calculator">
         <label for="income">Przychód roczny:</label>
         <input type="number" id="income" name="income" placeholder="Wpisz swój przychód roczny" required>
-
+     <br><br>
         <label for="deductions">Odliczenia od podatku:</label>
         <input type="number" id="deductions" name="deductions" placeholder="Wpisz łączną wartość odliczeń od podatku" required>
-
-        <button type="submit">Oblicz podatek</button>
+</h4>
+        <button class='button2' type="submit">Oblicz podatek</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
 
