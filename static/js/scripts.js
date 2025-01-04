@@ -79,7 +79,7 @@ function checkCookiesAccept() {
         document.getElementById('cookie-accept').addEventListener('click', function() {
             blockade.style.display = 'none';
             cookies.style.display = 'none';
-            document.cookie = "cookies-accepted=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;" // Utworzenie pliku cookie który sygnalizuje o akceptacji ciasteczek
+            document.cookie = "cookies-accepted=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;"; // Utworzenie pliku cookie który sygnalizuje o akceptacji ciasteczek
         });
 
         document.getElementById('cookie-deny').addEventListener('click', function() {
