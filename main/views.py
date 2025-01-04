@@ -10,8 +10,6 @@ from json import dumps
 def index(request): # Strona główna
     return render(request, 'index.html')
 
-#TODO: Akceptacja cookies https://medium.com/@kanithkar_baskaran/how-to-save-cookies-in-web-django-847136032737
-
 def dashboard(request): # Pulpit
     if  request.user.is_authenticated:
         return render(request, 'dashboard.html')
