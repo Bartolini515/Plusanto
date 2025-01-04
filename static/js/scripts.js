@@ -75,7 +75,7 @@ function checkCookiesAccept() {
     cookies = document.getElementsByClassName("ciasteczka")[0] // Wybiera pierwszy element, czyli jedyny, z klasy "ciasteczka"
     if (getCookie('cookies-accepted') == "") { // Sprawdza czy istnieje cookie cookies-accepted, jeżeli funkcja zwraca pusty string to wyświetla proces akceptacji
         blockade.style.display = '';
-        cookies.style.display = ''
+        cookies.style.display = '';
         document.getElementById('cookie-accept').addEventListener('click', function() {
             blockade.style.display = 'none';
             cookies.style.display = 'none';
