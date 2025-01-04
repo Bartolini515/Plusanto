@@ -62,6 +62,15 @@ class Budget_form(forms.Form):
         widget=forms.Select(attrs={'placeholder': 'Wybierz typ budżetu'})
     )
     
+    percentExpenses = forms.IntegerField(
+        label="Procent przekazywany na wydatki",
+        min_value=0,
+        max_value=50,
+        required=False,
+        disabled=True,
+        widget=forms.NumberInput(attrs={'placeholder': 'Wprowadź procent wydatków'}),
+        initial='50'
+    )
     percentWants = forms.IntegerField(
         label="Procent przekazywany na zachcianki",
         min_value=0,
@@ -92,7 +101,7 @@ class Budget_form(forms.Form):
 class CalculatorForm(forms.Form):
     income = forms.IntegerField(
     label="Przychód roczny",
-    min_value=0,
+    min_value=1,
     max_value=999999999,
     required=True,
     widget=forms.NumberInput(attrs={'placeholder': 'Wpisz swój przychód roczny'})
@@ -110,16 +119,16 @@ class CalculatorForm(forms.Form):
 class AffordabilityForm(forms.Form):
     expense = forms.IntegerField(
     label="Wartość wydatku",
-    min_value=0,
+    min_value=1,
     max_value=999999999,
     required=True,
     widget=forms.NumberInput(attrs={'placeholder': 'Wpisz wartość wydatku'})
     )
     frequency = forms.ChoiceField(
-        label="Powtarzalnosć",
+        label="Powtarzalność",
         choices=[('1', 'Jednorazowo'), 
-                 ('2', 'Miesięcznie'),
-                 ('3', 'Rocznie')],
+                ('2', 'Miesięcznie'),
+                ('3', 'Rocznie')],
         required=True,
         widget=forms.Select(attrs={'placeholder': 'Wybierz Powtarzalność'})
     )
