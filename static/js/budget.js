@@ -64,7 +64,8 @@ document.getElementById('submitButton').addEventListener('click', function (even
                 const labels = data.labels;
                 const dataValues = data.values;
                 const title = 'Alokacja budżetu';
-                myChart = renderChart(ctx, type, labels, title, dataValues);
+                const show = false;
+                myChart = renderChart(ctx, type, labels, title, dataValues, show);
 
                 responseMessage.textContent = data.message; 
                 responseMessage.style.color = 'green';
@@ -224,7 +225,8 @@ export function budgetOutDataDisplay(data) {
     const labels = data.labels;
     const dataValues = data.values;
     const title = 'Alokacja budżetu';
-    myChart = renderChart(ctx, type, labels, title, dataValues);
+    const show = false;
+    myChart = renderChart(ctx, type, labels, title, dataValues, show);
 }
 
 // Funkcja ustawiająca elementy zgodnie z wybranymi opcjami
