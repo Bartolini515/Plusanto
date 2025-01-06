@@ -64,7 +64,8 @@ document.querySelectorAll('.actionButton').forEach(button => {
                             const labels = data.labels;
                             const dataValues = data.values;
                             const title = 'Porównanie przed i po wydatku';
-                            myChart = renderChart(ctx, type, labels, title, dataValues);
+                            const show = true;
+                            myChart = renderChart(ctx, type, labels, title, dataValues, show);
                         } else {
                             document.getElementById("calculatedResults").style.display = "";
                             canDoDisplay.textContent = 'Wydatek nie jest możliwy do pokrycia!';

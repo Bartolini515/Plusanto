@@ -1,6 +1,6 @@
 import 'https://cdn.jsdelivr.net/npm/chart.js';
 
-export function renderChart(ctx, type, labels, title, dataValues) {
+export function renderChart(ctx, type, labels, title, dataValues, show) {
     return new Chart(ctx, {
         type: type,
         data: {
@@ -24,10 +24,27 @@ export function renderChart(ctx, type, labels, title, dataValues) {
             }]
         },
         options: {
-            responsive: true, // To do zmiany
+            responsive: false, 
+            maintainAspectRatio: false,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    grid: {
+                        display: show,
+                    }, 
+                    ticks: {
+                        color: 'white',
+                        display: show, 
+                    },
+                },
+                x: {
+                    grid: {
+                        display: show, 
+                    }, 
+                    ticks: {
+                        color: 'white',
+                        display: show, 
+                    },
                 }
             },
             plugins: {
