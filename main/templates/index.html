@@ -54,15 +54,15 @@
     <ul>
     {% if user.is_authenticated %}
         <!-- Jeśli użytkownik jest zalogowany, nie pokazuj przycisków -->
-        <li><button class="button2"><a href="{% url 'logout' %}">Wyloguj się</a></button></li>
-        <li><button class="button2"><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></button></li>
+        <button class="button2"><li><a href="{% url 'logout' %}">Wyloguj się</a></li></button>
+        <button class="button2"><li><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></li></button>
     {% else %}
         <!-- Jeśli użytkownik nie jest zalogowany, pokazuj przyciski -->
-        <li><button class="button2"><a href="{% url 'register' %}">Zarejestruj się</a></button></li>
-        <li><button class="button2"><a href="{% url 'login' %}">Zaloguj się</a></button></li>
+        <button class="button2"><li><a href="{% url 'register' %}">Zarejestruj się</a></li></button>
+        <button class="button2"><li><a href="{% url 'login' %}">Zaloguj się</a></button></li>
     {% endif %}
-    <li><button class="button2"><a href="{% url 'about' %}">O Plusanto</a></button></li>
-    <li><button class="button2"><a href="{% url 'contact' %}">Kontakt</a></button></li>
+    <button class="button2"><li><a href="{% url 'about' %}">O Plusanto</a></li></button>
+    <button class="button2"><li><a href="{% url 'contact' %}">Kontakt</a></li></button>
 </ul>
     
     <br /> <br />
