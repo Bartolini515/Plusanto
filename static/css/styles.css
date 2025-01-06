@@ -257,3 +257,14 @@ button:active {
     padding: 20px;
     
  }
+ .button3{
+  background-color: rgba(255, 255, 255, 0.2); /* Półprzezroczyste białe tło */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Lekkie obramowanie */
+    color: white; /* Biały tekst */
+    padding: 5px 10px; /* Małe odstępy wewnętrzne */
+    font-size: 12px; /* Mały rozmiar czcionki */
+    border-radius: 5px; /* Zaokrąglone rogi */
+    cursor: pointer; /* Kursor wskazujący */
+    transition: background-color 0.3s ease; /* Płynna zmiana koloru tła */
+    position: relative; 
+     }

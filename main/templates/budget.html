@@ -27,7 +27,8 @@
             {{form.income}}
             {{form.income.errors}}
 
-        <br><br><label for="id_expenses">Wydatki stałe</label>
+        <br><br><button class="button3" title="Stałe, regularne wydatki, takie jak rachunki za prąd, wodę czy czynsz.">? </button>
+        <label for="id_expenses">Wydatki stałe</label>
             {{form.expenses}}
             {{form.expenses.errors}}
 
@@ -38,22 +39,34 @@
         </span>
 
         <span id="emergencyFundSpan">
-        <br><br><label for="id_emergencyFund">Fundusz awaryjny</label>
+        <br><br>
+        <button class="button3" title="Twój fundusz awaryjny to środki przeznaczone na niespodziewane wydatki. Mogą one być potrzebne w sytuacjach, które wymagają większej ilości pieniędzy, niż aktualnie posiadasz w swoim budżecie.">?</button>
+        <label for="id_emergencyFund">Fundusz awaryjny</label>
             {{form.emergencyFund}}
             {{form.emergencyFund.errors}}
 
-        <br><br><label for="id_plannedEmergencyFund">Planowany fundusz awaryjny</label>
+        <br><br>
+        <button class="button3" title="Twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.">?</button>
+        <label for="id_plannedEmergencyFund">Planowany fundusz awaryjny</label>
             {{form.plannedEmergencyFund}}
             {{form.plannedEmergencyFund.errors}}
         </span>
 
         <span id="buforSpan">
-            <br><br><label for="id_bufor">Bufor</label>
+            <br><br>
+            <button class="button3" title="Dodatkowa kwota uwzględniana w budżecie, służy jako zabezpieczenie przed małymi, nagłymi wydatkami.">?</button>
+            <label for="id_bufor">Bufor</label>
                 {{form.bufor}}
                 {{form.bufor.errors}}
         </span>
 
-        <br><br><label for="id_budgetType">Typ budżetu</label>
+        <br><br>
+        <button class="button3" title="Budżet Stabilny Łączy oszczędzanie z uwzględnieniem codziennych potrzeb i przyjemności. Unikatowe dla budżetu stabilnego:
+- Zachcianki,
+- Przekazywanie dodatku do budżetu awaryjnego (jeżeli poniżej 40% planowanego funduszu).
+Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpieczeń finansowych. Unikalne dla budżetu rozwojowego:
+- Bufor do wydatków.">?</button>
+        <label for="id_budgetType">Typ budżetu</label>
             {{form.budgetType}}
             {{form.budgetType.errors}}
 
