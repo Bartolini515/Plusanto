@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
+    <header class="czarny-naglowek">
+        <h1>Witaj w budżecie</h1>
+    </header>
 <h3><a href="{% url 'dashboard' %}" class="button1">Wróć do pulpitu</a></h3>
-    <h1>Witaj w budżecie</h1>
+   
 
     <form id="budgetForm" method="post">
         {% csrf_token %}
@@ -115,6 +118,7 @@ Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpiecze�
         </div>
         <h2 id='debtDisplayHeader'><p>Dług: <span id="debtDisplay"></span></p></h2>
         <ul id="messages"></ul>
+        <br><br><br><br><br>
         <span style="display: flex; justify-content: center; align-items: center; height: 70vh;">
             <canvas id="chartDisplay" width='600' height='600'></canvas>
         </span>
