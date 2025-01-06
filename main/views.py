@@ -207,5 +207,5 @@ def affordability(request): # Przystępnościomierz
             form = AffordabilityForm()
             return render(request, 'affordability.html', {'form': form}) # Jeżeli użytkownik nie wysyła żadnych danych to wyświetli stronę informacji
         except Budget_output_informations.DoesNotExist: # Jeżeli nie posiada to odmawiamy dostępu
-            messages.error(request, 'Musisz najpierw obliczyć budżet aby skorzystać z przystępnościomierza.')
-            return redirect('dashboard')
+            messages.error (request, 'Musisz najpierw obliczyć budżet aby skorzystać z przystępnościomierza.')
+            return render(request, 'dashboard.html')
