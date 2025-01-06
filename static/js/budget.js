@@ -17,8 +17,8 @@ document.getElementById('submitButton').addEventListener('click', function (even
     if (parseInt(balanceInput.value) > parseInt(incomeInput.value) * 2) {
         if (confirm('Posiadasz saldo powyżej 2 wartości dochodu, czy chcesz rozprowadzić nadmiar do budżetu?')) {
             distributeConf = true;
-        } else {distributeConf = false};
-    } else {distributeConf = false};
+        }
+    }
 
     if (validatePercentages() && validateFormInputs()) {
         const form = document.getElementById('budgetForm');
@@ -64,7 +64,8 @@ document.getElementById('submitButton').addEventListener('click', function (even
                 const labels = data.labels;
                 const dataValues = data.values;
                 const title = 'Alokacja budżetu';
-                myChart = renderChart(ctx, type, labels, title, dataValues);
+                const show = false;
+                myChart = renderChart(ctx, type, labels, title, dataValues, show);
 
                 responseMessage.textContent = data.message; 
                 responseMessage.style.color = 'green';
@@ -119,7 +120,7 @@ function validatePercentages() {
     const total = wants + allowance + emergency;
 
     if (total != 50) {
-        errorMessageElement.textContent = 'Suma procentów musi się równać 50%.';
+        errorMessageElement.textContent = 'Suma procentów musi się równać 50%. Niezgadzająca się ilość punktów procentowych: ' + (total - 50);
         errorMessageElement.style.display = 'block'; // Pokaż błąd
         // Zmiana stylu obramowań sygnalizująca błędne dane
         percentWantsInput.style.borderColor = 'red';
@@ -172,24 +173,32 @@ function checkBudgetType(value) {
     switch (value) {
         case '1': // Typ budżetu stabilny
             // Dla procentów
-            percentWantsInput.style.display = ''; // Pokaż element
+            percentWantsSpan.style.display = ''; // Pokaż element
             percentWantsInput.value = 30;
             percentAllowanceInput.value = 15;
-            percentEmergencyInput.value = 5; 
+            if (getCookie('emergencyFundChecked') == 'True') {
+                percentEmergencyInput.value = 5; 
+            } else {
+                percentEmergencyInput.value = 0;
+            }
 
             // Dla buforu
-            buforInput.style.display = 'none' // Ukryj element
+            buforSpan.style.display = 'none' // Ukryj element
             buforInput.value = 0;
             break;
         case '2': // Typ budżetu rozwojowy
             // Dla procentów
-            percentWantsInput.style.display = 'none'; // Ukryj element
+            percentWantsSpan.style.display = 'none'; // Ukryj element
             percentWantsInput.value = 0; 
             percentAllowanceInput.value = 30; 
-            percentEmergencyInput.value = 20;
+            if (getCookie('emergencyFundChecked') == 'True') {
+                percentEmergencyInput.value = 20; 
+            } else {
+                percentEmergencyInput.value = 0;
+            }
 
             // Dla buforu
-            buforInput.style.display = '' // Pokaż element
+            buforSpan.style.display = '' // Pokaż element
             buforInput.value = '';
             break;
     }
@@ -216,10 +225,69 @@ export function budgetOutDataDisplay(data) {
     const labels = data.labels;
     const dataValues = data.values;
     const title = 'Alokacja budżetu';
-    myChart = renderChart(ctx, type, labels, title, dataValues);
+    const show = false;
+    myChart = renderChart(ctx, type, labels, title, dataValues, show);
 }
 
-// Wyciąganie elementow z formularza
+// Funkcja ustawiająca elementy zgodnie z wybranymi opcjami
+function checkOptions() {
+    if (getCookie('debtChecked') == '' || getCookie('emergencyFundChecked') == '') { 
+            document.cookie = "debtChecked=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;";
+            document.cookie = "emergencyFundChecked=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;";
+    }
+
+    if (getCookie('debtChecked') == 'True') {
+        debtSpan.style.display = '';
+        debtDisplayHeader.style.display = '';
+        debtCheckbox.checked = true;
+    } else {
+        debtSpan.style.display = 'none';
+        debtDisplayHeader.style.display = 'none';
+        debtCheckbox.checked = false;
+        debtInput.value = 0;
+    }
+
+    if (getCookie('emergencyFundChecked') == 'True') {
+        emergencyFundSpan.style.display = '';
+        percentEmergencySpan.style.display = '';
+        emergencyFundCheckbox.checked = true;
+    } else {
+        emergencyFundSpan.style.display = 'none';
+        percentEmergencySpan.style.display = 'none';
+        emergencyFundCheckbox.checked = false;
+        emergencyFundInput.value = 0;
+        plannedEmergencyFundInput.value = 0;
+        percentEmergencyInput.value = 0;
+    }
+}
+
+// Funkcja sprawdzająca stan checkbox-a
+function checkDebtChecked(state){
+    if (state) {
+        document.cookie = "debtChecked=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;";
+    } else {
+        document.cookie = "debtChecked=False; expires=Wed, 29 Dec 2077 12:00:00 UTC;";
+    }
+    checkOptions()
+}
+
+// Funkcja sprawdzająca stan checkbox-a
+function checkEmergencyFundChecked(state){
+    if (state) {
+        document.cookie = "emergencyFundChecked=True; expires=Wed, 29 Dec 2077 12:00:00 UTC;";
+    } else {
+        document.cookie = "emergencyFundChecked=False; expires=Wed, 29 Dec 2077 12:00:00 UTC;";
+    }
+    checkOptions()
+}
+
+
+function toggleHelp() {
+    const helpText = document.getElementById('helpText');
+    helpText.classList.toggle('active'); // Dodaje/usuwa klasę "active"
+}
+
+// Wyciąganie elementów z formularza
 const balanceInput = document.getElementById('id_balance');
 const incomeInput = document.getElementById('id_income');
 const expensesInput = document.getElementById('id_expenses');
@@ -231,6 +299,7 @@ const budgetTypeField = document.getElementById('id_budgetType');
 const percentWantsInput = document.getElementById('id_percentWants');
 const percentAllowanceInput = document.getElementById('id_percentAllowance');
 const percentEmergencyInput = document.getElementById('id_percentEmergency');
+
 const balanceDisplay = document.getElementById('balanceDisplay');
 const budgetExpensesDisplay = document.getElementById('budgetExpensesDisplay');
 const budgetWantsDisplay = document.getElementById('budgetWantsDisplay');
@@ -238,6 +307,16 @@ const allowanceDisplay = document.getElementById('allowanceDisplay');
 const budgetEmergencyDisplay = document.getElementById('budgetEmergencyDisplay');
 const debtDisplay = document.getElementById('debtDisplay');
 const chartDisplay = document.getElementById('chartDisplay');
+
+const debtSpan = document.getElementById('debtSpan');
+const emergencyFundSpan = document.getElementById('emergencyFundSpan');
+const buforSpan = document.getElementById('buforSpan');
+const percentWantsSpan = document.getElementById('percentWantsSpan');
+const percentEmergencySpan = document.getElementById('percentEmergencySpan');
+const debtDisplayHeader = document.getElementById('debtDisplayHeader');
+
+const debtCheckbox = document.getElementById('debtCheckbox');
+const emergencyFundCheckbox = document.getElementById('emergencyFundCheckbox');
 
 // Debouncowanie funkcji
 const validateFormInputsDebounced = debounce(validateFormInputs, 300);
@@ -256,11 +335,11 @@ percentWantsInput.addEventListener('input', validatePercentagesDebounced);
 percentAllowanceInput.addEventListener('input', validatePercentagesDebounced);
 percentEmergencyInput.addEventListener('input', validatePercentagesDebounced);
 
+debtCheckbox.addEventListener('change', () => checkDebtChecked(debtCheckbox.checked));
+emergencyFundCheckbox.addEventListener('change', () => checkEmergencyFundChecked(emergencyFundCheckbox.checked));
+
 // Reszta
+checkOptions();
 checkBudgetType(budgetTypeField.value);
 let myChart = null;
-
-function toggleHelp() {
-    const helpText = document.getElementById('helpText');
-    helpText.classList.toggle('active'); // Dodaje/usuwa klasę "active"
-}
+let distributeConf = false;

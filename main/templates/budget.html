@@ -13,9 +13,71 @@
 
     <form id="budgetForm" method="post">
         {% csrf_token %}
-        <h2> {{ form.as_p }}</h2> 
+        <span>
+            <label for="debtCheckbox">Dług</label>
+            <input type="checkbox" id="debtCheckbox" name="debtCheckbox"><br>
+            <label for="emergencyFundCheckbox">Fundusz awaryjny</label>
+            <input type="checkbox" id="emergencyFundCheckbox" name="emergencyFundCheckbox">
+        </span>
+        <br><br><label for="id_balance">Saldo konta</label>
+            {{form.balance}}
+            {{form.balance.errors}}
+
+        <br><br><label for="id_income">Dochód</label>
+            {{form.income}}
+            {{form.income.errors}}
+
+        <br><br><label for="id_expenses">Wydatki stałe</label>
+            {{form.expenses}}
+            {{form.expenses.errors}}
+
+        <span id="debtSpan">
+        <br><br><label for="id_debt">Dług</label>
+            {{form.debt}}
+            {{form.debt.errors}}
+        </span>
+
+        <span id="emergencyFundSpan">
+        <br><br><label for="id_emergencyFund">Fundusz awaryjny</label>
+            {{form.emergencyFund}}
+            {{form.emergencyFund.errors}}
+
+        <br><br><label for="id_plannedEmergencyFund">Planowany fundusz awaryjny</label>
+            {{form.plannedEmergencyFund}}
+            {{form.plannedEmergencyFund.errors}}
+        </span>
+
+        <span id="buforSpan">
+            <br><br><label for="id_bufor">Bufor</label>
+                {{form.bufor}}
+                {{form.bufor.errors}}
+        </span>
+
+        <br><br><label for="id_budgetType">Typ budżetu</label>
+            {{form.budgetType}}
+            {{form.budgetType.errors}}
+
+        <br><br><label for="id_percentExpenses">Procent przekazywany na wydatki</label>
+            {{form.percentExpenses}}
+            {{form.percentExpenses.errors}}
+
+        <span id="percentWantsSpan">
+            <br><br><label for="id_percentWants">Procent przekazywany na zachcianki</label>
+                {{form.percentWants}}
+                {{form.percentWants.errors}}
+        </span>
+
+        <br><br><label for="id_percentAllowance">Procent przekazywany na dodatek</label>
+            {{form.percentAllowance}}
+            {{form.percentAllowance.errors}}
+
+        <span id="percentEmergencySpan">
+        <br><br><label for="id_percentEmergency">Procent przekazywany na awaryjność</label>
+            {{form.percentEmergency}}
+            {{form.percentEmergency.errors}}
+        </span>
         {% comment %} jeżeli jest typ budżetu 2 to wtedy nie pokazuje procentu na zachcianki {% endcomment %}
-        <button class="button2" id='submitButton'>Zapisz</button>
+        <br><br><button class="button2" id='submitButton'>Zapisz</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
     <div id="responseMessage"></div>
@@ -59,9 +121,11 @@ Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpiecze�
         <h2><p>Dodatek: <span id="allowanceDisplay"></span></p></h2>
         <h2><p>Budżet awaryjny: <span id="budgetEmergencyDisplay"></span></p></h2>
         </div>
-        <h2><p>Dług: <span id="debtDisplay"></span></p></h2>
+        <h2 id='debtDisplayHeader'><p>Dług: <span id="debtDisplay"></span></p></h2>
         <ul id="messages"></ul>
-        <canvas id="chartDisplay" width="200" height="100"></canvas>
+        <span style="display: flex; justify-content: center; align-items: center; height: 70vh;">
+            <canvas id="chartDisplay" width='600' height='600'></canvas>
+        </span>
     </div>
 </body>
 </html>

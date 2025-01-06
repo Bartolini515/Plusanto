@@ -25,15 +25,8 @@
 # Pozostawia się (jeśli możliwe) bufor określony przez użytkownika, nawet jeżeli budżet wydatkowy przekazywany jest na dodatek
 
 
-
-
 # TODO
-# Lepsze opisanie wszystkiego oraz przeniesienie do takiego poradnika typu help
-# 5 przychodów będzie tylko sugestią w helpie
-
-
-# TODO może
-# Dodanie możliwości wprowadzania różnych typów długów i ich spłacania
+#
 
 import math
 
@@ -69,6 +62,7 @@ def budgetAdd(value:int, budgetType, budgetExpenses:int, budgetWants:int, budget
 
 # Funkcja obliczania i łatania deficitu w budżecie wydatkowym
 def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, allowance:int, budgetEmergency:int, balance:int, budgetType):
+    global lackingFunds
     match budgetType:
         case '1': # W przypadku 50/30/15/5
             difference = expenses - budgetExpenses
@@ -76,7 +70,7 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                 case difference if (budgetWants - difference) >= 0:
                     budgetExpenses += difference
                     budgetWants -= difference
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case difference if (budgetWants + allowance - difference) >= 0:
@@ -84,7 +78,7 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     budgetWants -= difference 
                     allowance -= abs(budgetWants)
                     budgetWants = 0
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek oraz dodatku.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek oraz dodatku.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case difference if (budgetWants + allowance + budgetEmergency - difference) >= 0:
@@ -93,7 +87,7 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     allowance -= abs(budgetWants)
                     budgetEmergency -= abs(allowance)
                     budgetWants, allowance = 0, 0
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek i dodatku oraz budżetu awaryjnego.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek i dodatku oraz budżetu awaryjnego.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case difference if balance - abs(budgetWants + allowance + budgetEmergency - difference) >= 0:
@@ -103,12 +97,12 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     budgetEmergency -= abs(allowance)
                     balance -= abs(budgetEmergency)
                     budgetWants, allowance, budgetEmergency = 0, 0, 0
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek, dodatku, budżetu awaryjnego oraz obecnego salda.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z budżetu zachcianek, dodatku, budżetu awaryjnego oraz obecnego salda.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case _:
-                    # TODO Czy coś tu dodać aby robiło gdy nie ma wystarczających środków?
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference}, pokrycie nie jest możliwe. Brakująca ilość: {balance - abs(budgetWants + allowance + budgetEmergency - difference)}.')
+                    lackingFunds = True
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference}, pokrycie nie jest możliwe. Brakująca ilość: {balance - abs(budgetWants + allowance + budgetEmergency - difference)}.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
 
                     
@@ -118,7 +112,7 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                 case difference if (allowance - difference) >= 0:
                     budgetExpenses += difference 
                     allowance -= difference
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case difference if (allowance + budgetEmergency - difference) >= 0:
@@ -126,7 +120,7 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     allowance -= difference
                     budgetEmergency -= abs(allowance)
                     allowance = 0
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku i budżetu awaryjnego.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku i budżetu awaryjnego.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case difference if balance - abs(allowance + budgetEmergency - difference) >= 0:
@@ -135,13 +129,11 @@ def calculateExpensesDeficit(expenses:int, budgetExpenses:int, budgetWants:int, 
                     budgetEmergency -= abs(allowance)
                     balance -= abs(budgetEmergency)
                     allowance, budgetEmergency = 0, 0
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku, budżetu awaryjnego oraz obecnego salda.')
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference} pokryte zostały z dodatku, budżetu awaryjnego oraz obecnego salda.')
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
                 case _:
-                    # TODO Czy coś tu dodać aby robiło gdy nie ma wystarczających środków?
-                    createMessage(f'Przekraczasz budżet na wydatki, dodatkowe koszty w wysokości {difference}, pokrycie nie jest możliwe. Brakująca ilość: {balance - abs(budgetWants + allowance + budgetEmergency - difference)}.')
-                    global lackingFunds
+                    createMessage(f'Przekraczasz budżet na wydatki. Dodatkowe koszty w wysokości {difference}, pokrycie nie jest możliwe. Brakująca ilość: {balance - abs(budgetWants + allowance + budgetEmergency - difference)}.')
                     lackingFunds = True
                     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
                 
@@ -151,7 +143,7 @@ def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, 
     difference = balance - (income * 2)
     balance -= abs(difference)
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetAdd(abs(difference), budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency)
-    createMessage(f'Nadmiar w saldzie został rozprowadzony w wysokości {abs(difference)}')
+    createMessage(f'Nadmiar w saldzie, w wysokości {abs(difference)}, został rozprowadzony ')
     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
 
 
@@ -160,7 +152,7 @@ def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, b
     if emergencyFund > plannedEmergencyFund: # W przypadku jeżeli posiadamy fundusz awaryjny powyżej planowanego, dodajemy jego składki do dodatku
         allowance += budgetEmergency
         budgetEmergency = 0
-        createMessage(f'Fundusz awaryjny jest powyżej planowanego funduszu, budżet awaryjny został przekazany do dodatku.')
+        createMessage(f'Fundusz awaryjny jest powyżej planowanego, budżet awaryjny został przekazany do dodatku.')
     
     else: # W przypadku jeżeli posiadamy fundusz awaryjny o wielkości mniejszej niż 40% planowanego przekazujemy połowę dodatku na budżet awaryjny
         if debt: # Jeżeli istnieje dług to przekazujemy pół dodatku na budżet awaryjny, a drugie na spłate długu
@@ -168,11 +160,11 @@ def distributeFund(emergencyFund:int, plannedEmergencyFund:int, allowance:int, b
             allowance = 0
             budgetEmergency += halfAllowance
             repayDebt += halfAllowance
-            createMessage(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, połowa dodatku o wartości {halfAllowance} została przekazana na budżet awaryjny. Pozostała część posłuży spłaceniu długu.')
+            createMessage(f'Fundusz awaryjny jest poniżej 2 wartości przychodu. Połowa dodatku o wartości {halfAllowance} została przekazana na budżet awaryjny. Pozostała część posłuży spłaceniu długu.')
         else:
             budgetEmergency += allowance
             allowance = 0
-            createMessage(f'Fundusz awaryjny jest poniżej 2 wartości przychodu, dodatek został przekazany na budżet awaryjny.')
+            createMessage(f'Fundusz awaryjny jest poniżej 2 wartości przychodu. Dodatek został przekazany na budżet awaryjny.')
     return allowance, budgetEmergency, repayDebt
 
 
@@ -183,7 +175,7 @@ def distributeExpenses(budgetExpenses:int, expenses:int, allowance:int, bufor:in
         case '1':
             budgetExpenses -= difference
             allowance += difference
-            createMessage(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}, nadmiar przekazany został do dodatku.')
+            createMessage(f'Posiadasz nadmiar w budżecie wydatkowym, w wysokości {difference}. Nadmiar przekazany został do dodatku.')
             return budgetExpenses, allowance
         
         case '2':
@@ -218,7 +210,7 @@ def checkEmergencyBudget(emergencyFund:int, plannedEmergencyFund:int, budgetEmer
     if ((difference2 := difference - budgetEmergency) < 0):
         allowance += abs(difference2)
         budgetEmergency = difference
-        createMessage(f'Twój budżet awaryjny przekraczał planowany, został odpowiednio skorygowany przekazując {abs(difference2)} do dodatku.')
+        createMessage(f'Twój budżet awaryjny przekraczał planowany. Został odpowiednio skorygowany przekazując {abs(difference2)} do dodatku.')
     return budgetEmergency, allowance
     
     
@@ -241,8 +233,10 @@ def budgetRule(balance:int, income:int, expenses:int, debt:int, emergencyFund:in
 
     if expenses > budgetExpenses: # Sprawdza czy wydatki przekraczają budżet na wydatki, jeżeli tak to stara się załatać lukę
         budgetExpenses, budgetWants, budgetEmergency, allowance, balance = calculateExpensesDeficit(expenses, budgetExpenses, budgetWants, allowance, budgetEmergency, balance, budgetType)
-    else: # Jeżeli jest nadmiar to go rozprowadza
+    elif expenses < budgetExpenses: # Jeżeli jest nadmiar to go rozprowadza
         budgetExpenses, allowance = distributeExpenses(budgetExpenses, expenses, allowance, bufor, budgetType)
+    else:
+        pass
 
     if emergencyFund > plannedEmergencyFund or (budgetType == '1' and emergencyFund < plannedEmergencyFund * 0.4): # Jeżeli mamy typ budżetu 1 i fundusz awaryjny jest poniżej 40% planowanego albo jeżeli fundusz awaryjny jest powyżej planowanego to rozprowadza fundusz
         allowance, budgetEmergency, repayDebt = distributeFund(emergencyFund, plannedEmergencyFund, allowance, budgetEmergency, debt, repayDebt)

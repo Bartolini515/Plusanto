@@ -14,7 +14,6 @@
     </header>
     <h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
     
-     
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -24,29 +23,35 @@
     {% endif %}
     <form method="post">
         {% csrf_token %} <!-- Zawsze przywołuj csrf_token gdy formularz korzysta z POST aby chronić przed CSRF (https://owasp.org/www-community/attacks/csrf#overview) <p> -->
-           <label for="id_username"><h4>Nazwa użytkownika</h4></label>
-           {{form.username}}
+        <label for="id_username"><h4>Nazwa użytkownika</h4></label>
+            {{form.username}}
+            {{form.username.errors}}
         
         <label for="id_first_name"><h4>Imię</h4></label>
-           {{form.first_name}}
+            {{form.first_name}}
+            {{form.first_name.errors}}
         
         <label for="id_last_name"><h4>Nazwisko</h4></label>
-           {{form.last_name}}
+            {{form.last_name}}
+            {{form.last_name.errors}}
         
         <label for="id_email"><h4>Email</h4></label>
-           {{form.email}}
+            {{form.email}}
+            {{form.email.errors}}
         
-           <label for="id_password"><h4>Hasło</h4></label>
-           {{form.password}}
+        <label for="id_password"><h4>Hasło</h4></label>
+            {{form.password}}
+            {{form.password.errors}}
         
-           <label for="id_password_confirm"><h4>Potwierdź hasło</h4></label>
-           {{form.password_confirm}}
+        <label for="id_password_confirm"><h4>Potwierdź hasło</h4></label>
+            {{form.password_confirm}}
+            {{form.password_confirm.errors}}
         <br><br>
 
         
         <button class="button2">Zarejestruj się</button>
     </form>
     <br>
-    <a href="signin" class="link"><u><b> Masz już konto? Zaloguj się.</u></b></a>
+    <a href="{% url 'login' %}" class="link"><u><b> Masz już konto? Zaloguj się.</u></b></a>
 </body>
 </html>

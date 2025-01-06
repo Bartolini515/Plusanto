@@ -10,8 +10,6 @@ from json import dumps
 def index(request): # Strona główna
     return render(request, 'index.html')
 
-#TODO: Akceptacja cookies https://medium.com/@kanithkar_baskaran/how-to-save-cookies-in-web-django-847136032737
-
 def dashboard(request): # Pulpit
     if  request.user.is_authenticated:
         return render(request, 'dashboard.html')
@@ -29,8 +27,8 @@ def budget(request): # Sekcja budżetu
             balance = form.cleaned_data['balance']
             income = form.cleaned_data['income']
             expenses = form.cleaned_data['expenses']
-            debt = form.cleaned_data['debt']
-            emergencyFund = form.cleaned_data['emergencyFund']
+            debt = form.cleaned_data['debt'] or 0
+            emergencyFund = form.cleaned_data['emergencyFund'] or 0
             budgetType = form.cleaned_data['budgetType']
             bufor = form.cleaned_data['bufor'] or 0
             percentWants = form.cleaned_data['percentWants'] or 0

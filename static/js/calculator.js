@@ -55,8 +55,8 @@ function validateInputs() {
 }
 
 // Wyciąganie elementow ze strony
-const incomeInput = document.getElementById('income');
-const deductionsInput = document.getElementById('deductions');
+const incomeInput = document.getElementById('id_income');
+const deductionsInput = document.getElementById('id_deductions');
 
 // Debouncowanie funkcji
 const validateFormInputsDebounced = debounce(validateInputs, 300);
