@@ -268,3 +268,8 @@ button:active {
     transition: background-color 0.3s ease; /* Płynna zmiana koloru tła */
     position: relative; 
      }
+    
+.about-div{
+  margin-left: 30px;
+  margin-right: 30px;
+}
