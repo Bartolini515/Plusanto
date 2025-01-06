@@ -31,7 +31,11 @@ function checkAlerts(messages, levels) {
             ul.appendChild(br);
         });
 
-        alertBox.innerHTML = ""; 
+        alertBox.innerHTML = "";
+        alertBox.style.display = '';
+        setTimeout(() => {
+            alertBox.style.display = "none";
+        }, 8000);
         alertBox.appendChild(ul); 
     } else { // Jeżeli nie ma errorów to wyświetla wszystkie komunikaty
         const ul = document.createElement("ul");
