@@ -39,9 +39,10 @@
     
     
     <header class="czarny-naglowek">
-        <h1>Witaj na stronie głównej</h1>
+        <h1>Strona główna</h1>
+        <h4><b>Witaj {{ user.username }}</b></h4>
         {% if user.is_authenticated %}
-            <h4><b> {{ user.username }}</b></h4>
+            
         {% endif %}
     </header>
     <div class="text-image-container">

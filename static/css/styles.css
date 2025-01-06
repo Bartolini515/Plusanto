@@ -225,8 +225,9 @@ button:active {
 
 
 .button5 {
-    background-color: #4d4dd3; 
-    border: 2px solid black; 
+
+    background:  radial-gradient(circle, rgb(15, 64, 116) 20%, rgb(39, 134, 165) 30%, rgba(135, 206, 250, 1) 100%);
+    border: 4px solid black; 
     color: #ffffff; /* Biały tekst */
     width: 300px; /* Szerokość prostokątów */
     height: 100px; /* Wysokość prostokątów */
@@ -256,3 +257,43 @@ button:active {
     padding: 20px;
     
  }
+
+ /* Styl przycisku Pomoc */
+.help-button {
+    position: fixed; /* Przycisk jest zawsze widoczny */
+    left: 0; /* Umiejscowienie z lewej strony */
+    top: 50%; /* Pozycja w pionie na środku */
+    transform: translateY(-50%); /* Wyśrodkowanie pionowe */
+    background-color: #1E3A8A; /* Ciemny niebieski */
+    color: white; /* Biały tekst */
+    border: none; /* Bez obramowania */
+    padding: 10px 20px; /* Wewnętrzne odstępy */
+    font-size: 16px; /* Rozmiar czcionki */
+    cursor: pointer; /* Kursor wskazujący */
+    z-index: 1000; /* Przycisk na wierzchu */
+    border-radius: 0 5px 5px 0; /* Zaokrąglenie prawej strony */
+    transition: background-color 0.3s ease; /* Efekt przejścia */
+}
+
+.help-button:hover {
+    background-color: #1D2A65; /* Ciemniejszy odcień niebieskiego */
+}
+
+/* Styl wysuwanego tekstu */
+.help-text {
+    position: fixed; /* Tekst jest zawsze widoczny */
+    left: -300px; /* Ukryty poza ekranem */
+    top: 50%; /* Pozycja w pionie na środku */
+    transform: translateY(-50%); /* Wyśrodkowanie pionowe */
+    width: 300px; /* Szerokość tekstu */
+    background-color: #f1f1f1; /* Kolor tła */
+    padding: 20px; /* Wewnętrzne odstępy */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Cień */
+    z-index: 999; /* Tekst pod przyciskiem */
+    transition: left 0.3s ease; /* Efekt wysuwania */
+}
+
+/* Klasa dodawana po kliknięciu, aby wysunąć tekst */
+.help-text.active {
+    left: 0; /* Wysuwa tekst na ekran */
+}

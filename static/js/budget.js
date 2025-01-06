@@ -281,6 +281,12 @@ function checkEmergencyFundChecked(state){
     checkOptions()
 }
 
+
+function toggleHelp() {
+    const helpText = document.getElementById('helpText');
+    helpText.classList.toggle('active'); // Dodaje/usuwa klasę "active"
+}
+
 // Wyciąganie elementów z formularza
 const balanceInput = document.getElementById('id_balance');
 const incomeInput = document.getElementById('id_income');

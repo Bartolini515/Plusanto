@@ -91,7 +91,27 @@
         });
     </script>
 {% endif %}
+<button class="help-button" onclick="toggleHelp()">Pomoc</button>
+<div class="help-text" id="helpText">
+    <p>Wydatki stałe
+Stałe, regularne wydatki, takie jak rachunki za prąd, wodę czy czynsz.
 
+Fundusz awaryjny
+Twój obecny fundusz w razie nagłej potrzeby, innymi słowy gdy stanie się coś niezaplanowanego i potrzebne są duże środki pieniężne których nie posiada się w saldzie.
+
+Planowany fundusz awaryjny
+Twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.
+
+Bufor
+Dodatkowa kwota uwzględniana w budżecie, służy jako zabezpieczenie przed małymi, nagłymi wydatkami.
+
+Typ budżetu
+Budżet Stabilny Łączy oszczędzanie z uwzględnieniem codziennych potrzeb i przyjemności. Unikatowe dla budżetu stabilnego:
+- Zachcianki,
+- Przekazywanie dodatku do budżetu awaryjnego (jeżeli poniżej 40% planowanego funduszu).
+Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpieczeń finansowych. Unikalne dla budżetu rozwojowego:
+- Bufor do wydatków.</p>
+</div>
     <div id="calculatedResults" style="display:none">
         <h2>Wyliczony budżet</h2>
         <h2><p>Saldo: <span id="balanceDisplay"></span></p></h2>
