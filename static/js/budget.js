@@ -343,3 +343,19 @@ checkOptions();
 checkBudgetType(budgetTypeField.value);
 let myChart = null;
 let distributeConf = false;
+
+// Expander checkboxów do przycisku opcje
+document.addEventListener('DOMContentLoaded', function() {
+    const optionsButton = document.getElementById('optionsButton');
+    const optionsContainer = document.getElementById('optionsContainer');
+
+    // Obsługa kliknięcia przycisku "Opcje"
+    optionsButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Zapobiega domyślnej akcji przycisku
+        if (optionsContainer.style.display === 'none') {
+            optionsContainer.style.display = '';
+        } else {
+            optionsContainer.style.display = 'none';
+        }
+    });
+});
