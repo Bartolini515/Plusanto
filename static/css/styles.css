@@ -273,3 +273,9 @@ button:active {
   margin-left: 30px;
   margin-right: 30px;
 }
+
+.label_tekst{
+  text-align: center;
+  font-size: 24px;
+  color: #ffffff;
+}

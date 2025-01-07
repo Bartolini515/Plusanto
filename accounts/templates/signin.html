@@ -21,11 +21,11 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <label for="id_username"><h4>Nazwa użytkownika</h4></label>
+        <label class="label_tekst" for="id_username">Nazwa użytkownika</label><br>
             {{form.username}}
             {{form.username.errors}}
         <br><br>
-        <label for="id_password"><h4>Hasło</h4></label>
+        <label class="label_tekst" for="id_password">Hasło</label><br>
             {{form.password}}
             {{form.password.errors}}
         <br><br>

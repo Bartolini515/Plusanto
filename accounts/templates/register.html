@@ -23,27 +23,27 @@
     {% endif %}
     <form method="post">
         {% csrf_token %} <!-- Zawsze przywołuj csrf_token gdy formularz korzysta z POST aby chronić przed CSRF (https://owasp.org/www-community/attacks/csrf#overview) <p> -->
-        <label for="id_username"><h4>Nazwa użytkownika</h4></label>
+        <label class="label_tekst" for="id_username">Nazwa użytkownika</label><br>
             {{form.username}}
             {{form.username.errors}}
-        
-        <label for="id_first_name"><h4>Imię</h4></label>
+        <br><br>
+        <label class="label_tekst" for="id_first_name">Imię</label><br>
             {{form.first_name}}
             {{form.first_name.errors}}
-        
-        <label for="id_last_name"><h4>Nazwisko</h4></label>
+        <br><br>
+        <label class="label_tekst" for="id_last_name">Nazwisko</label><br>
             {{form.last_name}}
             {{form.last_name.errors}}
-        
-        <label for="id_email"><h4>Email</h4></label>
+        <br><br>
+        <label class="label_tekst" for="id_email">Email</label><br>
             {{form.email}}
             {{form.email.errors}}
-        
-        <label for="id_password"><h4>Hasło</h4></label>
+        <br><br>
+        <label class="label_tekst" for="id_password">Hasło</label><br>
             {{form.password}}
             {{form.password.errors}}
-        
-        <label for="id_password_confirm"><h4>Potwierdź hasło</h4></label>
+        <br><br>
+        <label class="label_tekst" for="id_password_confirm">Potwierdź hasło</label><br>
             {{form.password_confirm}}
             {{form.password_confirm.errors}}
         <br><br>
