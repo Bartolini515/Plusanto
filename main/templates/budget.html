@@ -8,17 +8,13 @@
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
 </head>
 <body>
+    <header class="czarny-naglowek">
+        <h1>Witaj w budżecie</h1>
+    </header>
 <h3><a href="{% url 'dashboard' %}" class="button1">Wróć do pulpitu</a></h3>
-    <h1>Witaj w budżecie</h1>
 
     <form id="budgetForm" method="post">
         {% csrf_token %}
-        <span>
-            <label for="debtCheckbox">Dług</label>
-            <input type="checkbox" id="debtCheckbox" name="debtCheckbox"><br>
-            <label for="emergencyFundCheckbox">Fundusz awaryjny</label>
-            <input type="checkbox" id="emergencyFundCheckbox" name="emergencyFundCheckbox">
-        </span>
         <br><br><label for="id_balance">Saldo konta</label>
             {{form.balance}}
             {{form.balance.errors}}
@@ -27,33 +23,55 @@
             {{form.income}}
             {{form.income.errors}}
 
-        <br><br><label for="id_expenses">Wydatki stałe</label>
+        <br><br><button disabled class="button3" title="Stałe, regularne wydatki, takie jak rachunki za prąd, wodę czy czynsz.">? </button>
+        <label for="id_expenses">Wydatki stałe</label>
             {{form.expenses}}
             {{form.expenses.errors}}
-
+        <br> <br>
+        <span>
+            <label for="debtCheckbox">Dług</label>
+            <input type="checkbox" id="debtCheckbox" name="debtCheckbox">
+        </span>
         <span id="debtSpan">
         <br><br><label for="id_debt">Dług</label>
             {{form.debt}}
             {{form.debt.errors}}
         </span>
-
+        <br><br>
+        <span>
+        <button disabled class="button3" title="Twój fundusz awaryjny to środki przeznaczone na niespodziewane wydatki. Mogą one być potrzebne w sytuacjach, które wymagają większej ilości pieniędzy, niż aktualnie posiadasz w swoim budżecie.
+        Planowany fundusz awaryjny to twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.">?</button>
+        <label for="emergencyFundCheckbox">Fundusz awaryjny</label>
+            <input type="checkbox" id="emergencyFundCheckbox" name="emergencyFundCheckbox">
+        </span>
         <span id="emergencyFundSpan">
-        <br><br><label for="id_emergencyFund">Fundusz awaryjny</label>
+        <br><br>
+        
+        <label for="id_emergencyFund">Fundusz awaryjny</label>
             {{form.emergencyFund}}
             {{form.emergencyFund.errors}}
 
-        <br><br><label for="id_plannedEmergencyFund">Planowany fundusz awaryjny</label>
+        <br><br>
+        
+        <label for="id_plannedEmergencyFund">Planowany fundusz awaryjny</label>
             {{form.plannedEmergencyFund}}
             {{form.plannedEmergencyFund.errors}}
         </span>
-
         <span id="buforSpan">
-            <br><br><label for="id_bufor">Bufor</label>
+            <br><br>
+            <button disabled class="button3"  title="Dodatkowa kwota uwzględniana w budżecie, służy jako zabezpieczenie przed małymi, nagłymi wydatkami.">?</button>
+            <label for="id_bufor">Bufor</label>
                 {{form.bufor}}
                 {{form.bufor.errors}}
         </span>
 
-        <br><br><label for="id_budgetType">Typ budżetu</label>
+        <br><br>
+        <button disabled class="button3" title="Budżet Stabilny Łączy oszczędzanie z uwzględnieniem codziennych potrzeb i przyjemności. Unikatowe dla budżetu stabilnego:
+- Zachcianki,
+- Przekazywanie dodatku do budżetu awaryjnego (jeżeli poniżej 40% planowanego funduszu).
+Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpieczeń finansowych. Unikalne dla budżetu rozwojowego:
+- Bufor do wydatków.">?</button>
+        <label for="id_budgetType">Typ budżetu</label>
             {{form.budgetType}}
             {{form.budgetType.errors}}
 
@@ -76,7 +94,6 @@
             {{form.percentEmergency}}
             {{form.percentEmergency.errors}}
         </span>
-        {% comment %} jeżeli jest typ budżetu 2 to wtedy nie pokazuje procentu na zachcianki {% endcomment %}
         <br><br><button class="button2" id='submitButton'>Zapisz</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
@@ -91,27 +108,6 @@
         });
     </script>
 {% endif %}
-<button class="help-button" onclick="toggleHelp()">Pomoc</button>
-<div class="help-text" id="helpText">
-    <p>Wydatki stałe
-Stałe, regularne wydatki, takie jak rachunki za prąd, wodę czy czynsz.
-
-Fundusz awaryjny
-Twój obecny fundusz w razie nagłej potrzeby, innymi słowy gdy stanie się coś niezaplanowanego i potrzebne są duże środki pieniężne których nie posiada się w saldzie.
-
-Planowany fundusz awaryjny
-Twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.
-
-Bufor
-Dodatkowa kwota uwzględniana w budżecie, służy jako zabezpieczenie przed małymi, nagłymi wydatkami.
-
-Typ budżetu
-Budżet Stabilny Łączy oszczędzanie z uwzględnieniem codziennych potrzeb i przyjemności. Unikatowe dla budżetu stabilnego:
-- Zachcianki,
-- Przekazywanie dodatku do budżetu awaryjnego (jeżeli poniżej 40% planowanego funduszu).
-Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpieczeń finansowych. Unikalne dla budżetu rozwojowego:
-- Bufor do wydatków.</p>
-</div>
     <div id="calculatedResults" style="display:none">
         <h2>Wyliczony budżet</h2>
         <h2><p>Saldo: <span id="balanceDisplay"></span></p></h2>
@@ -122,7 +118,8 @@ Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpiecze�
         <h2><p>Budżet awaryjny: <span id="budgetEmergencyDisplay"></span></p></h2>
         </div>
         <h2 id='debtDisplayHeader'><p>Dług: <span id="debtDisplay"></span></p></h2>
-        <ul id="messages"></ul>
+        <ul id="messages" style="border: 10px solid black; display: none;"></ul>
+        <br><br><br><br><br>
         <span style="display: flex; justify-content: center; align-items: center; height: 70vh;">
             <canvas id="chartDisplay" width='600' height='600'></canvas>
         </span>

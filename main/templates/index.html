@@ -22,6 +22,17 @@
     </div>
 
            
+    
+    
+    
+    <header class="czarny-naglowek">
+        <h1>Strona główna</h1>
+        
+        
+        {% if user.is_authenticated %}
+            <h4><b>Witaj {{ user.username }}</b></h4>
+        {% endif %}
+    </header>
     <div class="alert" style="display:none">
 
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -36,15 +47,6 @@
     </script>
 {% endif %}
 </div>
-    
-    
-    <header class="czarny-naglowek">
-        <h1>Strona główna</h1>
-        <h4><b>Witaj {{ user.username }}</b></h4>
-        {% if user.is_authenticated %}
-            
-        {% endif %}
-    </header>
     <div class="text-image-container">
        
       </div>
@@ -52,26 +54,24 @@
     <ul>
     {% if user.is_authenticated %}
         <!-- Jeśli użytkownik jest zalogowany, nie pokazuj przycisków -->
-        <li><button class="button2"><a href="{% url 'logout' %}">Wyloguj się</a></button></li>
-        <li><button class="button2"><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></button></li>
+        <a href="{% url 'logout' %}"><button class="button2"><li style='float: left; color: black'>Wyloguj się</li></button></a>
+        <a href="{% url 'dashboard' %}"><button class="button2"><li style='float: left; color: black'>Wejdź do pulpitu</li></button></a>
     {% else %}
         <!-- Jeśli użytkownik nie jest zalogowany, pokazuj przyciski -->
-        <li><button class="button2"><a href="{% url 'register' %}">Zarejestruj się</a></button></li>
-        <li><button class="button2"><a href="{% url 'login' %}">Zaloguj się</a></button></li>
+        <a href="{% url 'register' %}"><button class="button2"><li style='float: left; color: black'>Zarejestruj się</li></button></a>
+        <a href="{% url 'login' %}"><button class="button2"><li style='float: left; color: black'>Zaloguj się</li></button></a>
     {% endif %}
-    <li><button class="button2"><a href="{% url 'about' %}">O Plusanto</a></button></li>
-    <li><button class="button2"><a href="{% url 'contact' %}">Kontakt</a></button></li>
+    <a href="{% url 'about' %}"><button class="button2"><li style='float: left; color: black'>O Plusanto</li></button></a>
+    <a href="{% url 'contact' %}"><button class="button2"><li style='float: left; color: black'>Kontakt</li></button></a>
 </ul>
     
     <br /> <br />
-    <!-- Napis Plusanto w ładnej czcionce dośc duże, obok całego tekstu po lewo logo Plusanto -->
     <h2>Plusanto</h2>
     <strong><p>Oblicz swój budżet!</p></strong>
     <strong><p>Określ swoje cele finansowe!</p></strong>
     <strong><p>Planuj swoją przyszłość!</p></strong>
     <p>Oferujemy narzędzia, które Ci w tym pomogą!</p>
     <p>Zarejestruj się lub zaloguj, aby skorzystać z naszych zasobów!</p>
-    <!-- Niewidzialne odnośniki przy "Zarejestruj się" i "Zaloguj się" -->
       
 </body>
 

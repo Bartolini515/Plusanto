@@ -23,8 +23,7 @@
         <br><br><label for="id_frequency">Powtarzalność</label>
             {{form.frequency}}
             {{form.frequency.errors}}
-        <br><br><button class="actionButton" data-action='calculate'>Oblicz przystępność</button>
-        {% comment %} Jak chcesz zmienić klasę to pamiętaj o js aby zmienić to w linijce 2 {% endcomment %}
+        <br><br><button class="button2" data-action='calculate'>Oblicz przystępność</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
 
@@ -41,7 +40,7 @@
         <h2><p>Dodatek przed: <span id="allowanceDisplay"></span></p></h2>
         <h2><p>Dodatek po: <span id="allowanceAftDisplay"></span></p></h2>
         </div>
-        <button class="actionButton" data-action='save'>Zaktualizuj budżet wliczając ten wydatek</button>
+        <button class="button2" data-action='save'>Zaktualizuj budżet wliczając ten wydatek</button>
         <ul id="messages"></ul>
         <span style="display: flex; justify-content: center; align-items: center; height: 70vh;">
             <canvas id="chartDisplay" width='600' height='600'></canvas>

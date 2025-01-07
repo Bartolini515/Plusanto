@@ -143,7 +143,7 @@ def distributeBalance(balance, income, budgetType, budgetExpenses, budgetWants, 
     difference = balance - (income * 2)
     balance -= abs(difference)
     budgetExpenses, budgetWants, budgetEmergency, allowance = budgetAdd(abs(difference), budgetType, budgetExpenses, budgetWants, budgetEmergency, allowance, percentWants, percentAllowance, percentEmergency)
-    createMessage(f'Nadmiar w saldzie, w wysokości {abs(difference)}, został rozprowadzony ')
+    createMessage(f'Nadmiar w saldzie, w wysokości {abs(difference)}, został rozprowadzony.')
     return budgetExpenses, budgetWants, budgetEmergency, allowance, balance
 
 
@@ -195,11 +195,11 @@ def debtRepayment(repayDebt:int, allowance:int, debt:int):
     difference = debt - repayDebt
     if difference > 0:
         debt -= repayDebt
-        createMessage(f'Spłacono część długu kwotą {repayDebt} za pomocą dodatku. Pozostały dług to {debt}')
+        createMessage(f'Spłacono część długu kwotą {repayDebt} za pomocą dodatku. Pozostały dług to {debt}.')
     else: # Jeżeli dług został spłacony w całości wtedy usuwamy dług oraz dodajemy resztę do dodatku
         debt = 0
         allowance += abs(difference)
-        createMessage(f'Cały dług w wysokości {debtActual} został spłacony za pomocą dodatku. Pozostały dodatek to {allowance}')
+        createMessage(f'Cały dług w wysokości {debtActual} został spłacony za pomocą dodatku. Pozostały dodatek to {allowance}.')
     return allowance, debt
 
 

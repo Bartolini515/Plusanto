@@ -3,6 +3,7 @@
     
 <head>
     {% load static %}
+    <script src="{% static 'js/scripts.js' %}" defer></script>
     <meta charset="UTF-8">
     <title>Pulpit</title>
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
@@ -11,13 +12,21 @@
      <header class="czarny-naglowek">
         <h1>Witaj w pulpicie</h1>
     </header>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
+    <div class="alert" style="display:none">
+
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+
+   {% if messages %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() { // Sprawdzanie alertów
+            // Dzielenie messages od django na format 2 list, jedna z zawartością, a druga z poziomem wiadomości
+            const messages = [{% for message in messages %}"{{ message|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]; 
+            const levels = [{% for message in messages %}"{{ message.level_tag|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]
+            checkAlerts(messages, levels); // Wezwanie funkcji sprawdzajacej alerty
+        });
+    </script>
 {% endif %}
+</div>
 <h3><a href="{% url 'index' %}"class="button1">Wróć na stronę główną</a></h3>
     <div class="dashboard-menu">
     <a href="{% url 'budget' %}"><button class="button5"><h4>Budżet</h4></button></a>
