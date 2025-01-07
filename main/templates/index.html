@@ -54,26 +54,24 @@
     <ul>
     {% if user.is_authenticated %}
         <!-- Jeśli użytkownik jest zalogowany, nie pokazuj przycisków -->
-        <button class="button2"><li><a href="{% url 'logout' %}">Wyloguj się</a></li></button>
-        <button class="button2"><li><a href="{% url 'dashboard' %}">Wejdź do pulpitu</a></li></button>
+        <a href="{% url 'logout' %}"><button class="button2"><li style='float: left; color: black'>Wyloguj się</li></button></a>
+        <a href="{% url 'dashboard' %}"><button class="button2"><li style='float: left; color: black'>Wejdź do pulpitu</li></button></a>
     {% else %}
         <!-- Jeśli użytkownik nie jest zalogowany, pokazuj przyciski -->
-        <button class="button2"><li><a href="{% url 'register' %}">Zarejestruj się</a></li></button>
-        <button class="button2"><li><a href="{% url 'login' %}">Zaloguj się</a></button></li>
+        <a href="{% url 'register' %}"><button class="button2"><li style='float: left; color: black'>Zarejestruj się</li></button></a>
+        <a href="{% url 'login' %}"><button class="button2"><li style='float: left; color: black'>Zaloguj się</li></button></a>
     {% endif %}
-    <button class="button2"><li><a href="{% url 'about' %}">O Plusanto</a></li></button>
-    <button class="button2"><li><a href="{% url 'contact' %}">Kontakt</a></li></button>
+    <a href="{% url 'about' %}"><button class="button2"><li style='float: left; color: black'>O Plusanto</li></button></a>
+    <a href="{% url 'contact' %}"><button class="button2"><li style='float: left; color: black'>Kontakt</li></button></a>
 </ul>
     
     <br /> <br />
-    <!-- Napis Plusanto w ładnej czcionce dośc duże, obok całego tekstu po lewo logo Plusanto -->
     <h2>Plusanto</h2>
     <strong><p>Oblicz swój budżet!</p></strong>
     <strong><p>Określ swoje cele finansowe!</p></strong>
     <strong><p>Planuj swoją przyszłość!</p></strong>
     <p>Oferujemy narzędzia, które Ci w tym pomogą!</p>
     <p>Zarejestruj się lub zaloguj, aby skorzystać z naszych zasobów!</p>
-    <!-- Niewidzialne odnośniki przy "Zarejestruj się" i "Zaloguj się" -->
       
 </body>
 

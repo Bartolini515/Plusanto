@@ -3,7 +3,7 @@ import { renderChart } from './chart.js';
 
 
 // AJAX dla podstrony przystępnościomierza
-document.querySelectorAll('.actionButton').forEach(button => {
+document.querySelectorAll('.button2').forEach(button => {
     button.addEventListener('click', function (event) {
         event.preventDefault(); // Zapobiegamy defaultowemy zachowaniu na POSTa
 

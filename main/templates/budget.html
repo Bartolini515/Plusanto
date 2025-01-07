@@ -12,7 +12,6 @@
         <h1>Witaj w budżecie</h1>
     </header>
 <h3><a href="{% url 'dashboard' %}" class="button1">Wróć do pulpitu</a></h3>
-   
 
     <form id="budgetForm" method="post">
         {% csrf_token %}
@@ -95,7 +94,6 @@ Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpiecze�
             {{form.percentEmergency}}
             {{form.percentEmergency.errors}}
         </span>
-        {% comment %} jeżeli jest typ budżetu 2 to wtedy nie pokazuje procentu na zachcianki {% endcomment %}
         <br><br><button class="button2" id='submitButton'>Zapisz</button>
     </form>
     <span id="errorValidateJS" style="color: red; display: none;"></span>
@@ -120,7 +118,7 @@ Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpiecze�
         <h2><p>Budżet awaryjny: <span id="budgetEmergencyDisplay"></span></p></h2>
         </div>
         <h2 id='debtDisplayHeader'><p>Dług: <span id="debtDisplay"></span></p></h2>
-        <div style="border: 10px solid black; ">.<ul id="messages"></ul></div>
+        <ul id="messages" style="border: 10px solid black; display: none;"></ul>
         <br><br><br><br><br>
         <span style="display: flex; justify-content: center; align-items: center; height: 70vh;">
             <canvas id="chartDisplay" width='600' height='600'></canvas>

@@ -24,6 +24,7 @@ document.getElementById('submitButton').addEventListener('click', function (even
         const form = document.getElementById('budgetForm');
         const formData = new FormData(form);
         formData.append('distributeConf', distributeConf);
+        distributeConf = false;
         const csrfToken = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
         fetch(form.action, { // Za pomocą Fetch API wysyłamy formularz do serwera
@@ -54,6 +55,7 @@ document.getElementById('submitButton').addEventListener('click', function (even
                 // Pokazujemy wiadomości zwrotne od algorytmu budżetowego
                 const messagesContainer = document.getElementById('messages');
                 messagesContainer.innerHTML = '';
+                messagesContainer.style.display = '';
                 data.messages.forEach(message => {
                 const li = document.createElement('li');
                 li.textContent = message;
@@ -82,6 +84,7 @@ document.getElementById('submitButton').addEventListener('click', function (even
     } else { // Jeżeli walidacje JS nie przeszły dajemy niepoprawny format danych
         responseMessage.textContent = 'Niepoprawny format danych.';
         responseMessage.style.color = 'red';
+        distributeConf = false;
     };
 });
 
