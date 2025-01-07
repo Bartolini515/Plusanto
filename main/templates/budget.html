@@ -16,12 +16,6 @@
 
     <form id="budgetForm" method="post">
         {% csrf_token %}
-        <span>
-            <label for="debtCheckbox">Dług</label>
-            <input type="checkbox" id="debtCheckbox" name="debtCheckbox"><br>
-            <label for="emergencyFundCheckbox">Fundusz awaryjny</label>
-            <input type="checkbox" id="emergencyFundCheckbox" name="emergencyFundCheckbox">
-        </span>
         <br><br><label for="id_balance">Saldo konta</label>
             {{form.balance}}
             {{form.balance.errors}}
@@ -34,22 +28,32 @@
         <label for="id_expenses">Wydatki stałe</label>
             {{form.expenses}}
             {{form.expenses.errors}}
-
+        <br> <br>
+        <span>
+            <label for="debtCheckbox">Dług</label>
+            <input type="checkbox" id="debtCheckbox" name="debtCheckbox">
+        </span>
         <span id="debtSpan">
         <br><br><label for="id_debt">Dług</label>
             {{form.debt}}
             {{form.debt.errors}}
         </span>
-
+        <br><br>
+        <span>
+        <button disabled class="button3" title="Twój fundusz awaryjny to środki przeznaczone na niespodziewane wydatki. Mogą one być potrzebne w sytuacjach, które wymagają większej ilości pieniędzy, niż aktualnie posiadasz w swoim budżecie.
+        Planowany fundusz awaryjny to twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.">?</button>
+        <label for="emergencyFundCheckbox">Fundusz awaryjny</label>
+            <input type="checkbox" id="emergencyFundCheckbox" name="emergencyFundCheckbox">
+        </span>
         <span id="emergencyFundSpan">
         <br><br>
-        <button disabled class="button3" title="Twój fundusz awaryjny to środki przeznaczone na niespodziewane wydatki. Mogą one być potrzebne w sytuacjach, które wymagają większej ilości pieniędzy, niż aktualnie posiadasz w swoim budżecie.">?</button>
+        
         <label for="id_emergencyFund">Fundusz awaryjny</label>
             {{form.emergencyFund}}
             {{form.emergencyFund.errors}}
 
         <br><br>
-        <button disabled class="button3" title="Twój planowany fundusz w razie nagłej potrzeby. Rekomenduje się jego wysokość na poziomie co najmniej pięciokrotności miesięcznego dochodu.">?</button>
+        
         <label for="id_plannedEmergencyFund">Planowany fundusz awaryjny</label>
             {{form.plannedEmergencyFund}}
             {{form.plannedEmergencyFund.errors}}
@@ -116,7 +120,7 @@ Budżet Rozwojowy nakłada na ciągłe powiększanie kapitału oraz zabezpiecze�
         <h2><p>Budżet awaryjny: <span id="budgetEmergencyDisplay"></span></p></h2>
         </div>
         <h2 id='debtDisplayHeader'><p>Dług: <span id="debtDisplay"></span></p></h2>
-        <h4><ul id="messages"></ul></h4>
+        <div style="border: 10px solid black; ">.<ul id="messages"></ul></div>
         <br><br><br><br><br>
         <span style="display: flex; justify-content: center; align-items: center; height: 70vh;">
             <canvas id="chartDisplay" width='600' height='600'></canvas>
